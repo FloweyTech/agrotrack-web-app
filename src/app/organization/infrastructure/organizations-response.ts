@@ -1,0 +1,44 @@
+import {BaseResource} from '../../shared/infrastructure/base-response';
+
+/**
+ * Represents the API resource/DTO for a Category.
+ */
+export interface OrganizationResource extends BaseResource{
+  /**
+   * The unique identifier for the organization.
+   */
+  id: number;
+  /**
+   * The name of the organization.
+   */
+  name: string;
+  /**
+   * The members of the organization.
+   */
+  members: Array<number>;
+  /**
+   * status of the organization.
+   */
+  status: string;
+  /**
+   * The maximum number of plots allowed for the organization.
+   */
+  maxPlots: number;
+  /**
+   * The subscription details of the organization.
+   */
+  subscription : string;
+
+}
+
+
+/**
+ * Represents the API response structure for a list of organizations.
+ */
+export interface OrganizationsResponse extends BaseResource{
+  /**
+   * The list of organizations returned by de API.
+   */
+  organizations: OrganizationResource[];
+
+}

@@ -1,0 +1,53 @@
+{
+  "organizations": [
+    {
+      "id": 1,
+      "name": "AgroTech Solutions",
+      "members": [1, 2, 3],
+      "status": "ACTIVE",
+      "maxPlots": 5,
+      "subscription": {
+        "type": "PREMIUM",
+        "startDate": "2025-01-15T00:00:00.000Z",
+        "endDate": "2026-01-15T00:00:00.000Z"
+      }
+    },
+    {
+      "id": 2,
+      "name": "GreenFields Association",
+      "members": [4, 5],
+      "status": "SUSPENDED",
+      "maxPlots": 3,
+      "subscription": {
+        "type": "BASIC",
+        "startDate": "2024-07-01T00:00:00.000Z",
+        "endDate": "2025-07-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": 3,
+      "name": "WaterFlow Peru",
+      "members": [6, 7, 8, 9],
+      "status": "ACTIVE",
+      "maxPlots": 10,
+      "subscription": {
+        "type": "ENTERPRISE",
+        "startDate": "2025-02-10T00:00:00.000Z",
+        "endDate": "2026-02-10T00:00:00.000Z"
+      }
+    }
+  ],
+  "members": [
+    { "id": 1, "name": "Carlos Ramirez", "email": "carlos.ramirez@example.com", "role": "ADMIN" },
+    { "id": 2, "name": "Lucía Fernández", "email": "lucia.fernandez@example.com", "role": "MEMBER" },
+    { "id": 3, "name": "Jorge Soto", "email": "jorge.soto@example.com", "role": "MEMBER" },
+
+    { "id": 4, "name": "Ana Torres", "email": "ana.torres@example.com", "role": "ADMIN" },
+    { "id": 5, "name": "Pedro Castillo", "email": "pedro.castillo@example.com", "role": "MEMBER" },
+
+    { "id": 6, "name": "María Paredes", "email": "maria.paredes@example.com", "role": "ADMIN" },
+    { "id": 7, "name": "Luis Gutiérrez", "email": "luis.gutierrez@example.com", "role": "MEMBER" },
+    { "id": 8, "name": "Fernanda López", "email": "fernanda.lopez@example.com", "role": "MEMBER" },
+    { "id": 9, "name": "Ricardo Chávez", "email": "ricardo.chavez@example.com", "role": "MEMBER" }
+  ]
+}
