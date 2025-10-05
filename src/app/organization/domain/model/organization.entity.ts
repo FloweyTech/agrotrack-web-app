@@ -1,6 +1,5 @@
-
-import {Subscription} from 'rxjs';
 import {BaseEntity} from '../../../shared/infrastructure/base-entity';
+import {Subscription, SubscriptionPlan} from './subscription.entity';
 
 /**
  * Represents an Organization entity in the application.
@@ -26,8 +25,6 @@ export class Organization implements BaseEntity {
 
   private _status: OrganizationStatus;
 
-  private _maxPlots: number;
-
   private _subscription : Subscription;
 
 
@@ -41,7 +38,6 @@ export class Organization implements BaseEntity {
     name: string;
     members: Array<number>;
     status: OrganizationStatus;
-    maxPlots: number;
     subscription : Subscription;
     }) {
 
@@ -49,7 +45,6 @@ export class Organization implements BaseEntity {
     this._name = organization.name;
     this._members = organization.members;
     this._status = organization.status;
-    this._maxPlots = organization.maxPlots;
     this._subscription = organization.subscription;
   }
 
@@ -69,6 +64,34 @@ export class Organization implements BaseEntity {
 
   set name(value: string) {
     this._name = value;
+  }
+
+  get members(): Array<number>{
+    return this._members;
+  }
+
+  set members(members: Array<number>){
+    this._members = members;
+  }
+
+  get status(): OrganizationStatus {
+    return this._status;
+  }
+  set status(value: OrganizationStatus){
+    this._status = value;
+  }
+
+  get maxPlots(): number {
+    switch (this._subscription.plan){
+      case SubscriptionPlan.AGROSTART:
+        return 5;
+      case SubscriptionPlan.AGROSMART:
+        return 15;
+      case SubscriptionPlan.AGROEXPERT:
+        return 50;
+      default:
+        return 0;
+    }
   }
 
 
