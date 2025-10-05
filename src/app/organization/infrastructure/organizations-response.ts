@@ -1,4 +1,5 @@
 import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-response';
+import {SubscriptionResource} from './subscriptions-response';
 
 /**
  * Represents the API resource/DTO for a Category.
@@ -23,7 +24,7 @@ export interface OrganizationResource extends BaseResource{
   /**
    * The maximum number of plots allowed for the organization.
    */
-  subscription : string;
+  subscription : SubscriptionResource;
 
 }
 

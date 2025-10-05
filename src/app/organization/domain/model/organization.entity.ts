@@ -94,10 +94,16 @@ export class Organization implements BaseEntity {
     }
   }
 
+  get subscription(): Subscription {
+    return this._subscription;
+  }
+  set subscription(value: Subscription){
+    this._subscription = value;
+  }
 
 }
 
-enum OrganizationStatus {
+export enum OrganizationStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive'
 }

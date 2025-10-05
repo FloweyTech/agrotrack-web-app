@@ -41,6 +41,6 @@ export class SubscriptionAssembler implements BaseAssembler<Subscription, Subscr
       startDate: entity.startDate.toISOString(),
       endDate: entity.endDate.toISOString(),
       status: entity.status
-    }
+    } as SubscriptionResource
   }
 }

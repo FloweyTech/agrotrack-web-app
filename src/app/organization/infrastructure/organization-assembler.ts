@@ -1,12 +1,19 @@
 import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {Organization} from '../domain/model/organization.entity';
+import {Organization, OrganizationStatus} from '../domain/model/organization.entity';
 import {OrganizationResource, OrganizationsResponse} from './organizations-response';
 import {resource} from '@angular/core';
+import {SubscriptionAssembler} from './subscription-assembler';
 
 /**
  * Assembler for converting between Organization entities, OrganizationResource, resources and OrganizationResponse
  */
 export class OrganizationAssembler implements BaseAssembler<Organization, OrganizationResource, OrganizationsResponse>{
+  /**
+   * Assembler for Subscription entities.
+   */
+  private readonly subscriptionAssembler = new SubscriptionAssembler();
+
+
   /**
    * Converts a OrganizationResponse to an array of Organization entities.
    * @param response - The API response containing organization.
@@ -27,13 +34,13 @@ export class OrganizationAssembler implements BaseAssembler<Organization, Organi
       id: resource.id,
       name: resource.name,
       members: resource.members,
-      status: resource.status,
-      subscription: resource.subscription
+      status: resource.status as OrganizationStatus,
+      subscription: this.subscriptionAssembler.toEntityFromResource(resource.subscription)
     });
   }
 
   /**
-   * Converts a Organization entity to a OrganizationResource.
+   * Converts an Organization entity to a OrganizationResource.
    * @param entity - The Organization entity to convert.
    * @return The converted OrganizationResource.
    */
@@ -43,7 +50,7 @@ export class OrganizationAssembler implements BaseAssembler<Organization, Organi
       name: entity.name,
       members: entity.members,
       status: entity.status,
-      subscription: entity.subscription
+      subscription: this.subscriptionAssembler.toResourceFromEntity(entity.subscription)
     } as OrganizationResource;
   }
 }
