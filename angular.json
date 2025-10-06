@@ -97,7 +97,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/routes.json"
             ],
             "styles": [
               "src/styles.css"
