@@ -1,3 +1,6 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+const baseTitle = 'Agrotrack';
+export const routes: Routes = [
+  //{ path: 'organization', loadChildren: () =>}
+];

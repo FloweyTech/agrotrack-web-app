@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
@@ -9,6 +9,9 @@ import { MatNavList, MatListItem, MatListItemIcon, MatListItemTitle } from '@ang
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatToolbar, MatToolbarRow} from '@angular/material/toolbar';
 import {NgOptimizedImage} from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Subject, takeUntil } from 'rxjs';
+
 
 @Component({
   selector: 'app-layout',
@@ -25,16 +28,46 @@ import {NgOptimizedImage} from '@angular/common';
   templateUrl: './layout.html',
   styleUrls: ['./layout.css']
 })
-export class Layout {
+export class Layout implements OnInit, OnDestroy{
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
   isMenuOpen = true;
+  isMobile = false;
+
+  private destroy$ = new Subject<void>();
 
   options = [
-    { label: 'Organization',  icon: 'business',      route: '/organizations' },
-    { label: 'Tasks', icon: 'assignment_turned_in', route: '/subscriptions' },
-    { label: 'Settings',      icon: 'settings',      route: '/settings' }
+    { labelKey: 'nav.organization', icon: 'business',            route: '/organizations' },
+    { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/subscriptions' },
+    { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
 
+  constructor(private bp: BreakpointObserver) {}
+
+  ngOnInit() {
+    this.bp.observe(['(max-width: 800px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        this.isMobile = state.matches;
+        if (this.isMobile) this.isMenuOpen = false;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  isCollapsed = true;
+
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMobile) {
+      this.sidenav.toggle().catch(() => {});
+      this.isCollapsed = false;
+    } else {
+      this.sidenav.open().catch(() => {});
+      this.isCollapsed = !this.isCollapsed;
+    }
   }
 }
+
