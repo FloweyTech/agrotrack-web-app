@@ -37,7 +37,7 @@ export class Layout implements OnInit, OnDestroy{
   private destroy$ = new Subject<void>();
 
   options = [
-    { labelKey: 'nav.organization', icon: 'business',            route: '/organizations' },
+    { labelKey: 'nav.organization', icon: 'business',            route: '/organization' },
     { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/subscriptions' },
     { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
@@ -70,4 +70,3 @@ export class Layout implements OnInit, OnDestroy{
     }
   }
 }
-

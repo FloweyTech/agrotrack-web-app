@@ -1,86 +1,92 @@
 {
   "organizations": [
     {
-      "id": 1,
-      "name": "AgroAndes SAC",
-      "members": [101, 102, 103],
-      "status": "active",
-      "subscription": {
-        "id": 1,
-        "plan": "AgroSmart",
-        "startDate": "2025-01-15T00:00:00Z",
-        "endDate": "2026-01-15T00:00:00Z",
-        "status": "Active"
-      }
-    },
-    {
       "id": 2,
-      "name": "EcoHarvest Perú",
-      "members": [104, 105],
+      "name": "EcoHarvest Perúu",
+      "members": [],
       "status": "active",
       "subscription": {
-        "id": 2,
-        "plan": "AgroExpert",
-        "startDate": "2025-03-10T00:00:00Z",
-        "endDate": "2026-03-10T00:00:00Z",
+        "id": 3404,
+        "plan": "AgroStart",
+        "startDate": "2025-10-06T05:24:14.959Z",
+        "endDate": "2025-11-06T05:24:14.959Z",
         "status": "Active"
       }
     },
     {
       "id": 3,
       "name": "Campos del Sur SRL",
-      "members": [106],
+      "members": [
+        106
+      ],
       "status": "inactive",
       "subscription": {
         "id": 3,
         "plan": "AgroStart",
         "startDate": "2024-07-01T00:00:00Z",
-        "endDate": "2025-07-01T00:00:00Z",
+        "endDate": "2024-08-01T00:00:00Z",
         "status": "Expired"
       }
     },
     {
       "id": 4,
       "name": "BioSierra Consulting",
-      "members": [107, 108, 109, 110],
+      "members": [
+        107,
+        108,
+        109,
+        110
+      ],
       "status": "active",
       "subscription": {
         "id": 4,
         "plan": "AgroExpert",
         "startDate": "2025-05-05T00:00:00Z",
-        "endDate": "2026-05-05T00:00:00Z",
+        "endDate": "2025-06-05T00:00:00Z",
+        "status": "Active"
+      }
+    },
+    {
+      "id": 1759728302399,
+      "name": "HolaDiego",
+      "members": [],
+      "status": "active",
+      "subscription": {
+        "id": 75,
+        "plan": "AgroStart",
+        "startDate": "2025-10-06T05:25:02.399Z",
+        "endDate": "2025-11-06T05:25:02.399Z",
         "status": "Active"
       }
     }
   ],
-
   "subscriptions": [
     {
       "id": 1,
       "plan": "AgroSmart",
       "startDate": "2025-01-15T00:00:00Z",
-      "endDate": "2026-01-15T00:00:00Z",
+      "endDate": "2025-02-15T00:00:00Z",
       "status": "Active"
     },
     {
       "id": 2,
       "plan": "AgroExpert",
       "startDate": "2025-03-10T00:00:00Z",
-      "endDate": "2026-03-10T00:00:00Z",
+      "endDate": "2025-04-10T00:00:00Z",
       "status": "Active"
     },
     {
       "id": 3,
       "plan": "AgroStart",
       "startDate": "2024-07-01T00:00:00Z",
-      "endDate": "2025-07-01T00:00:00Z",
+      "endDate": "2024-08-01T00:00:00Z",
       "status": "Expired"
     },
     {
       "id": 4,
       "plan": "AgroExpert",
       "startDate": "2025-05-05T00:00:00Z",
-      "endDate": "2026-05-05T00:00:00Z",
+      "endDate": "2025-06-05T00:00:00Z",
       "status": "Active"
     }
   ]

@@ -36,7 +36,9 @@ export class OrganizationForm {
   private store = inject(OrganizationStore);
 
   form = this.fb.group({
-    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
+    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    status: new FormControl<string>('active', { nonNullable: true }),
+    plan: new FormControl<string>('AgroStart', { nonNullable: true })
   });
 
   isEdit = false;

@@ -5,16 +5,25 @@
     "settings": "Ajustes"
   },
   "organization": {
+    "title": "Organizaciones",
     "edit-title": "Editar Organización",
     "new-title": "Nueva Organización",
     "name": "Nombre",
     "status": "Estado",
     "plan": "Plan de suscripción",
+    "plan-label": "Plan",
     "status-active": "Activa",
     "status-inactive": "Inactiva",
-    "create": "Crear",
-    "update": "Actualizar",
+    "create": "Crear organización",
+    "update": "Actualizar organización",
     "cancel": "Cancelar",
+    "enter": "Entrar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "delete-confirm": "¿Está seguro de que desea eliminar esta organización?",
+    "no-organizations": "No hay organizaciones registradas.",
+    "members": "Miembros",
+    "subscription-end": "Fin de suscripción",
     "error": {
       "name-required": "El nombre de la organización es obligatorio."
     }
