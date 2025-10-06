@@ -3,5 +3,20 @@
     "organization": "Organization",
     "tasks": "Tasks",
     "settings": "Settings"
+  },
+  "organization": {
+    "edit-title": "Edit Organization",
+    "new-title": "New Organization",
+    "name": "Name",
+    "status": "Status",
+    "plan": "Subscription plan",
+    "status-active": "Active",
+    "status-inactive": "Inactive",
+    "create": "Create",
+    "update": "Update",
+    "cancel": "Cancel",
+    "error": {
+      "name-required": "Organization name is required."
+    }
   }
 }
