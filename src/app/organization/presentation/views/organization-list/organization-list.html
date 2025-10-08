@@ -47,10 +47,11 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button mat-stroked-button color="primary" (click)="navigateToOrganization(org.id)">
+            <button mat-raised-button color="primary" (click)="navigateToOrganization(org.id)">
               {{ 'organization.enter' | translate }}
             </button>
-            <button mat-stroked-button color="warn" (click)="deleteOrganization(org.id)">
+
+            <button mat-raised-button color="warn" (click)="deleteOrganization(org.id)">
               {{ 'organization.delete' | translate }}
             </button>
             <button mat-icon-button color="primary" (click)="editOrganization(org.id)" matTooltip="{{ 'organization.edit' | translate }}">
