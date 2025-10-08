@@ -121,5 +121,21 @@
       "periodEnd": "2025-08-31T23:59:59Z",
       "generate": false
     }
-  ]
+  ],
+  "users": [
+  {
+    "id": 1,
+    "email": "agronomo@agrotrack.com",
+    "passwordHash": "123456",
+    "role": "AGRONOMIST",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "email": "farmer@agrotrack.com",
+    "passwordHash": "123456",
+    "role": "FARMER",
+    "status": "ACTIVE"
+  }
+]
 }
