@@ -3,7 +3,8 @@
     "organization": "Organización",
     "reports": "Reportes",
     "tasks": "Tareas",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "monitoring": "Monitoreo"
   },
   "auth": {
     "login": {
