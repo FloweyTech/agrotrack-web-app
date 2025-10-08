@@ -1,0 +1,22 @@
+<div class="auth-container">
+  <h1 class="logo"><span class="green">Agro</span><span class="orange">Track</span></h1>
+
+  <h2>Login</h2>
+  <p class="subtitle">Welcome!</p>
+
+  <form (ngSubmit)="onLogin()" #form="ngForm">
+    <label>Name or email:</label>
+    <input type="email" [(ngModel)]="email" name="email" required placeholder="example@gmail.com" />
+
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password" name="password" required placeholder="*********" />
+
+    <p *ngIf="store.error()" class="error">{{ store.error() }}</p>
+
+    <div class="links">
+      <a routerLink="/register">Not registered yet? Click here</a>
+    </div>
+
+    <button type="submit" [disabled]="store.loading()">Sign in</button>
+  </form>
+</div>
