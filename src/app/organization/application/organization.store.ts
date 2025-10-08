@@ -26,6 +26,8 @@ export class OrganizationStore {
   readonly planttypes = this.plantTypeSignal.asReadonly();
   private readonly plotsSignal = signal<Plot[]>([]);
   readonly plots = this.plotsSignal.asReadonly();
+  private readonly selectedPlantTypeSignal = signal<PlantType | null>(null);
+  readonly selectedPlantType = this.selectedPlantTypeSignal.asReadonly();
 
   private readonly loadingSignal = signal<boolean>(false);
   readonly loading = this.loadingSignal.asReadonly();
@@ -193,6 +195,15 @@ export class OrganizationStore {
       }
     });
   }
+
+  /**
+   * Sets the selected plant type globally.
+   * @param plantType The plant type selected by the user.
+   */
+  setSelectedPlantType(plantType: PlantType): void {
+    this.selectedPlantTypeSignal.set(plantType);
+  }
+
 
   /**
    * Updates an existing plant type.

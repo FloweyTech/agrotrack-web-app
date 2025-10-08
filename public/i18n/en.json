@@ -27,5 +27,16 @@
     "error": {
       "name-required": "Organization name is required."
     }
-  }
+  },
+  "plot": {
+    "plantType": "Plant type",
+    "addNewPlantType": "Add new type",
+    "newPlantTypeName": "New plant type name",
+    "placeholderNewType": "Example: Quinoa, Cassava, Mango..."
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "custom": "Custom"
 }

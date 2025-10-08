@@ -27,5 +27,16 @@
     "error": {
       "name-required": "El nombre de la organización es obligatorio."
     }
-  }
+  },
+  "plot": {
+    "plantType": "Tipo de planta",
+    "addNewPlantType": "Añadir nuevo tipo",
+    "newPlantTypeName": "Nombre del nuevo tipo de planta",
+    "placeholderNewType": "Ejemplo: Quinua, Yuca, Mango..."
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "custom": "Personalizado"
 }
