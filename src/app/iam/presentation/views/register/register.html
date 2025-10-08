@@ -1,0 +1,37 @@
+<div class="auth-container">
+  <h1 class="logo"><span class="green">Agro</span><span class="orange">Track</span></h1>
+
+  <h2>Create Account</h2>
+  <p class="subtitle">REGISTER NOW!!</p>
+
+  <form (ngSubmit)="onRegister()" #form="ngForm">
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="name" name="name" required placeholder="Name" />
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="email" name="email" required placeholder="example@gmail.com" />
+
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password" name="password" required placeholder="*********" />
+
+    <label>Confirm Password:</label>
+    <input
+      type="password"
+      [(ngModel)]="confirmPassword"
+      name="confirmPassword"
+      required
+      placeholder="*********"
+    />
+
+    <div class="roles">
+      <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" /> Agronomist</label>
+      <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" /> Farmer</label>
+    </div>
+
+    <div class="links">
+      <a routerLink="/login">Already have an account? Sign in</a>
+    </div>
+
+    <button type="submit" [disabled]="store.loading()">Create account</button>
+  </form>
+</div>
