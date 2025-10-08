@@ -1,37 +1,37 @@
 <div class="auth-container">
   <h1 class="logo"><span class="green">Agro</span><span class="orange">Track</span></h1>
 
-  <h2>Create Account</h2>
-  <p class="subtitle">REGISTER NOW!!</p>
+  <h2>{{ 'auth.register.title' | translate }}</h2>
+  <p class="subtitle">{{ 'auth.register.subtitle' | translate }}</p>
 
   <form (ngSubmit)="onRegister()" #form="ngForm">
-    <label>Name:</label>
-    <input type="text" [(ngModel)]="name" name="name" required placeholder="Name" />
+    <label>{{ 'auth.register.name' | translate }}</label>
+    <input type="text" [(ngModel)]="name" name="name" required [placeholder]="'auth.register.namePlaceholder' | translate" />
 
-    <label>Email:</label>
-    <input type="email" [(ngModel)]="email" name="email" required placeholder="example@gmail.com" />
+    <label>{{ 'auth.register.email' | translate }}</label>
+    <input type="email" [(ngModel)]="email" name="email" required [placeholder]="'auth.register.emailPlaceholder' | translate" />
 
-    <label>Password:</label>
-    <input type="password" [(ngModel)]="password" name="password" required placeholder="*********" />
+    <label>{{ 'auth.register.password' | translate }}</label>
+    <input type="password" [(ngModel)]="password" name="password" required [placeholder]="'auth.register.passwordPlaceholder' | translate" />
 
-    <label>Confirm Password:</label>
+    <label>{{ 'auth.register.confirmPassword' | translate }}</label>
     <input
       type="password"
       [(ngModel)]="confirmPassword"
       name="confirmPassword"
       required
-      placeholder="*********"
+      [placeholder]="'auth.register.passwordPlaceholder' | translate"
     />
 
     <div class="roles">
-      <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" /> Agronomist</label>
-      <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" /> Farmer</label>
+      <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" /> {{ 'auth.register.agronomist' | translate }}</label>
+      <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" /> {{ 'auth.register.farmer' | translate }}</label>
     </div>
 
     <div class="links">
-      <a routerLink="/login">Already have an account? Sign in</a>
+      <a routerLink="/login">{{ 'auth.register.alreadyHaveAccount' | translate }}</a>
     </div>
 
-    <button type="submit" [disabled]="store.loading()">Create account</button>
+    <button type="submit" [disabled]="store.loading()">{{ 'auth.register.createAccount' | translate }}</button>
   </form>
 </div>

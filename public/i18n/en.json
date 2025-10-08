@@ -5,6 +5,84 @@
     "tasks": "Tasks",
     "settings": "Settings"
   },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome!",
+      "email": "Name or email:",
+      "password": "Password:",
+      "emailPlaceholder": "example@gmail.com",
+      "passwordPlaceholder": "*********",
+      "signIn": "Sign in",
+      "notRegistered": "Not registered yet? Click here",
+      "error": {
+        "required": "Email and password are required",
+        "invalid": "Inactive user or not found",
+        "generic": "Error logging in"
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "REGISTER NOW!!",
+      "name": "Name:",
+      "email": "Email:",
+      "password": "Password:",
+      "confirmPassword": "Confirm Password:",
+      "namePlaceholder": "Name",
+      "emailPlaceholder": "example@gmail.com",
+      "passwordPlaceholder": "*********",
+      "agronomist": "Agronomist",
+      "farmer": "Farmer",
+      "createAccount": "Create account",
+      "alreadyHaveAccount": "Already have an account? Sign in",
+      "error": {
+        "allRequired": "All fields are required",
+        "passwordMismatch": "Passwords do not match",
+        "roleRequired": "Must select at least one role (Agronomist or Farmer)",
+        "generic": "Error registering user"
+      }
+    }
+  },
+  "report": {
+    "title": "Reports",
+    "refresh": "Refresh",
+    "loading": "Loading reports...",
+    "filterBy": "Filter by Organization:",
+    "allOrganizations": "All organizations",
+    "columns": {
+      "id": "ID",
+      "organization": "Organization",
+      "type": "Type",
+      "status": "Status",
+      "period": "Period",
+      "actions": "Actions"
+    },
+    "actions": {
+      "generate": "Generate",
+      "viewDetail": "View detail"
+    },
+    "detail": {
+      "title": "Report Detail #",
+      "back": "Back",
+      "type": "Type",
+      "status": "Status",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "downloadExcel": "Download Excel",
+      "excelPreview": "Excel Preview",
+      "notFound": "Report not found"
+    },
+    "types": {
+      "PARCEL": "Parcel",
+      "GENERAL": "General"
+    },
+    "statuses": {
+      "REQUESTED": "Requested",
+      "PROCESSING": "Processing",
+      "GENERATED": "Generated",
+      "FAILED": "Failed"
+    }
+  },
   "organization": {
     "title": "Organizations",
     "edit-title": "Edit Organization",

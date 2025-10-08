@@ -21,7 +21,9 @@ export class AuthStore {
   );
   readonly isFarmer = computed(() => this.userSignal()?.role === UserRole.FARMER);
 
-  constructor(private authApi: AuthApi) {}
+  constructor(private authApi: AuthApi) {
+    this.restoreSession();
+  }
 
   login(email: string, password: string): void {
     this.loadingSignal.set(true);
@@ -31,13 +33,15 @@ export class AuthStore {
       next: (user) => {
         if (user && user.isActive()) {
           this.userSignal.set(user);
+          this.saveSession(user);
         } else {
           this.errorSignal.set('Usuario inactivo o no encontrado');
         }
         this.loadingSignal.set(false);
       },
-      error: () => {
-        this.errorSignal.set('Error al iniciar sesión');
+      error: (err) => {
+        console.error('Error en login:', err);
+        this.errorSignal.set('Error al iniciar sesión: ' + (err.message || 'Error desconocido'));
         this.loadingSignal.set(false);
       },
     });
@@ -45,8 +49,9 @@ export class AuthStore {
 
   logout(): void {
     this.userSignal.set(null);
+    this.errorSignal.set(null);
+    this.clearSession();
   }
-
 
   register(email: string, password: string, role: UserRole): void {
     this.loadingSignal.set(true);
@@ -63,26 +68,36 @@ export class AuthStore {
     this.authApi.register(newUser).subscribe({
       next: (createdUser) => {
         this.userSignal.set(createdUser);
+        this.saveSession(createdUser);
         this.loadingSignal.set(false);
       },
-      error: () => {
-        this.errorSignal.set('Error al registrar usuario');
+      error: (err) => {
+        console.error('Error en registro:', err);
+        this.errorSignal.set('Error al registrar usuario: ' + (err.message || 'Error desconocido'));
         this.loadingSignal.set(false);
       },
     });
   }
 
-  restoreSession(): void {
-    const stored = localStorage.getItem('auth_user');
-    if (stored) {
-      const parsed = JSON.parse(stored) as User;
-      this.userSignal.set(parsed);
-    }
+  private saveSession(user: User): void {
+    localStorage.setItem('auth_user', JSON.stringify(user));
   }
 
-  persistSession(): void {
-    if (this.userSignal()) {
-      localStorage.setItem('auth_user', JSON.stringify(this.userSignal()));
+  private clearSession(): void {
+    localStorage.removeItem('auth_user');
+  }
+
+  private restoreSession(): void {
+    try {
+      const stored = localStorage.getItem('auth_user');
+      if (stored) {
+        const userData = JSON.parse(stored);
+        const user = new User(userData);
+        this.userSignal.set(user);
+      }
+    } catch (error) {
+      console.error('Error restaurando sesión:', error);
+      this.clearSession();
     }
   }
 }

@@ -1,22 +1,22 @@
 <div class="auth-container">
   <h1 class="logo"><span class="green">Agro</span><span class="orange">Track</span></h1>
 
-  <h2>Login</h2>
-  <p class="subtitle">Welcome!</p>
+  <h2>{{ 'auth.login.title' | translate }}</h2>
+  <p class="subtitle">{{ 'auth.login.subtitle' | translate }}</p>
 
   <form (ngSubmit)="onLogin()" #form="ngForm">
-    <label>Name or email:</label>
-    <input type="email" [(ngModel)]="email" name="email" required placeholder="example@gmail.com" />
+    <label>{{ 'auth.login.email' | translate }}</label>
+    <input type="email" [(ngModel)]="email" name="email" required [placeholder]="'auth.login.emailPlaceholder' | translate" />
 
-    <label>Password:</label>
-    <input type="password" [(ngModel)]="password" name="password" required placeholder="*********" />
+    <label>{{ 'auth.login.password' | translate }}</label>
+    <input type="password" [(ngModel)]="password" name="password" required [placeholder]="'auth.login.passwordPlaceholder' | translate" />
 
     <p *ngIf="store.error()" class="error">{{ store.error() }}</p>
 
     <div class="links">
-      <a routerLink="/register">Not registered yet? Click here</a>
+      <a routerLink="/register">{{ 'auth.login.notRegistered' | translate }}</a>
     </div>
 
-    <button type="submit" [disabled]="store.loading()">Sign in</button>
+    <button type="submit" [disabled]="store.loading()">{{ 'auth.login.signIn' | translate }}</button>
   </form>
 </div>
