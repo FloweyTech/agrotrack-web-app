@@ -10,18 +10,19 @@ import {MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {PlantTypeSelector} from '../plant-type-selector/plant-type-selector';
 import {MatButton} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-plot-form',
   imports: [
-    TranslatePipe,
     ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatError,
-    PlantTypeSelector,
-    MatButton
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    TranslatePipe,
+    PlantTypeSelector
   ],
   templateUrl: './plot-form.html',
   styleUrl: './plot-form.css'
@@ -64,11 +65,11 @@ export class PlotForm {
     });
 
     this.store.addPlot(plot);
-    this.router.navigate(['/plots']).then();
+    this.router.navigate(['/organization', this.organizationId, 'plots']).then();
   }
 
   goBack(): void {
-    this.router.navigate(['/plots']).then();
+    this.router.navigate(['/organization', this.organizationId, 'plots']).then();
   }
 
 }

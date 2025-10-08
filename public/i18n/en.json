@@ -42,7 +42,14 @@
       "nameRequired": "Name is required",
       "areaRequired": "Area is required",
       "areaMin": "Minimum area must be 0.1 hectares"
-    }
+    },
+    "title": "Registered plots",
+    "create": "Add plot",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this plot?",
+    "edit": "Edit",
+    "no-plots": "No plots registered.",
+    "no-location": "No location registered"
   },
   "actions": {
     "save": "Save",

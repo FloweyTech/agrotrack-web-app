@@ -75,5 +75,6 @@ export enum PlantTypes {
   RICE = 'Rice',
   TOMATO = 'Tomato',
   LETTUCE = 'Lettuce',
-  CARROT = 'Carrot'
+  CARROT = 'Carrot',
+  CUSTOM = 'Custom'
 }

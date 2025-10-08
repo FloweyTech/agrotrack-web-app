@@ -102,5 +102,134 @@
       "endDate": "2025-06-05T00:00:00Z",
       "status": "Active"
     }
+  ],
+  "planttypes": [
+    {
+      "id": 1,
+      "name": "Tomate",
+      "type": "TOMATO",
+      "isCustom": false
+    },
+    {
+      "id": 2,
+      "name": "Maíz",
+      "type": "CORN",
+      "isCustom": false
+    },
+    {
+      "id": 3,
+      "name": "Papa",
+      "type": "POTATO",
+      "isCustom": false
+    },
+    {
+      "id": 4,
+      "name": "Lechuga",
+      "type": "LETTUCE",
+      "isCustom": false
+    },
+    {
+      "id": 5,
+      "name": "Zanahoria",
+      "type": "CARROT",
+      "isCustom": false
+    },
+    {
+      "id": 6,
+      "name": "Trigo",
+      "type": "WHEAT",
+      "isCustom": false
+    },
+    {
+      "id": 7,
+      "name": "Cebada",
+      "type": "BARLEY",
+      "isCustom": false
+    },
+    {
+      "id": 8,
+      "name": "Café",
+      "type": "COFFEE",
+      "isCustom": false
+    },
+    {
+      "id": 9,
+      "name": "Arroz",
+      "type": "RICE",
+      "isCustom": false
+    },
+    {
+      "id": 1759947635387,
+      "name": "Camonte",
+      "type": "Custom",
+      "isCustom": true
+    }
+  ],
+  "plots": [
+    {
+      "id": 1,
+      "name": "Parcela Norte",
+      "area": 2.5,
+      "location": "Sector Norte - Campo A",
+      "organizationId": 2,
+      "plantType": {
+        "id": 1,
+        "name": "Tomate",
+        "type": "TOMATO",
+        "isCustom": false
+      }
+    },
+    {
+      "id": 2,
+      "name": "Campo de Maíz",
+      "area": 5.0,
+      "location": "Sector Este - Lote 3",
+      "organizationId": 2,
+      "plantType": {
+        "id": 2,
+        "name": "Maíz",
+        "type": "CORN",
+        "isCustom": false
+      }
+    },
+    {
+      "id": 3,
+      "name": "Huerto de Lechugas",
+      "area": 1.2,
+      "location": "Invernadero Central",
+      "organizationId": 3,
+      "plantType": {
+        "id": 4,
+        "name": "Lechuga",
+        "type": "LETTUCE",
+        "isCustom": false
+      }
+    },
+    {
+      "id": 4,
+      "name": "Plantación de Café",
+      "area": 8.7,
+      "location": "Montaña Sur - Terraza 2",
+      "organizationId": 4,
+      "plantType": {
+        "id": 8,
+        "name": "Café",
+        "type": "COFFEE",
+        "isCustom": false
+      }
+    },
+    {
+      "id": 5,
+      "name": "Campo Experimental",
+      "area": 3.3,
+      "location": "Zona de Investigación",
+      "organizationId": 2,
+      "plantType": {
+        "id": 1759947635387,
+        "name": "Camonte",
+        "type": "CUSTOM",
+        "isCustom": true
+      }
+    }
   ]
 }

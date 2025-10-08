@@ -9,16 +9,16 @@
     </button>
   </div>
 
-  @if (store.plots().length === 0) {
+  @if (organizationPlots().length === 0) {
     <div class="no-plots">
       <mat-icon class="no-plot-icon">yard</mat-icon>
       <p>{{ 'plot.no-plots' | translate }}</p>
     </div>
   }
 
-  @if (store.plots().length > 0) {
+  @if (organizationPlots().length > 0) {
     <div class="plot-grid">
-      @for (plot of store.plots(); track plot.id) {
+      @for (plot of organizationPlots(); track plot.id) {
         <mat-card class="plot-card">
           <mat-card-header>
             <mat-icon mat-card-avatar>eco</mat-icon>

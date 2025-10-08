@@ -119,6 +119,14 @@ export class OrganizationApi extends BaseApi{
   }
 
   /**
+   * Retrieves all plots from the API.
+   * @returns An Observable for an array of Plot objects.
+   */
+  getPlots(): Observable<Plot[]> {
+    return this.plotsEndpoint.getAll();
+  }
+
+  /**
    * Retrieves all plots associated with a specific organization.
    * @param orgId - The ID of the organization.
    * @returns An Observable of Plot entities.
@@ -188,4 +196,3 @@ export class OrganizationApi extends BaseApi{
     return this.plantTypesEndpoint.delete(id);
   }
 }
-

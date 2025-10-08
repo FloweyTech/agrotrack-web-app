@@ -1,45 +1,70 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, signal, forwardRef} from '@angular/core';
 import {OrganizationStore} from '../../../application/organization.store';
-import {Router} from '@angular/router';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {PlantType} from '../../../domain/model/plant-type.entity';
-import {MatFormField} from '@angular/material/form-field';
-import {MatLabel} from '@angular/material/form-field';
-import {MatSelect} from '@angular/material/select';
-import {MatOption} from '@angular/material/core';
-import {MatInput} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import {PlantType, PlantTypes} from '../../../domain/model/plant-type.entity';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-plant-type-selector',
   imports: [
-    MatFormField,
-    MatLabel,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
     TranslatePipe,
-    MatSelect,
-    MatOption,
-    MatInput,
-    FormsModule,
-    MatButton
+    FormsModule
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PlantTypeSelector),
+      multi: true
+    }
   ],
   templateUrl: './plant-type-selector.html',
   styleUrl: './plant-type-selector.css'
 })
-export class PlantTypeSelector {
+export class PlantTypeSelector implements ControlValueAccessor {
   readonly store = inject(OrganizationStore);
-  private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
 
   addingCustomPlantType = signal(false);
   newTypeName = signal('');
+  selectedPlantType: PlantType | null = null;
+
+  private onChange = (value: PlantType | null) => {};
+  private onTouched = () => {};
+
+  constructor() {
+    // Cargar los plant types cuando se inicializa el componente
+    this.store.loadPlantTypes();
+  }
+
+  // ControlValueAccessor methods
+  writeValue(value: PlantType | null): void {
+    this.selectedPlantType = value;
+  }
+
+  registerOnChange(fn: (value: PlantType | null) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
 
   /**
-   * Select a plant type and navigate to the next step.
+   * Select a plant type and update the form control.
    * @param type The selected plantType
    */
   selectPlantType(type: PlantType): void {
-    this.store.setSelectedPlantType(type);
+    this.selectedPlantType = type;
+    this.onChange(type);
+    this.onTouched();
   }
 
   /**
@@ -59,18 +84,29 @@ export class PlantTypeSelector {
     const newPlantType = new PlantType({
       id: Date.now(),
       name: typeName,
-      type: null!,
+      type: PlantTypes.CUSTOM,
       isCustom: true
     });
+
     this.store.addPlantType(newPlantType);
-    this.store.setSelectedPlantType(newPlantType);
+    this.selectPlantType(newPlantType);
 
     this.newTypeName.set('');
     this.addingCustomPlantType.set(false);
   }
+
   /** Cancel adding a custom plant type. */
   cancelAddCustomPlantType(): void {
     this.newTypeName.set('');
     this.addingCustomPlantType.set(false);
+  }
+
+  // Getters para el template
+  get newTypeNameValue(): string {
+    return this.newTypeName();
+  }
+
+  set newTypeNameValue(value: string) {
+    this.newTypeName.set(value);
   }
 }

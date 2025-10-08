@@ -38,6 +38,7 @@ export class OrganizationStore {
     this.loadOrganizations();
     this.loadSubscriptions();
     this.loadPlantTypes();
+    this.loadPlots(); // Agregar carga de parcelas
   }
 
   /**
@@ -56,6 +57,17 @@ export class OrganizationStore {
    */
   getSubscriptionById(id: number): Signal<Subscription | undefined> {
     return computed(() => id ? this.subscriptions().find(s => s.id === id) : undefined);
+  }
+
+  /**
+   * Retrieves plots filtered by organization ID as a signal.
+   * @param organizationId The ID of the organization.
+   * @return A signal containing the plots for that organization.
+   */
+  getPlotsByOrganizationId(organizationId: number): Signal<Plot[]> {
+    return computed(() =>
+      this.plots().filter(plot => plot.organizationId === organizationId)
+    );
   }
 
   /**
@@ -348,7 +360,7 @@ export class OrganizationStore {
   /**
    * Loads all plant types from de API
    */
-  private loadPlantTypes(): void {
+  loadPlantTypes(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
     this.organizationApi.getPlantTypes().pipe(takeUntilDestroyed()).subscribe({
@@ -366,14 +378,14 @@ export class OrganizationStore {
   }
 
   /**
-   * Loads all plots from de API
+   * Loads all plots from the API
    */
-  private loadPlots(orgId: number): void {
+  loadPlots(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
-    this.organizationApi.getPlotsByOrganizationId(orgId).pipe(takeUntilDestroyed()).subscribe({
+    this.organizationApi.getPlots().pipe(takeUntilDestroyed()).subscribe({
       next: plots => {
-        console.log(plots);
+        console.log('All plots loaded:', plots);
         this.plotsSignal.set(plots);
         this.loadingSignal.set(false);
         this.assignPlantTypesToPlots();

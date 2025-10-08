@@ -4,11 +4,13 @@
 
 <form [formGroup]="plotForm" (ngSubmit)="submit()" class="plot-form">
   <mat-form-field appearance="fill" class="full-width">
-    <mat-label>{{ 'plot.name' | translate }}<</mat-label>
+    <mat-label>{{ 'plot.name' | translate }}</mat-label>
+    <input matInput formControlName="name" required />
     @if (plotForm.get('name')!.touched && plotForm.get('name')!.hasError('required')) {
       <mat-error>{{ 'plot.error.nameRequired' | translate }}</mat-error>
     }
   </mat-form-field>
+
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>{{ 'plot.area' | translate }}</mat-label>
     <input matInput type="number" formControlName="area" required />
@@ -25,7 +27,7 @@
     <input matInput formControlName="location" />
   </mat-form-field>
 
-  <app-plant-type-selector></app-plant-type-selector>
+  <app-plant-type-selector formControlName="plantType"></app-plant-type-selector>
 
   <div class="actions">
     <button mat-stroked-button color="warn" type="button" (click)="goBack()">
@@ -37,4 +39,3 @@
     </button>
   </div>
 </form>
-
