@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, effect} from '@angular/core';
 import {OrganizationStore} from '../../../application/organization.store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
@@ -42,11 +42,37 @@ export class PlotForm {
   });
 
   organizationId!: number;
+  plotId?: number;
   isEdit = false;
+  currentPlot?: Plot;
 
   constructor() {
     this.route.params.subscribe((params: any) => {
       this.organizationId = +params['orgId'] || 0;
+      this.plotId = params['id'] ? +params['id'] : undefined;
+      this.isEdit = !!this.plotId;
+
+      console.log('Route params:', { orgId: this.organizationId, plotId: this.plotId, isEdit: this.isEdit });
+    });
+
+    effect(() => {
+      if (this.isEdit && this.plotId && this.organizationId) {
+        console.log('Effect ejecutándose para edición');
+        const plots = this.store.getPlotsByOrganizationId(this.organizationId)();
+        console.log('Plots disponibles:', plots);
+        this.currentPlot = plots.find(p => p.id === this.plotId);
+        console.log('Plot encontrado para editar:', this.currentPlot);
+
+        if (this.currentPlot) {
+          console.log('Cargando datos en formulario');
+          this.plotForm.patchValue({
+            name: this.currentPlot.name,
+            area: this.currentPlot.area,
+            location: this.currentPlot.location,
+            plantType: this.currentPlot.plantType
+          });
+        }
+      }
     });
   }
 
@@ -54,17 +80,32 @@ export class PlotForm {
     if (!this.plotForm.valid) return;
 
     const formValue = this.plotForm.value;
+    console.log('Submit ejecutándose:', { isEdit: this.isEdit, currentPlot: this.currentPlot });
 
-    const plot = new Plot({
-      id: Date.now(),
-      name: formValue.name!,
-      area: formValue.area!,
-      location: formValue.location ?? '',
-      plantType: formValue.plantType!,
-      organizationId: this.organizationId
-    });
+    if (this.isEdit && this.currentPlot) {
+      console.log('Actualizando parcela existente');
+      const updatedPlot = new Plot({
+        id: this.currentPlot.id,
+        name: formValue.name!,
+        area: formValue.area!,
+        location: formValue.location ?? '',
+        plantType: formValue.plantType!,
+        organizationId: this.organizationId
+      });
+      this.store.updatePlot(updatedPlot);
+    } else {
+      console.log('Creando nueva parcela');
+      const plot = new Plot({
+        id: Date.now(),
+        name: formValue.name!,
+        area: formValue.area!,
+        location: formValue.location ?? '',
+        plantType: formValue.plantType!,
+        organizationId: this.organizationId
+      });
+      this.store.addPlot(plot);
+    }
 
-    this.store.addPlot(plot);
     this.router.navigate(['/organization', this.organizationId, 'plots']).then();
   }
 

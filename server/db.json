@@ -163,6 +163,12 @@
       "name": "Camonte",
       "type": "Custom",
       "isCustom": true
+    },
+    {
+      "id": 1759956231524,
+      "name": "Quinua",
+      "type": "Custom",
+      "isCustom": true
     }
   ],
   "plots": [
@@ -182,7 +188,7 @@
     {
       "id": 2,
       "name": "Campo de Maíz",
-      "area": 5.0,
+      "area": 5,
       "location": "Sector Este - Lote 3",
       "organizationId": 2,
       "plantType": {
@@ -230,6 +236,32 @@
         "type": "CUSTOM",
         "isCustom": true
       }
+    },
+    {
+      "id": 1759955735756,
+      "name": "Culivos Pepe",
+      "area": 5,
+      "location": "Cajamarca",
+      "plantType": {
+        "id": 5,
+        "name": "Zanahoria",
+        "type": "CARROT",
+        "isCustom": false
+      },
+      "organizationId": 1759728302399
+    },
+    {
+      "id": 1759956231527,
+      "name": "Cultivos Diego",
+      "area": 3,
+      "location": "Casa de Diego ",
+      "plantType": {
+        "id": 1759956231524,
+        "name": "Quinua",
+        "type": "Custom",
+        "isCustom": true
+      },
+      "organizationId": 1759728302399
     }
   ]
 }
