@@ -89,5 +89,37 @@
       "endDate": "2025-06-05T00:00:00Z",
       "status": "Active"
     }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "organizationId": 101,
+      "organizationName": "AgroTech Apurímac",
+      "reportType": "PARCEL",
+      "reportStatus": "GENERATED",
+      "periodStart": "2025-09-01T00:00:00.000Z",
+      "periodEnd": "2025-09-30T23:59:59.000Z",
+      "generate": true
+    },
+    {
+      "id": 2,
+      "organizationId": 102,
+      "organizationName": "Campo Verde SAC",
+      "reportType": "GENERAL",
+      "reportStatus": "REQUESTED",
+      "periodStart": "2025-09-01T00:00:00Z",
+      "periodEnd": "2025-09-30T23:59:59Z",
+      "generate": false
+    },
+    {
+      "id": 3,
+      "organizationId": 101,
+      "organizationName": "AgroTech Apurímac",
+      "reportType": "PARCEL",
+      "reportStatus": "PROCESSING",
+      "periodStart": "2025-08-01T00:00:00Z",
+      "periodEnd": "2025-08-31T23:59:59Z",
+      "generate": false
+    }
   ]
 }
