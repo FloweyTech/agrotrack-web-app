@@ -32,11 +32,22 @@
     "plantType": "Plant type",
     "addNewPlantType": "Add new type",
     "newPlantTypeName": "New plant type name",
-    "placeholderNewType": "Example: Quinoa, Cassava, Mango..."
+    "placeholderNewType": "Example: Quinoa, Cassava, Mango...",
+    "newTitle": "Register new plot",
+    "editTitle": "Edit plot",
+    "name": "Plot name",
+    "area": "Area (hectares)",
+    "location": "Location",
+    "error": {
+      "nameRequired": "Name is required",
+      "areaRequired": "Area is required",
+      "areaMin": "Minimum area must be 0.1 hectares"
+    }
   },
   "actions": {
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "update": "Update"
   },
   "custom": "Custom"
 }
