@@ -47,7 +47,6 @@ export class LanguageSwitcher implements OnInit {
     console.log('Cambiando idioma a:', language);
     this.translate.use(language);
     this.currentLang = language;
-    // Guardar preferencia en localStorage
     localStorage.setItem('preferred-language', language);
   }
 }

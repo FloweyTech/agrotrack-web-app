@@ -30,7 +30,6 @@ export class ReportDetailComponent implements OnInit, OnDestroy {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.report = this.store.reports().find((r) => r.id === id);
 
-    // Refrescar vista al cambiar idioma
     this.langSub = this.translate.onLangChange.subscribe(() => {
       this.cdr.markForCheck();
       this.cdr.detectChanges();

@@ -1,11 +1,9 @@
 <div class="report-detail-container" *ngIf="report">
-  <!-- Boton de regresar -->
   <button mat-icon-button class="back-button" (click)="goBack()">
     ← {{ 'report.detail.back' | translate }}
   </button>
 
   <div class="content-layout">
-    <!-- Card vertical izquierda -->
     <div class="report-card">
       <h2>{{ 'report.detail.title' | translate }}{{ report.id }}</h2>
 
