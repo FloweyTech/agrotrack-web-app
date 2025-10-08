@@ -6,10 +6,10 @@
       "members": [],
       "status": "active",
       "subscription": {
-        "id": 3404,
+        "id": 4274,
         "plan": "AgroStart",
-        "startDate": "2025-10-06T05:24:14.959Z",
-        "endDate": "2025-11-06T05:24:14.959Z",
+        "startDate": "2025-10-07T21:10:17.885Z",
+        "endDate": "2025-11-07T21:10:17.885Z",
         "status": "Active"
       }
     },
@@ -56,6 +56,19 @@
         "plan": "AgroStart",
         "startDate": "2025-10-06T05:25:02.399Z",
         "endDate": "2025-11-06T05:25:02.399Z",
+        "status": "Active"
+      }
+    },
+    {
+      "id": 1759871414138,
+      "name": "EcoTrack",
+      "members": [],
+      "status": "active",
+      "subscription": {
+        "id": 3969,
+        "plan": "AgroStart",
+        "startDate": "2025-10-07T21:10:14.138Z",
+        "endDate": "2025-11-07T21:10:14.138Z",
         "status": "Active"
       }
     }
