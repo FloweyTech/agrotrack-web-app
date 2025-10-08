@@ -1,6 +1,7 @@
 {
   "nav": {
     "organization": "Organization",
+    "reports": "Reports",
     "tasks": "Tasks",
     "settings": "Settings"
   },

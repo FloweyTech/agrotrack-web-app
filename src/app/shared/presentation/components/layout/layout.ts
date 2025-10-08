@@ -38,6 +38,7 @@ export class Layout implements OnInit, OnDestroy{
 
   options = [
     { labelKey: 'nav.organization', icon: 'business',            route: '/organization' },
+    { labelKey: 'nav.reports',      icon: 'assessment',          route: '/report' },
     { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/subscriptions' },
     { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
