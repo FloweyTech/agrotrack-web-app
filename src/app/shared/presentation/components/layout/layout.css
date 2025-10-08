@@ -146,3 +146,9 @@ mat-sidenav.collapsed a.mat-mdc-list-item {
 mat-sidenav:not(.collapsed) a.mat-mdc-list-item {
   border-radius: 0.5rem;
 }
+
+a.is-active {
+  background-color: rgba(76, 175, 80, 0.1); /* Verde suave */
+  border-left: 3px solid #4CAF50;
+  font-weight: 600;
+}

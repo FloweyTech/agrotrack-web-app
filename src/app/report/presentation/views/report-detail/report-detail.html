@@ -1,0 +1,73 @@
+<div class="report-detail-container" *ngIf="report">
+  <!-- Boton de regresar -->
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    ← Volver
+  </button>
+
+  <div class="content-layout">
+    <!-- Card vertical izquierda -->
+    <div class="report-card">
+      <h2>Detalle del Reporte #{{ report.id }}</h2>
+      
+      <div class="report-info">
+        <div class="info-item">
+          <strong>Tipo</strong>
+          <span>{{ report.type }}</span>
+        </div>
+        
+        <div class="info-item">
+          <strong>Estado</strong>
+          <span>{{ report.status }}</span>
+        </div>
+        
+        <div class="info-item">
+          <strong>Fecha Inicio</strong>
+          <span>{{ report.periodStart | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        
+        <div class="info-item">
+          <strong>Fecha Fin</strong>
+          <span>{{ report.periodEnd | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <button mat-raised-button 
+                color="primary" 
+                class="download-button"
+                (click)="downloadExcel()">
+          Descargar Excel
+        </button>
+      </div>
+    </div>
+
+    <!-- Previsualización Excel derecha -->
+    <div class="excel-preview">
+      <h3>Previsualización Excel</h3>
+      <div class="preview-content">
+        <div class="excel-header">
+          <div class="cell header">ID</div>
+          <div class="cell header">Tipo</div>
+          <div class="cell header">Estado</div>
+          <div class="cell header">Periodo</div>
+        </div>
+        <div class="excel-row">
+          <div class="cell">{{ report.id }}</div>
+          <div class="cell">{{ report.type }}</div>
+          <div class="cell">{{ report.status }}</div>
+          <div class="cell">{{ report.periodStart | date: 'dd/MM/yyyy' }} - {{ report.periodEnd | date: 'dd/MM/yyyy' }}</div>
+        </div>
+        <div class="excel-row">
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="not-found" *ngIf="!report">
+  No se encontró el reporte solicitado
+</div>

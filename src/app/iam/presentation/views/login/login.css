@@ -1,0 +1,56 @@
+.auth-container {
+  width: 320px;
+  margin: 100px auto;
+  padding: 20px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.green {
+  color: #28a745;
+}
+
+.orange {
+  color: #f26722;
+}
+
+input {
+  width: 90%;
+  margin: 6px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 12px;
+  width: 95%;
+  background: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+a {
+  text-decoration: none;
+  color: #0077cc;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}

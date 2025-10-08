@@ -1,53 +1,141 @@
 {
   "organizations": [
     {
-      "id": 1,
-      "name": "AgroTech Solutions",
-      "members": [1, 2, 3],
-      "status": "ACTIVE",
-      "maxPlots": 5,
-      "subscription": {
-        "type": "PREMIUM",
-        "startDate": "2025-01-15T00:00:00.000Z",
-        "endDate": "2026-01-15T00:00:00.000Z"
-      }
-    },
-    {
       "id": 2,
-      "name": "GreenFields Association",
-      "members": [4, 5],
-      "status": "SUSPENDED",
-      "maxPlots": 3,
+      "name": "EcoHarvest Perúu",
+      "members": [],
+      "status": "active",
       "subscription": {
-        "type": "BASIC",
-        "startDate": "2024-07-01T00:00:00.000Z",
-        "endDate": "2025-07-01T00:00:00.000Z"
+        "id": 3404,
+        "plan": "AgroStart",
+        "startDate": "2025-10-06T05:24:14.959Z",
+        "endDate": "2025-11-06T05:24:14.959Z",
+        "status": "Active"
       }
     },
     {
       "id": 3,
-      "name": "WaterFlow Peru",
-      "members": [6, 7, 8, 9],
-      "status": "ACTIVE",
-      "maxPlots": 10,
+      "name": "Campos del Sur SRL",
+      "members": [
+        106
+      ],
+      "status": "inactive",
       "subscription": {
-        "type": "ENTERPRISE",
-        "startDate": "2025-02-10T00:00:00.000Z",
-        "endDate": "2026-02-10T00:00:00.000Z"
+        "id": 3,
+        "plan": "AgroStart",
+        "startDate": "2024-07-01T00:00:00Z",
+        "endDate": "2024-08-01T00:00:00Z",
+        "status": "Expired"
+      }
+    },
+    {
+      "id": 4,
+      "name": "BioSierra Consulting",
+      "members": [
+        107,
+        108,
+        109,
+        110
+      ],
+      "status": "active",
+      "subscription": {
+        "id": 4,
+        "plan": "AgroExpert",
+        "startDate": "2025-05-05T00:00:00Z",
+        "endDate": "2025-06-05T00:00:00Z",
+        "status": "Active"
+      }
+    },
+    {
+      "id": 1759728302399,
+      "name": "HolaDiego",
+      "members": [],
+      "status": "active",
+      "subscription": {
+        "id": 75,
+        "plan": "AgroStart",
+        "startDate": "2025-10-06T05:25:02.399Z",
+        "endDate": "2025-11-06T05:25:02.399Z",
+        "status": "Active"
       }
     }
   ],
-  "members": [
-    { "id": 1, "name": "Carlos Ramirez", "email": "carlos.ramirez@example.com", "role": "ADMIN" },
-    { "id": 2, "name": "Lucía Fernández", "email": "lucia.fernandez@example.com", "role": "MEMBER" },
-    { "id": 3, "name": "Jorge Soto", "email": "jorge.soto@example.com", "role": "MEMBER" },
-
-    { "id": 4, "name": "Ana Torres", "email": "ana.torres@example.com", "role": "ADMIN" },
-    { "id": 5, "name": "Pedro Castillo", "email": "pedro.castillo@example.com", "role": "MEMBER" },
-
-    { "id": 6, "name": "María Paredes", "email": "maria.paredes@example.com", "role": "ADMIN" },
-    { "id": 7, "name": "Luis Gutiérrez", "email": "luis.gutierrez@example.com", "role": "MEMBER" },
-    { "id": 8, "name": "Fernanda López", "email": "fernanda.lopez@example.com", "role": "MEMBER" },
-    { "id": 9, "name": "Ricardo Chávez", "email": "ricardo.chavez@example.com", "role": "MEMBER" }
-  ]
+  "subscriptions": [
+    {
+      "id": 1,
+      "plan": "AgroSmart",
+      "startDate": "2025-01-15T00:00:00Z",
+      "endDate": "2025-02-15T00:00:00Z",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "plan": "AgroExpert",
+      "startDate": "2025-03-10T00:00:00Z",
+      "endDate": "2025-04-10T00:00:00Z",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "plan": "AgroStart",
+      "startDate": "2024-07-01T00:00:00Z",
+      "endDate": "2024-08-01T00:00:00Z",
+      "status": "Expired"
+    },
+    {
+      "id": 4,
+      "plan": "AgroExpert",
+      "startDate": "2025-05-05T00:00:00Z",
+      "endDate": "2025-06-05T00:00:00Z",
+      "status": "Active"
+    }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "organizationId": 101,
+      "organizationName": "AgroTech Apurímac",
+      "reportType": "PARCEL",
+      "reportStatus": "GENERATED",
+      "periodStart": "2025-09-01T00:00:00.000Z",
+      "periodEnd": "2025-09-30T23:59:59.000Z",
+      "generate": true
+    },
+    {
+      "id": 2,
+      "organizationId": 102,
+      "organizationName": "Campo Verde SAC",
+      "reportType": "GENERAL",
+      "reportStatus": "REQUESTED",
+      "periodStart": "2025-09-01T00:00:00Z",
+      "periodEnd": "2025-09-30T23:59:59Z",
+      "generate": false
+    },
+    {
+      "id": 3,
+      "organizationId": 101,
+      "organizationName": "AgroTech Apurímac",
+      "reportType": "PARCEL",
+      "reportStatus": "PROCESSING",
+      "periodStart": "2025-08-01T00:00:00Z",
+      "periodEnd": "2025-08-31T23:59:59Z",
+      "generate": false
+    }
+  ],
+  "users": [
+  {
+    "id": 1,
+    "email": "agronomo@agrotrack.com",
+    "passwordHash": "123456",
+    "role": "AGRONOMIST",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "email": "farmer@agrotrack.com",
+    "passwordHash": "123456",
+    "role": "FARMER",
+    "status": "ACTIVE"
+  }
+]
 }

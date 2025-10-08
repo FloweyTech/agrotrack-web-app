@@ -1,0 +1,53 @@
+.organization-list {
+  padding: 2rem;
+  position: relative;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.create-section {
+  margin: 1.5rem 0 2rem 0;
+}
+
+.create-button {
+  font-weight: 500;
+}
+
+.no-organizations {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #777;
+}
+
+.no-org-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #999;
+}
+
+.organization-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.organization-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.organization-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fab-add {
+  position: fixed;
+  top: 120px;
+  right: 2rem;
+  z-index: 1000;
+}

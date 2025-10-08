@@ -1,0 +1,42 @@
+<h1 class="title">
+  {{ (isEdit ? 'organization.edit-title' : 'organization.new-title') | translate }}
+</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="organization-form">
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{ 'organization.name' | translate }}</mat-label>
+    <input matInput formControlName="name" required>
+    @if (form.get('name')!.touched && form.get('name')!.hasError('required')) {
+      <mat-error>{{ 'organization.error.name-required' | translate }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{ 'organization.status' | translate }}</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="active">{{ 'organization.status-active' | translate }}</mat-option>
+      <mat-option value="inactive">{{ 'organization.status-inactive' | translate }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{ 'organization.plan' | translate }}</mat-label>
+    <mat-select formControlName="plan">
+      <mat-option value="AgroStart">AgroStart</mat-option>
+      <mat-option value="AgroSmart">AgroSmart</mat-option>
+      <mat-option value="AgroExpert">AgroExpert</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-stroked-button color="warn" type="button" (click)="goBack()">
+      {{ 'organization.cancel' | translate }}
+    </button>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      {{ (isEdit ? 'organization.update' : 'organization.create') | translate }}
+    </button>
+
+  </div>
+</form>
