@@ -21,7 +21,7 @@ export class OrganizationList {
   private readonly translate = inject(TranslateService);
 
   navigateToOrganization(id: number): void {
-    this.router.navigate(['/organization', id]).then();
+    this.router.navigate(['/organization', id, 'plots']).then();
   }
 
   navigateToNew(): void {

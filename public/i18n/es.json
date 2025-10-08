@@ -28,5 +28,34 @@
     "error": {
       "name-required": "El nombre de la organización es obligatorio."
     }
-  }
+  },
+  "plot": {
+    "plantType": "Tipo de planta",
+    "addNewPlantType": "Añadir nuevo tipo",
+    "newPlantTypeName": "Nombre del nuevo tipo de planta",
+    "placeholderNewType": "Ejemplo: Quinua, Yuca, Mango...",
+    "newTitle": "Registrar nueva parcela",
+    "editTitle": "Editar parcela",
+    "name": "Nombre de la parcela",
+    "area": "Área (hectáreas)",
+    "location": "Ubicación",
+    "error": {
+      "nameRequired": "El nombre es obligatorio",
+      "areaRequired": "El área es obligatoria",
+      "areaMin": "El área mínima debe ser 0.1 hectáreas"
+    },
+    "title": "Parcelas registradas",
+    "create": "Agregar parcela",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Estás seguro de eliminar esta parcela?",
+    "edit": "Editar",
+    "no-plots": "No hay parcelas registradas.",
+    "no-location": "Sin ubicación registrada"
+  },
+  "actions": {
+    "save": "Guardar",
+    "update": "Actualizar",
+    "cancel": "Cancelar"
+  },
+  "custom": "Personalizado"
 }

@@ -6,6 +6,10 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Organization} from '../domain/model/organization.entity';
 import {Subscription} from '../domain/model/subscription.entity';
+import {PlotsApiEndpoint} from './plots-api-endpoint';
+import {PlantType, PlantTypes} from '../domain/model/plant-type.entity';
+import {PlanttypesApiEndpoint} from './planttypes-api-endpoint';
+import {Plot} from '../domain/model/plot.entity';
 
 /**
  * API service for managing endpoints in the learning context (organizations, subscriptions plots and plantTypes).
@@ -14,11 +18,15 @@ import {Subscription} from '../domain/model/subscription.entity';
 export class OrganizationApi extends BaseApi{
   private readonly organizationsEndpoint: OrganizationsApiEndpoint;
   private readonly subscriptionsEndpoint: SubscriptionsApiEndpoint;
+  private readonly plotsEndpoint: PlotsApiEndpoint;
+  private readonly plantTypesEndpoint: PlanttypesApiEndpoint;
 
   constructor(http: HttpClient) {
     super();
     this.organizationsEndpoint = new OrganizationsApiEndpoint(http);
     this.subscriptionsEndpoint = new SubscriptionsApiEndpoint(http);
+    this.plotsEndpoint = new PlotsApiEndpoint(http);
+    this.plantTypesEndpoint = new PlanttypesApiEndpoint(http);
   }
 
   /**
@@ -110,4 +118,81 @@ export class OrganizationApi extends BaseApi{
     return this.subscriptionsEndpoint.delete(id);
   }
 
+  /**
+   * Retrieves all plots from the API.
+   * @returns An Observable for an array of Plot objects.
+   */
+  getPlots(): Observable<Plot[]> {
+    return this.plotsEndpoint.getAll();
+  }
+
+  /**
+   * Retrieves all plots associated with a specific organization.
+   * @param orgId - The ID of the organization.
+   * @returns An Observable of Plot entities.
+   */
+  getPlotsByOrganizationId(orgId: number): Observable<Plot[]> {
+    return this.plotsEndpoint.getByOrganizationId(orgId);
+  }
+
+  /**
+   * Creates a new plot.
+   * @param plot - The plot to create.
+   * @returns An Observable of the created Plot object.
+   */
+  createPlot(plot: Plot): Observable<Plot> {
+    return this.plotsEndpoint.create(plot);
+  }
+
+  /**
+   * Updates an existing plot.
+   * @param plot - The plot to update.
+   * @returns An Observable of the updated Plot object.
+   */
+  updatePlot(plot: Plot): Observable<Plot> {
+    return this.plotsEndpoint.update(plot, plot.id);
+  }
+
+  /**
+   * Deletes a plot by ID.
+   * @param id - The ID of the plot to delete.
+   * @returns An Observable of void.
+   */
+  deletePlot(id: number): Observable<void> {
+    return this.plotsEndpoint.delete(id);
+  }
+
+  /**
+   * Retrieves all plant types from the API.
+   */
+  getPlantTypes(): Observable<PlantType[]>{
+    return this.plantTypesEndpoint.getAll();
+  }
+
+  /**
+   * Retrieves a single plant type by ID.
+   */
+  getPlantType(id: number): Observable<PlantType>{
+    return this.plantTypesEndpoint.getById(id);
+  }
+
+  /**
+   * Creates a new plant type.
+   */
+  createPlantType(plantType: PlantType): Observable<PlantType>{
+    return this.plantTypesEndpoint.create(plantType);
+  }
+
+  /**
+   * Updates an existing plant type.
+   * @param plantType - The plant type to update.
+   * @returns An Observable of the updated PlantType object.
+   */
+  updatePlantType(plantType: PlantType): Observable<PlantType>{
+    return this.plantTypesEndpoint.update(plantType,plantType.id);
+  }
+
+  deletePlantType(id: number): Observable<void> {
+    return this.plantTypesEndpoint.delete(id);
+  }
 }
