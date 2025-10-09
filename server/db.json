@@ -296,6 +296,120 @@
       "generate": false
     }
   ],
+  "environmental-readings": [
+    {
+      "id": 1,
+      "plotId": 1,
+      "type": "TEMPERATURE",
+      "value": 23.5,
+      "unit": "°C",
+      "measuredAt": "2025-01-09T08:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "plotId": 1,
+      "type": "HUMIDITY",
+      "value": 65.2,
+      "unit": "%",
+      "measuredAt": "2025-01-09T08:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "plotId": 1,
+      "type": "PH_LEVEL",
+      "value": 6.8,
+      "unit": "pH",
+      "measuredAt": "2025-01-09T08:30:00.000Z"
+    },
+    {
+      "id": 4,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 28.3,
+      "unit": "°C",
+      "measuredAt": "2025-01-09T09:15:00.000Z"
+    },
+    {
+      "id": 5,
+      "plotId": 2,
+      "type": "HUMIDITY",
+      "value": 72.1,
+      "unit": "%",
+      "measuredAt": "2025-01-09T09:15:00.000Z"
+    },
+    {
+      "id": 6,
+      "plotId": 2,
+      "type": "PH_LEVEL",
+      "value": 7.2,
+      "unit": "pH",
+      "measuredAt": "2025-01-09T09:15:00.000Z"
+    },
+    {
+      "id": 7,
+      "plotId": 3,
+      "type": "TEMPERATURE",
+      "value": 18.7,
+      "unit": "°C",
+      "measuredAt": "2025-01-09T10:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "plotId": 3,
+      "type": "HUMIDITY",
+      "value": 85.5,
+      "unit": "%",
+      "measuredAt": "2025-01-09T10:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "plotId": 4,
+      "type": "TEMPERATURE",
+      "value": 22.1,
+      "unit": "°C",
+      "measuredAt": "2025-01-09T11:30:00.000Z"
+    },
+    {
+      "id": 10,
+      "plotId": 4,
+      "type": "HUMIDITY",
+      "value": 58.3,
+      "unit": "%",
+      "measuredAt": "2025-01-09T11:30:00.000Z"
+    },
+    {
+      "id": 1759988463887,
+      "plotId": 1,
+      "type": "PH_LEVEL",
+      "value": 13,
+      "unit": "°C",
+      "measuredAt": "2025-10-09T05:41:03.887Z"
+    },
+    {
+      "id": 1759990692944,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 26,
+      "unit": "°C",
+      "measuredAt": "2025-10-09T06:18:12.944Z"
+    },
+    {
+      "id": 1759991159461,
+      "plotId": 1,
+      "type": "HUMIDITY",
+      "value": 34,
+      "unit": "%",
+      "measuredAt": "2025-10-09T06:25:59.461Z"
+    },
+    {
+      "id": 1759991286170,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 22,
+      "unit": "°C",
+      "measuredAt": "2025-10-09T06:28:06.170Z"
+    }
+  ],
   "users": [
     {
       "id": 1,
@@ -316,6 +430,13 @@
       "email": "test2@gmail.com",
       "passwordHash": "1234",
       "role": "FARMER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": 1759986976102,
+      "email": "hola@prueba.com",
+      "passwordHash": "12",
+      "role": "AGRONOMIST",
       "status": "ACTIVE"
     }
   ]
