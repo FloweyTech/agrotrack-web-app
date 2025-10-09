@@ -392,6 +392,22 @@
       "value": 26,
       "unit": "°C",
       "measuredAt": "2025-10-09T06:18:12.944Z"
+    },
+    {
+      "id": 1759991159461,
+      "plotId": 1,
+      "type": "HUMIDITY",
+      "value": 34,
+      "unit": "%",
+      "measuredAt": "2025-10-09T06:25:59.461Z"
+    },
+    {
+      "id": 1759991286170,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 22,
+      "unit": "°C",
+      "measuredAt": "2025-10-09T06:28:06.170Z"
     }
   ],
   "users": [
