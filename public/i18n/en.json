@@ -190,5 +190,84 @@
       "days": "{{count}} days ago",
       "week": "More than a week ago"
     }
+  },
+  "tasks": {
+    "title": "Agricultural Tasks List",
+    "subtitle": "Tasks assigned by the agronomist",
+    "assignedBy": "Assigned by:",
+    "dueDate": "Due date:",
+    "status": {
+      "pending": "Pending",
+      "inProgress": "In progress",
+      "completed": "Completed"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "categories": {
+      "irrigation": "Irrigation",
+      "fertilization": "Fertilization",
+      "pest_control": "Pest Control",
+      "harvest": "Harvest",
+      "soil_preparation": "Soil Preparation",
+      "monitoring": "Monitoring",
+      "maintenance": "Maintenance"
+    },
+    "list": {
+      "task1": {
+        "title": "Check drip irrigation system",
+        "description": "Inspect all drippers and verify there are no obstructions in the main lines.",
+        "category": "irrigation"
+      },
+      "task2": {
+        "title": "Apply NPK 15-15-15 fertilizer",
+        "description": "Apply 50kg per hectare of NPK fertilizer to tomato plots. Water immediately after application.",
+        "category": "fertilization"
+      },
+      "task3": {
+        "title": "Monitor for aphids presence",
+        "description": "Check the underside of leaves for aphids. Document any signs of infestation.",
+        "category": "pest_control"
+      },
+      "task4": {
+        "title": "Measure soil pH in north plot",
+        "description": "Take 5 soil samples at 15cm depth and measure pH. Record results.",
+        "category": "monitoring"
+      },
+      "task5": {
+        "title": "Prune dry branches on fruit trees",
+        "description": "Remove dead, diseased or inward-growing branches from fruit trees.",
+        "category": "maintenance"
+      },
+      "task6": {
+        "title": "Prepare planting beds",
+        "description": "Till soil, incorporate compost and form 1.2m wide beds for new planting.",
+        "category": "soil_preparation"
+      },
+      "task7": {
+        "title": "Harvest mature lettuce",
+        "description": "Harvest lettuce that has reached commercial size. Cut during cool hours of the day.",
+        "category": "harvest"
+      },
+      "task8": {
+        "title": "Apply preventive fungus treatment",
+        "description": "Spray preventive fungicide on susceptible crops. Use personal protective equipment.",
+        "category": "pest_control"
+      }
+    },
+    "filters": {
+      "all": "All tasks",
+      "pending": "Pending",
+      "completed": "Completed",
+      "category": "Category:",
+      "priority": "Priority:"
+    },
+    "actions": {
+      "markCompleted": "Mark as completed",
+      "markPending": "Mark as pending",
+      "viewDetails": "View details"
+    }
   }
 }
