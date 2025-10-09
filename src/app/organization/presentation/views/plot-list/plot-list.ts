@@ -57,4 +57,8 @@ export class PlotList {
   editPlot(id: number): void {
     this.router.navigate(['/organization', this.organizationId, 'plots', id, 'edit']).then();
   }
+
+  goToPlantRegistrationList(plotId: number): void {
+    this.router.navigate(['/monitoring/plant-registration']).then();
+  }
 }

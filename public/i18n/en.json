@@ -269,5 +269,24 @@
       "markPending": "Mark as pending",
       "viewDetails": "View details"
     }
+  },
+  "PLANT_REGISTRATION": {
+    "TITLE": "Plot plant registration",
+    "HEIGHT": "Height (cm)",
+    "LEAVES": "Number of leaves",
+    "FRUITS": "Number of fruits",
+    "DATE": "Registration date",
+    "ADD": "Add plant",
+    "ADD_TO_SESSION": "Add to session",
+    "ADD_RECORD": "Add record",
+    "LIST_TITLE": "Registered plants",
+    "SESSION_PLANTS": "Plants in this session",
+    "CALCULATE_AVERAGE": "Calculate average",
+    "CLEAR_SESSION": "Clear session",
+    "AVERAGE_TITLE": "Sample average",
+    "PLANTS_COUNT": "Number of plants",
+    "SAVE_SESSION": "Save averaged record",
+    "NO_RECORDS": "No plant records available",
+    "BACK_TO_LIST": "Back to list"
   }
 }

@@ -269,5 +269,24 @@
       "markPending": "Marcar como pendiente",
       "viewDetails": "Ver detalles"
     }
+  },
+  "PLANT_REGISTRATION": {
+    "TITLE": "Registro de plantas de parcela",
+    "HEIGHT": "Altura (cm)",
+    "LEAVES": "Número de hojas",
+    "FRUITS": "Número de frutos",
+    "DATE": "Fecha de registro",
+    "ADD": "Agregar planta",
+    "ADD_TO_SESSION": "Agregar a sesión",
+    "ADD_RECORD": "Agregar registro",
+    "LIST_TITLE": "Plantas registradas",
+    "SESSION_PLANTS": "Plantas en esta sesión",
+    "CALCULATE_AVERAGE": "Calcular promedio",
+    "CLEAR_SESSION": "Limpiar sesión",
+    "AVERAGE_TITLE": "Promedio de la muestra",
+    "PLANTS_COUNT": "Cantidad de plantas",
+    "SAVE_SESSION": "Guardar registro promediado",
+    "NO_RECORDS": "No hay registros de plantas disponibles",
+    "BACK_TO_LIST": "Volver a la lista"
   }
 }
