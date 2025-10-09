@@ -1,0 +1,292 @@
+{
+  "nav": {
+    "organization": "Organización",
+    "reports": "Reportes",
+    "tasks": "Tareas",
+    "settings": "Ajustes",
+    "monitoring": "Monitoreo"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "subtitle": "¡Bienvenido!",
+      "email": "Nombre o email:",
+      "password": "Contraseña:",
+      "emailPlaceholder": "ejemplo@gmail.com",
+      "passwordPlaceholder": "*********",
+      "signIn": "Iniciar sesión",
+      "notRegistered": "¿No tienes cuenta? Haz clic aquí",
+      "error": {
+        "required": "Email y contraseña son requeridos",
+        "invalid": "Usuario inactivo o no encontrado",
+        "generic": "Error al iniciar sesión"
+      }
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "subtitle": "¡REGÍSTRATE AHORA!",
+      "name": "Nombre:",
+      "email": "Email:",
+      "password": "Contraseña:",
+      "confirmPassword": "Confirmar Contraseña:",
+      "namePlaceholder": "Nombre",
+      "emailPlaceholder": "ejemplo@gmail.com",
+      "passwordPlaceholder": "*********",
+      "agronomist": "Agrónomo",
+      "farmer": "Agricultor",
+      "createAccount": "Crear cuenta",
+      "alreadyHaveAccount": "¿Ya tienes cuenta? Iniciar sesión",
+      "error": {
+        "allRequired": "Todos los campos son requeridos",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "roleRequired": "Debe seleccionar al menos un rol (Agrónomo o Agricultor)",
+        "generic": "Error al registrar usuario"
+      }
+    }
+  },
+  "report": {
+    "title": "Reportes",
+    "refresh": "Actualizar",
+    "loading": "Cargando reportes...",
+    "filterBy": "Filtrar por Organización:",
+    "allOrganizations": "Todas las organizaciones",
+    "columns": {
+      "id": "ID",
+      "organization": "Organización",
+      "type": "Tipo",
+      "status": "Estado",
+      "period": "Periodo",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "generate": "Generar",
+      "viewDetail": "Ver detalle"
+    },
+    "detail": {
+      "title": "Detalle del Reporte #",
+      "back": "Volver",
+      "type": "Tipo",
+      "status": "Estado",
+      "startDate": "Fecha Inicio",
+      "endDate": "Fecha Fin",
+      "downloadExcel": "Descargar Excel",
+      "excelPreview": "Previsualización Excel",
+      "notFound": "No se encontró el reporte solicitado"
+    },
+    "types": {
+      "PARCEL": "Parcela",
+      "GENERAL": "General"
+    },
+    "statuses": {
+      "REQUESTED": "Solicitado",
+      "PROCESSING": "Procesando",
+      "GENERATED": "Generado",
+      "FAILED": "Fallido"
+    }
+  },
+  "organization": {
+    "title": "Organizaciones",
+    "edit-title": "Editar Organización",
+    "new-title": "Nueva Organización",
+    "name": "Nombre",
+    "status": "Estado",
+    "plan": "Plan de suscripción",
+    "plan-label": "Plan",
+    "status-active": "Activa",
+    "status-inactive": "Inactiva",
+    "create": "Crear organización",
+    "update": "Actualizar organización",
+    "cancel": "Cancelar",
+    "enter": "Entrar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "delete-confirm": "¿Está seguro de que desea eliminar esta organización?",
+    "no-organizations": "No hay organizaciones registradas.",
+    "members": "Miembros",
+    "subscription-end": "Fin de suscripción",
+    "error": {
+      "name-required": "El nombre de la organización es obligatorio."
+    }
+  },
+  "plot": {
+    "plantType": "Tipo de planta",
+    "addNewPlantType": "Añadir nuevo tipo",
+    "newPlantTypeName": "Nombre del nuevo tipo de planta",
+    "placeholderNewType": "Ejemplo: Quinua, Yuca, Mango...",
+    "newTitle": "Registrar nueva parcela",
+    "editTitle": "Editar parcela",
+    "name": "Nombre de la parcela",
+    "area": "Área (hectáreas)",
+    "location": "Ubicación",
+    "error": {
+      "nameRequired": "El nombre es obligatorio",
+      "areaRequired": "El área es obligatoria",
+      "areaMin": "El área mínima debe ser 0.1 hectáreas"
+    },
+    "title": "Parcelas registradas",
+    "create": "Agregar parcela",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Estás seguro de eliminar esta parcela?",
+    "edit": "Editar",
+    "no-plots": "No hay parcelas registradas.",
+    "no-location": "Sin ubicación registrada"
+  },
+  "actions": {
+    "save": "Guardar",
+    "update": "Actualizar",
+    "cancel": "Cancelar"
+  },
+  "custom": "Personalizado",
+  "monitoring": {
+    "title": "Monitoreo Ambiental",
+    "new-reading": "Nueva Lectura",
+    "readings-list": "Lista de Lecturas",
+    "readings-found": "lecturas encontradas",
+    "active-alerts": "Alertas Activas",
+    "clear-alerts": "Limpiar Alertas",
+    "no-readings": "No hay lecturas registradas",
+    "plot": "Parcela",
+    "type": "Tipo",
+    "value": "Valor",
+    "unit": "Unidad",
+    "measuredAt": "Fecha de Medición",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "loading": "Cargando lecturas...",
+    "form": {
+      "title": "Registrar Lectura Ambiental",
+      "subtitle": "Registra una nueva lectura ambiental para monitorear tus cultivos",
+      "plotSection": "Seleccionar Parcela",
+      "typeSection": "Tipo de Lectura",
+      "valueSection": "Valor de la Medición",
+      "dateSection": "Fecha y Hora",
+      "plotHint": "Selecciona la parcela donde se realizará la lectura",
+      "dateHint": "La lectura se registrará con la fecha y hora actual",
+      "saving": "Guardando...",
+      "selectType": "Por favor selecciona un tipo de lectura",
+      "enterValue": "Ingresa un valor válido",
+      "success": "Lectura guardada exitosamente"
+    },
+    "types": {
+      "TEMPERATURE": "Temperatura",
+      "HUMIDITY": "Humedad",
+      "PH_LEVEL": "Nivel pH"
+    },
+    "hints": {
+      "temperature": "Rango normal: 15-35°C",
+      "humidity": "Rango normal: 40-80%",
+      "ph": "Rango normal: 5.5-7.5 pH"
+    },
+    "placeholders": {
+      "temperature": "Ej: 25.5",
+      "humidity": "Ej: 65.2",
+      "ph": "Ej: 6.8",
+      "value": "Ingresa el valor"
+    },
+    "time": {
+      "moment": "Hace un momento",
+      "minutes": "Hace {{count}} min",
+      "hours": "Hace {{count}} horas",
+      "days": "Hace {{count}} días",
+      "week": "Hace más de una semana"
+    }
+  },
+  "tasks": {
+    "title": "Lista de Tareas Agrícolas",
+    "subtitle": "Tareas asignadas por el agrónomo",
+    "assignedBy": "Asignado por:",
+    "dueDate": "Fecha límite:",
+    "status": {
+      "pending": "Pendiente",
+      "inProgress": "En progreso",
+      "completed": "Completada"
+    },
+    "priority": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "categories": {
+      "irrigation": "Riego",
+      "fertilization": "Fertilización",
+      "pest_control": "Control de plagas",
+      "harvest": "Cosecha",
+      "soil_preparation": "Preparación del suelo",
+      "monitoring": "Monitoreo",
+      "maintenance": "Mantenimiento"
+    },
+    "list": {
+      "task1": {
+        "title": "Revisar sistema de riego por goteo",
+        "description": "Inspeccionar todos los goteros y verificar que no haya obstrucciones en las líneas principales.",
+        "category": "irrigation"
+      },
+      "task2": {
+        "title": "Aplicar fertilizante NPK 15-15-15",
+        "description": "Aplicar 50kg por hectárea de fertilizante NPK en las parcelas de tomate. Regar inmediatamente después.",
+        "category": "fertilization"
+      },
+      "task3": {
+        "title": "Monitorear presencia de pulgones",
+        "description": "Revisar el envés de las hojas en busca de pulgones. Documentar cualquier signo de infestación.",
+        "category": "pest_control"
+      },
+      "task4": {
+        "title": "Medir pH del suelo en parcela norte",
+        "description": "Tomar 5 muestras de suelo a 15cm de profundidad y medir el pH. Registrar resultados.",
+        "category": "monitoring"
+      },
+      "task5": {
+        "title": "Podar ramas secas en frutales",
+        "description": "Eliminar ramas muertas, enfermas o que crezcan hacia adentro en los árboles frutales.",
+        "category": "maintenance"
+      },
+      "task6": {
+        "title": "Preparar camas de siembra",
+        "description": "Labrar el suelo, incorporar compost y formar camas de 1.2m de ancho para la nueva siembra.",
+        "category": "soil_preparation"
+      },
+      "task7": {
+        "title": "Cosechar lechugas maduras",
+        "description": "Cosechar lechugas que hayan alcanzado el tamaño comercial. Cortar en horas frescas del día.",
+        "category": "harvest"
+      },
+      "task8": {
+        "title": "Aplicar tratamiento preventivo contra hongos",
+        "description": "Rociar fungicida preventivo en cultivos susceptibles. Usar equipo de protección personal.",
+        "category": "pest_control"
+      }
+    },
+    "filters": {
+      "all": "Todas las tareas",
+      "pending": "Pendientes",
+      "completed": "Completadas",
+      "category": "Categoría:",
+      "priority": "Prioridad:"
+    },
+    "actions": {
+      "markCompleted": "Marcar como completada",
+      "markPending": "Marcar como pendiente",
+      "viewDetails": "Ver detalles"
+    }
+  },
+  "PLANT_REGISTRATION": {
+    "TITLE": "Registro de plantas de parcela",
+    "HEIGHT": "Altura (cm)",
+    "LEAVES": "Número de hojas",
+    "FRUITS": "Número de frutos",
+    "DATE": "Fecha de registro",
+    "ADD": "Agregar planta",
+    "ADD_TO_SESSION": "Agregar a sesión",
+    "ADD_RECORD": "Agregar registro",
+    "LIST_TITLE": "Plantas registradas",
+    "SESSION_PLANTS": "Plantas en esta sesión",
+    "CALCULATE_AVERAGE": "Calcular promedio",
+    "CLEAR_SESSION": "Limpiar sesión",
+    "AVERAGE_TITLE": "Promedio de la muestra",
+    "PLANTS_COUNT": "Cantidad de plantas",
+    "SAVE_SESSION": "Guardar registro promediado",
+    "NO_RECORDS": "No hay registros de plantas disponibles",
+    "BACK_TO_LIST": "Volver a la lista"
+  }
+}

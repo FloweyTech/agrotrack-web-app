@@ -1,0 +1,71 @@
+<div class="report-detail-container" *ngIf="report">
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    ← {{ 'report.detail.back' | translate }}
+  </button>
+
+  <div class="content-layout">
+    <div class="report-card">
+      <h2>{{ 'report.detail.title' | translate }}{{ report.id }}</h2>
+
+      <div class="report-info">
+        <div class="info-item">
+          <strong>{{ 'report.detail.type' | translate }}</strong>
+          <span>{{ ('report.types.' + report.type) | translate }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>{{ 'report.detail.status' | translate }}</strong>
+          <span>{{ ('report.statuses.' + report.status) | translate }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>{{ 'report.detail.startDate' | translate }}</strong>
+          <span>{{ report.periodStart | date: 'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="info-item">
+          <strong>{{ 'report.detail.endDate' | translate }}</strong>
+          <span>{{ report.periodEnd | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <button mat-raised-button
+                color="primary"
+                class="download-button"
+                (click)="downloadExcel()">
+          {{ 'report.detail.downloadExcel' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Previsualización Excel derecha -->
+    <div class="excel-preview">
+      <h3>{{ 'report.detail.excelPreview' | translate }}</h3>
+      <div class="preview-content">
+        <div class="excel-header">
+          <div class="cell header">{{ 'report.columns.id' | translate }}</div>
+          <div class="cell header">{{ 'report.columns.type' | translate }}</div>
+          <div class="cell header">{{ 'report.columns.status' | translate }}</div>
+          <div class="cell header">{{ 'report.columns.period' | translate }}</div>
+        </div>
+        <div class="excel-row">
+          <div class="cell">{{ report.id }}</div>
+          <div class="cell">{{ ('report.types.' + report.type) | translate }}</div>
+          <div class="cell">{{ ('report.statuses.' + report.status) | translate }}</div>
+          <div class="cell">{{ report.periodStart | date: 'dd/MM/yyyy' }} - {{ report.periodEnd | date: 'dd/MM/yyyy' }}</div>
+        </div>
+        <div class="excel-row">
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+          <div class="cell">...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="not-found" *ngIf="!report">
+  {{ 'report.detail.notFound' | translate }}
+</div>

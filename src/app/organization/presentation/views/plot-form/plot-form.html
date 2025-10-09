@@ -1,0 +1,43 @@
+<div class="plot-form">
+  <h1 class="title">
+    {{ (isEdit ? 'plot.editTitle' : 'plot.newTitle') | translate }}
+  </h1>
+
+  <form [formGroup]="plotForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ 'plot.name' | translate }}</mat-label>
+      <input matInput formControlName="name" required />
+      @if (plotForm.get('name')!.touched && plotForm.get('name')!.hasError('required')) {
+        <mat-error>{{ 'plot.error.nameRequired' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ 'plot.area' | translate }}</mat-label>
+      <input matInput type="number" formControlName="area" required />
+      @if (plotForm.get('area')!.hasError('required')) {
+        <mat-error>{{ 'plot.error.areaRequired' | translate }}</mat-error>
+      }
+      @if (plotForm.get('area')!.hasError('min')) {
+        <mat-error>{{ 'plot.error.areaMin' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ 'plot.location' | translate }}</mat-label>
+      <input matInput formControlName="location" />
+    </mat-form-field>
+
+    <app-plant-type-selector formControlName="plantType"></app-plant-type-selector>
+
+    <div class="actions">
+      <button mat-stroked-button color="warn" type="button" (click)="goBack()">
+        {{ 'actions.cancel' | translate }}
+      </button>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="plotForm.invalid">
+        {{ (isEdit ? 'actions.update' : 'actions.save') | translate }}
+      </button>
+    </div>
+  </form>
+</div>
