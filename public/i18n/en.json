@@ -3,7 +3,8 @@
     "organization": "Organization",
     "reports": "Reports",
     "tasks": "Tasks",
-    "settings": "Settings"
+    "settings": "Settings",
+    "monitoring": "Monitoring"
   },
   "auth": {
     "login": {
@@ -135,5 +136,26 @@
     "cancel": "Cancel",
     "update": "Update"
   },
-  "custom": "Custom"
+  "custom": "Custom",
+  "monitoring": {
+    "title": "Environmental Monitoring",
+    "new-reading": "Add New Reading",
+    "readings-list": "Recorded Environmental Readings",
+    "no-readings": "No readings have been recorded yet.",
+    "plot": "Plot",
+    "type": "Reading Type",
+    "value": "Value",
+    "unit": "Unit",
+    "measuredAt": "Measured At",
+    "cancel": "Cancel",
+    "save": "Save Reading",
+    "active-alerts": "Active Alerts",
+    "clear-alerts": "Clear Alerts",
+    "alert-temperature-high": "High temperature detected: above 35°C",
+    "alert-temperature-low": "Low temperature detected: below 10°C",
+    "alert-humidity-high": "High humidity detected: above 80%",
+    "alert-humidity-low": "Low humidity detected: below 20%",
+    "alert-ph-high": "High pH detected: above 7.5",
+    "alert-ph-low": "Low pH detected: below 5.5"
+  }
 }

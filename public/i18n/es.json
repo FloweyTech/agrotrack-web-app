@@ -3,7 +3,8 @@
     "organization": "Organización",
     "reports": "Reportes",
     "tasks": "Tareas",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "monitoring": "Monitoreo"
   },
   "auth": {
     "login": {
@@ -135,5 +136,26 @@
     "update": "Actualizar",
     "cancel": "Cancelar"
   },
-  "custom": "Personalizado"
+  "custom": "Personalizado",
+  "monitoring": {
+    "title": "Monitoreo Ambiental",
+    "new-reading": "Registrar Nueva Lectura",
+    "readings-list": "Lecturas Ambientales Registradas",
+    "no-readings": "Aún no se han registrado lecturas.",
+    "plot": "Parcela",
+    "type": "Tipo de Lectura",
+    "value": "Valor",
+    "unit": "Unidad",
+    "measuredAt": "Fecha de Medición",
+    "cancel": "Cancelar",
+    "save": "Guardar Lectura",
+    "active-alerts": "Alertas Activas",
+    "clear-alerts": "Limpiar Alertas",
+    "alert-temperature-high": "Temperatura alta detectada: superior a 35°C",
+    "alert-temperature-low": "Temperatura baja detectada: inferior a 10°C",
+    "alert-humidity-high": "Humedad alta detectada: superior al 80%",
+    "alert-humidity-low": "Humedad baja detectada: inferior al 20%",
+    "alert-ph-high": "pH alto detectado: superior a 7.5",
+    "alert-ph-low": "pH bajo detectado: inferior a 5.5"
+  }
 }
