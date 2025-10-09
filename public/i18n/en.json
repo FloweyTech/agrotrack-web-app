@@ -288,5 +288,10 @@
     "SAVE_SESSION": "Save averaged record",
     "NO_RECORDS": "No plant records available",
     "BACK_TO_LIST": "Back to list"
+  },
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
+    "go-home": "Go Home"
   }
 }
