@@ -52,6 +52,9 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
+            <button mat-raised-button color="accent" (click)="goToPlantRegistrationList(plot.id)">
+              {{ 'PLANT_REGISTRATION.ADD_RECORD' | translate }}
+            </button>
           </mat-card-actions>
         </mat-card>
       }
