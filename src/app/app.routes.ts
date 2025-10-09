@@ -32,5 +32,11 @@ export const routes: Routes = [
       import('./monitoring-control/presentation/views/monitoring.routes').then(m => m.monitoringRoutes),
     title: `${baseTitle} | Monitoring`
   },
+  {
+    path: 'tasks',
+    loadChildren: () =>
+      import('./monitoring-control/presentation/views/task.routes').then(m => m.taskRoutes),
+    title: `${baseTitle} | Tasks`
+  },
   { path: '**', redirectTo: '/login' }
 ];

@@ -1,0 +1,153 @@
+<div class="task-list-container">
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">{{ 'tasks.title' | translate }}</h1>
+    <p class="subtitle">{{ 'tasks.subtitle' | translate }}</p>
+  </div>
+
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-row">
+        <!-- Status Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{ 'tasks.filters.all' | translate }}</mat-label>
+          <mat-select [(value)]="selectedFilter">
+            <mat-option value="all">{{ 'tasks.filters.all' | translate }}</mat-option>
+            <mat-option value="pending">{{ 'tasks.filters.pending' | translate }}</mat-option>
+            <mat-option value="completed">{{ 'tasks.filters.completed' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Category Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{ 'tasks.filters.category' | translate }}</mat-label>
+          <mat-select [(value)]="selectedCategory">
+            <mat-option value="all">{{ 'tasks.filters.all' | translate }}</mat-option>
+            <mat-option value="irrigation">{{ 'tasks.categories.irrigation' | translate }}</mat-option>
+            <mat-option value="fertilization">{{ 'tasks.categories.fertilization' | translate }}</mat-option>
+            <mat-option value="pest_control">{{ 'tasks.categories.pest_control' | translate }}</mat-option>
+            <mat-option value="harvest">{{ 'tasks.categories.harvest' | translate }}</mat-option>
+            <mat-option value="soil_preparation">{{ 'tasks.categories.soil_preparation' | translate }}</mat-option>
+            <mat-option value="monitoring">{{ 'tasks.categories.monitoring' | translate }}</mat-option>
+            <mat-option value="maintenance">{{ 'tasks.categories.maintenance' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Priority Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{ 'tasks.filters.priority' | translate }}</mat-label>
+          <mat-select [(value)]="selectedPriority">
+            <mat-option value="all">{{ 'tasks.filters.all' | translate }}</mat-option>
+            <mat-option value="high">{{ 'tasks.priority.high' | translate }}</mat-option>
+            <mat-option value="medium">{{ 'tasks.priority.medium' | translate }}</mat-option>
+            <mat-option value="low">{{ 'tasks.priority.low' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tasks List -->
+  <div class="tasks-grid">
+    <mat-card
+      *ngFor="let task of filteredTasks; trackBy: trackByTaskId"
+      class="task-card"
+      [class.completed]="task.completed"
+      [class.high-priority]="task.priority === 'high'"
+      [class.overdue]="task.dueDate < '2025-01-10' && !task.completed">
+
+      <mat-card-header>
+        <div class="task-header">
+          <!-- Checkbox -->
+          <mat-checkbox
+            [(ngModel)]="task.completed"
+            (change)="toggleTaskCompletion(task)"
+            [color]="getPriorityColor(task.priority)"
+            class="task-checkbox">
+          </mat-checkbox>
+
+          <!-- Task Title -->
+          <div class="task-title-section">
+            <h3 class="task-title" [class.completed-text]="task.completed">
+              {{ task.titleKey | translate }}
+            </h3>
+
+            <!-- Priority and Category Chips -->
+            <div class="chips-container">
+              <mat-chip-set>
+                <!-- Priority Chip -->
+                <mat-chip [color]="getPriorityColor(task.priority)" selected>
+                  <mat-icon>{{ getPriorityIcon(task.priority) }}</mat-icon>
+                  {{ ('tasks.priority.' + task.priority) | translate }}
+                </mat-chip>
+
+                <!-- Category Chip -->
+                <mat-chip color="accent">
+                  <mat-icon>{{ getCategoryIcon(task.categoryKey) }}</mat-icon>
+                  {{ task.categoryKey | translate }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Task Description -->
+        <p class="task-description" [class.completed-text]="task.completed">
+          {{ task.descriptionKey | translate }}
+        </p>
+
+        <!-- Task Details -->
+        <div class="task-details">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">person</mat-icon>
+            <span class="detail-label">{{ 'tasks.assignedBy' | translate }}</span>
+            <span class="detail-value">{{ task.assignedBy }}</span>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon class="detail-icon">event</mat-icon>
+            <span class="detail-label">{{ 'tasks.dueDate' | translate }}</span>
+            <span class="detail-value"
+                  [class.overdue-text]="task.dueDate < '2025-01-10' && !task.completed">
+              {{ task.dueDate }}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon class="detail-icon">info</mat-icon>
+            <span class="detail-label">Status:</span>
+            <span class="detail-value status-badge" [class]="'status-' + task.status">
+              {{ ('tasks.status.' + task.status) | translate }}
+            </span>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          mat-stroked-button
+          [color]="task.completed ? 'primary' : 'accent'"
+          (click)="toggleTaskCompletion(task)"
+          class="action-button">
+          <mat-icon>{{ task.completed ? 'undo' : 'check_circle' }}</mat-icon>
+          {{ (task.completed ? 'tasks.actions.markPending' : 'tasks.actions.markCompleted') | translate }}
+        </button>
+
+        <button mat-button color="primary" class="action-button">
+          <mat-icon>visibility</mat-icon>
+          {{ 'tasks.actions.viewDetails' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredTasks.length === 0" class="empty-state">
+    <mat-icon class="empty-icon">assignment</mat-icon>
+    <h3>No hay tareas que coincidan con los filtros</h3>
+    <p>Intenta cambiar los filtros para ver más tareas</p>
+  </div>
+</div>
