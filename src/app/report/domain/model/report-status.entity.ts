@@ -1,6 +1,6 @@
 /**
  * Enum: ReportStatus
- * Define los estados posibles del ciclo de vida de un Report.
+ * Defines the possible states in the lifecycle of a Report.
  */
 export enum ReportStatus {
   REQUESTED = 'REQUESTED',

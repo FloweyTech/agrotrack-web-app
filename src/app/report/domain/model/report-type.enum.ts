@@ -1,6 +1,6 @@
 /**
  * Enum: ReportType
- * Define los tipos de reporte disponibles.
+ * Defines the available report types.
  */
 export enum ReportType {
   PARCEL = 'PARCEL',
