@@ -6,7 +6,7 @@ import { retry } from 'rxjs';
 
 /**
  * ReportStore
- * Administra el estado del contexto Report usando Angular Signals.
+ * Manages the state of the Report context using Angular Signals.
  */
 @Injectable({ providedIn: 'root' })
 export class ReportStore {
@@ -29,7 +29,7 @@ export class ReportStore {
   }
 
   /**
-   * Carga todos los reportes desde la API.
+   * Loads all reports from the API.
    */
   loadReports(): void {
   this.loadingSignal.set(true);
@@ -42,14 +42,14 @@ export class ReportStore {
     },
     error: (err) => {
       this.errorSignal.set(this.formatError(err, 'Error al cargar reportes'));
-      this.loadingSignal.set(false); 
+      this.loadingSignal.set(false);
     }
   });
 }
 
 
   /**
-   * Agrega un nuevo reporte.
+   * Adds a new report.
    */
   addReport(report: Report): void {
     this.loadingSignal.set(true);
@@ -67,7 +67,7 @@ export class ReportStore {
   }
 
   /**
-   * Actualiza un reporte existente.
+   * Updates an existing report.
    */
   updateReport(report: Report): void {
     this.loadingSignal.set(true);
@@ -87,7 +87,7 @@ export class ReportStore {
   }
 
   /**
-   * Elimina un reporte.
+   * Deletes a report.
    */
   deleteReport(id: number): void {
     this.loadingSignal.set(true);
@@ -105,7 +105,7 @@ export class ReportStore {
   }
 
   /**
-   * Marca un reporte como "en generación" → luego simula actualización.
+   * Marks a report as "processing" and then simulates an update.
    */
   generateReport(id: number): void {
     const report = this.reports().find((r) => r.id === id);
@@ -122,7 +122,7 @@ export class ReportStore {
   }
 
   /**
-   * Formatea mensajes de error.
+   * Formats error messages.
    */
   private formatError(error: any, fallback: string): string {
     if (error instanceof Error) return error.message;

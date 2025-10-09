@@ -7,13 +7,13 @@ import { ReportsResponse } from "./reports-response";
 
 /**
  * ReportAssembler
- * Convierte entre entidades del dominio (Report)
- * y recursos de infraestructura (ReportResource / ReportsResponse).
+ * Converts between domain entities (Report)
+ * and infrastructure resources (ReportResource / ReportsResponse).
  */
 export class ReportAssembler implements BaseAssembler<Report, ReportResource, ReportsResponse> {
 
   /**
-   * Convierte un recurso JSON en una entidad de dominio.
+   * Converts a JSON resource into a domain entity.
    */
   toEntityFromResource(resource: ReportResource): Report {
     return new Report({
@@ -29,7 +29,7 @@ export class ReportAssembler implements BaseAssembler<Report, ReportResource, Re
   }
 
   /**
-   * Convierte una entidad de dominio a un recurso JSON listo para envío.
+   * Converts a domain entity into a JSON resource ready for sending.
    */
   toResourceFromEntity(entity: Report): ReportResource {
     return {
@@ -45,7 +45,7 @@ export class ReportAssembler implements BaseAssembler<Report, ReportResource, Re
   }
 
   /**
-   * Convierte una respuesta del API con múltiples reportes a entidades.
+   * Converts an API response with multiple reports into domain entities.
    */
   toEntitiesFromResponse(response: ReportsResponse): Report[] {
     return response.reports.map(r => this.toEntityFromResource(r));

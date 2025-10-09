@@ -8,7 +8,7 @@ import { environment } from "../../../environments/environment.development";
 
 /**
  * ReportsApiEndpoint
- * Endpoint de acceso a la API REST para el contexto Report.
+ * REST API endpoint for the Report context.
  */
 export class ReportsApiEndpoint extends BaseApiEndpoint<
   Report,
