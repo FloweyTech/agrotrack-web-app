@@ -190,5 +190,10 @@
       "days": "{{count}} days ago",
       "week": "More than a week ago"
     }
+  },
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
+    "go-home": "Go Home"
   }
 }

@@ -190,5 +190,10 @@
       "days": "Hace {{count}} días",
       "week": "Hace más de una semana"
     }
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
   }
 }
