@@ -24,7 +24,7 @@
     },
     "register": {
       "title": "Create Account",
-      "subtitle": "REGISTER NOW!!",
+      "subtitle": "REGISTER NOW!",
       "name": "Name:",
       "email": "Email:",
       "password": "Password:",
@@ -71,7 +71,7 @@
       "endDate": "End Date",
       "downloadExcel": "Download Excel",
       "excelPreview": "Excel Preview",
-      "notFound": "Report not found"
+      "notFound": "Requested report not found"
     },
     "types": {
       "PARCEL": "Parcel",
@@ -112,7 +112,7 @@
     "plantType": "Plant type",
     "addNewPlantType": "Add new type",
     "newPlantTypeName": "New plant type name",
-    "placeholderNewType": "Example: Quinoa, Cassava, Mango...",
+    "placeholderNewType": "Example: Quinoa, Yuca, Mango...",
     "newTitle": "Register new plot",
     "editTitle": "Edit plot",
     "name": "Plot name",
@@ -133,29 +133,62 @@
   },
   "actions": {
     "save": "Save",
-    "cancel": "Cancel",
-    "update": "Update"
+    "update": "Update",
+    "cancel": "Cancel"
   },
   "custom": "Custom",
   "monitoring": {
     "title": "Environmental Monitoring",
-    "new-reading": "Add New Reading",
-    "readings-list": "Recorded Environmental Readings",
-    "no-readings": "No readings have been recorded yet.",
-    "plot": "Plot",
-    "type": "Reading Type",
-    "value": "Value",
-    "unit": "Unit",
-    "measuredAt": "Measured At",
-    "cancel": "Cancel",
-    "save": "Save Reading",
+    "new-reading": "New Reading",
+    "readings-list": "Readings List",
+    "readings-found": "readings found",
     "active-alerts": "Active Alerts",
     "clear-alerts": "Clear Alerts",
-    "alert-temperature-high": "High temperature detected: above 35°C",
-    "alert-temperature-low": "Low temperature detected: below 10°C",
-    "alert-humidity-high": "High humidity detected: above 80%",
-    "alert-humidity-low": "Low humidity detected: below 20%",
-    "alert-ph-high": "High pH detected: above 7.5",
-    "alert-ph-low": "Low pH detected: below 5.5"
+    "no-readings": "No readings registered",
+    "plot": "Plot",
+    "type": "Type",
+    "value": "Value",
+    "unit": "Unit",
+    "measuredAt": "Measurement Date",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading readings...",
+    "form": {
+      "title": "Register Environmental Reading",
+      "subtitle": "Register a new environmental reading to monitor your crops",
+      "plotSection": "Select Plot",
+      "typeSection": "Reading Type",
+      "valueSection": "Measurement Value",
+      "dateSection": "Date and Time",
+      "plotHint": "Select the plot where the reading will be taken",
+      "dateHint": "The reading will be registered with the current date and time",
+      "saving": "Saving...",
+      "selectType": "Please select a reading type",
+      "enterValue": "Enter a valid value",
+      "success": "Reading saved successfully"
+    },
+    "types": {
+      "TEMPERATURE": "Temperature",
+      "HUMIDITY": "Humidity",
+      "PH_LEVEL": "pH Level"
+    },
+    "hints": {
+      "temperature": "Normal range: 15-35°C",
+      "humidity": "Normal range: 40-80%",
+      "ph": "Normal range: 5.5-7.5 pH"
+    },
+    "placeholders": {
+      "temperature": "Ex: 25.5",
+      "humidity": "Ex: 65.2",
+      "ph": "Ex: 6.8",
+      "value": "Enter the value"
+    },
+    "time": {
+      "moment": "A moment ago",
+      "minutes": "{{count}} min ago",
+      "hours": "{{count}} hours ago",
+      "days": "{{count}} days ago",
+      "week": "More than a week ago"
+    }
   }
 }

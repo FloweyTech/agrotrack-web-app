@@ -139,23 +139,56 @@
   "custom": "Personalizado",
   "monitoring": {
     "title": "Monitoreo Ambiental",
-    "new-reading": "Registrar Nueva Lectura",
-    "readings-list": "Lecturas Ambientales Registradas",
-    "no-readings": "Aún no se han registrado lecturas.",
+    "new-reading": "Nueva Lectura",
+    "readings-list": "Lista de Lecturas",
+    "readings-found": "lecturas encontradas",
+    "active-alerts": "Alertas Activas",
+    "clear-alerts": "Limpiar Alertas",
+    "no-readings": "No hay lecturas registradas",
     "plot": "Parcela",
-    "type": "Tipo de Lectura",
+    "type": "Tipo",
     "value": "Valor",
     "unit": "Unidad",
     "measuredAt": "Fecha de Medición",
+    "save": "Guardar",
     "cancel": "Cancelar",
-    "save": "Guardar Lectura",
-    "active-alerts": "Alertas Activas",
-    "clear-alerts": "Limpiar Alertas",
-    "alert-temperature-high": "Temperatura alta detectada: superior a 35°C",
-    "alert-temperature-low": "Temperatura baja detectada: inferior a 10°C",
-    "alert-humidity-high": "Humedad alta detectada: superior al 80%",
-    "alert-humidity-low": "Humedad baja detectada: inferior al 20%",
-    "alert-ph-high": "pH alto detectado: superior a 7.5",
-    "alert-ph-low": "pH bajo detectado: inferior a 5.5"
+    "loading": "Cargando lecturas...",
+    "form": {
+      "title": "Registrar Lectura Ambiental",
+      "subtitle": "Registra una nueva lectura ambiental para monitorear tus cultivos",
+      "plotSection": "Seleccionar Parcela",
+      "typeSection": "Tipo de Lectura",
+      "valueSection": "Valor de la Medición",
+      "dateSection": "Fecha y Hora",
+      "plotHint": "Selecciona la parcela donde se realizará la lectura",
+      "dateHint": "La lectura se registrará con la fecha y hora actual",
+      "saving": "Guardando...",
+      "selectType": "Por favor selecciona un tipo de lectura",
+      "enterValue": "Ingresa un valor válido",
+      "success": "Lectura guardada exitosamente"
+    },
+    "types": {
+      "TEMPERATURE": "Temperatura",
+      "HUMIDITY": "Humedad",
+      "PH_LEVEL": "Nivel pH"
+    },
+    "hints": {
+      "temperature": "Rango normal: 15-35°C",
+      "humidity": "Rango normal: 40-80%",
+      "ph": "Rango normal: 5.5-7.5 pH"
+    },
+    "placeholders": {
+      "temperature": "Ej: 25.5",
+      "humidity": "Ej: 65.2",
+      "ph": "Ej: 6.8",
+      "value": "Ingresa el valor"
+    },
+    "time": {
+      "moment": "Hace un momento",
+      "minutes": "Hace {{count}} min",
+      "hours": "Hace {{count}} horas",
+      "days": "Hace {{count}} días",
+      "week": "Hace más de una semana"
+    }
   }
 }

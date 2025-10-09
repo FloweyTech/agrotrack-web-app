@@ -384,6 +384,14 @@
       "value": 13,
       "unit": "°C",
       "measuredAt": "2025-10-09T05:41:03.887Z"
+    },
+    {
+      "id": 1759990692944,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 26,
+      "unit": "°C",
+      "measuredAt": "2025-10-09T06:18:12.944Z"
     }
   ],
   "users": [
