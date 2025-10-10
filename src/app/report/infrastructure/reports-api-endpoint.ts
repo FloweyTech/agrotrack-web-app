@@ -4,7 +4,7 @@ import { Report } from "../domain/model/report.entity";
 import { ReportAssembler } from "./report-assembler";
 import { ReportResource } from "./report-resource";
 import { ReportsResponse } from "./reports-response";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 
 /**
  * ReportsApiEndpoint
@@ -17,7 +17,7 @@ export class ReportsApiEndpoint extends BaseApiEndpoint<
   ReportAssembler
 > {
   constructor(http: HttpClient) {
-    // Usa la misma convención que tus otros endpoints: base + /reports
-    super(http, `${environment.platformProviderApiBaseUrl}/reports`, new ReportAssembler());
+    // Usa la configuración del environment como los demás endpoints
+    super(http, `${environment.platformProviderApiBaseUrl}${environment.platformProviderReportsEndpointPath}`, new ReportAssembler());
   }
 }

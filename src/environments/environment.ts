@@ -11,4 +11,5 @@ export const environment = {
   platformProviderPlantObservationEndpointPath: '/plantobservation',
   platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
   platformProviderProfileEndpointPath: '/profile',
+  platformProviderReportsEndpointPath: '/reports',
 };
