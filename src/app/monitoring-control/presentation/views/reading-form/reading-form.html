@@ -123,11 +123,15 @@
               class="save-btn"
               [disabled]="form.invalid || isSubmitting">
         @if (isSubmitting) {
-          <mat-icon>refresh</mat-icon>
-          {{ 'monitoring.form.saving' | translate }}
+          <ng-container>
+            <mat-icon>refresh</mat-icon>
+            {{ 'monitoring.form.saving' | translate }}
+          </ng-container>
         } @else {
-          <mat-icon>save</mat-icon>
-          {{ 'monitoring.save' | translate }}
+          <ng-container>
+            <mat-icon>save</mat-icon>
+            {{ 'monitoring.save' | translate }}
+          </ng-container>
         }
       </button>
     </div>
