@@ -38,5 +38,6 @@ export const routes: Routes = [
       import('./monitoring-control/presentation/views/task.routes').then(m => m.taskRoutes),
     title: `${baseTitle} | Tasks`
   },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', loadComponent:() => import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound),
+  title: `${baseTitle} | Page Not Found`}
 ];

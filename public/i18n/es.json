@@ -288,5 +288,10 @@
     "SAVE_SESSION": "Guardar registro promediado",
     "NO_RECORDS": "No hay registros de plantas disponibles",
     "BACK_TO_LIST": "Volver a la lista"
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
   }
 }

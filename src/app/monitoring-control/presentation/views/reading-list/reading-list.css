@@ -2,14 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-top: 45px !important;
   padding: 16px 0;
 }
 
 .list-header h1 {
-  margin-top:45px;
   color: #1976d2;
   font-weight: 500;
+  margin: 0 !important;
 }
 
 .list-header button {
@@ -267,6 +267,15 @@
   min-width: 600px;
 }
 
+/* Estrategia específica que funciona - similar al editor web */
+.reading-list-container h1 {
+  color: #1976d2;
+  font-weight: 500;
+  margin: 0 !important;
+  margin-top: 45px !important;
+  font-size: 28px;
+}
+
 /* Responsive design */
 @media (max-width: 1024px) {
   .type-badge {
@@ -378,16 +387,4 @@
   padding: 20px;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   min-height: 100vh;
-}
-
-/* Enhanced card headers */
-.table-container mat-card-header mat-card-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.table-container mat-card-header mat-card-subtitle {
-  opacity: 0.8;
-  font-size: 14px;
 }

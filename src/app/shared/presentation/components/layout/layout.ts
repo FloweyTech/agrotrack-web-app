@@ -11,6 +11,7 @@ import {MatToolbar, MatToolbarRow} from '@angular/material/toolbar';
 import {NgOptimizedImage} from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject, takeUntil } from 'rxjs';
+import {Profile} from '../../../../profile/presentation/views/profile/profile';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { Subject, takeUntil } from 'rxjs';
     TranslatePipe, LanguageSwitcher,
     // Angular Material (standalone)
     MatSidenavContainer, MatSidenav, MatSidenavContent, MatIcon, MatIconButton,
-    MatNavList, MatListItem, MatListItemIcon, MatListItemTitle, MatTooltip, MatToolbar, MatToolbarRow, NgOptimizedImage
+    MatNavList, MatListItem, MatListItemIcon, MatListItemTitle, MatTooltip, MatToolbar, MatToolbarRow, NgOptimizedImage, Profile
   ],
   templateUrl: './layout.html',
   styleUrls: ['./layout.css']

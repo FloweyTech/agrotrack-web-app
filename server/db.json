@@ -169,6 +169,12 @@
       "name": "Quinua",
       "type": "Custom",
       "isCustom": true
+    },
+    {
+      "id": 1760005520183,
+      "name": "Arandanos",
+      "type": "Custom",
+      "isCustom": true
     }
   ],
   "plots": [
@@ -177,13 +183,13 @@
       "name": "Parcela Norte",
       "area": 2.5,
       "location": "Sector Norte - Campo A",
-      "organizationId": 2,
       "plantType": {
-        "id": 1,
-        "name": "Tomate",
-        "type": "TOMATO",
-        "isCustom": false
-      }
+        "id": 1760005520183,
+        "name": "Arandanos",
+        "type": "Custom",
+        "isCustom": true
+      },
+      "organizationId": 2
     },
     {
       "id": 2,
@@ -408,6 +414,14 @@
       "value": 22,
       "unit": "°C",
       "measuredAt": "2025-10-09T06:28:06.170Z"
+    },
+    {
+      "id": 1760005674360,
+      "plotId": 1,
+      "type": "PH_LEVEL",
+      "value": 5,
+      "unit": "pH",
+      "measuredAt": "2025-10-09T10:27:54.360Z"
     }
   ],
   "users": [
@@ -436,6 +450,13 @@
       "id": 1759986976102,
       "email": "hola@prueba.com",
       "passwordHash": "12",
+      "role": "AGRONOMIST",
+      "status": "ACTIVE"
+    },
+    {
+      "id": 1760005443778,
+      "email": "hola@prueba2.com",
+      "passwordHash": "123",
       "role": "AGRONOMIST",
       "status": "ACTIVE"
     }
