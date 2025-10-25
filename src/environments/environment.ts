@@ -12,4 +12,7 @@ export const environment = {
   platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
   platformProviderProfileEndpointPath: '/profile',
   platformProviderReportsEndpointPath: '/reports',
+  weatherApiBaseUrl: 'https://api.weatherapi.com/v1',
+  weatherApiKey: 'd8020360b6a448fe9e1172139250810',
+  weatherApiDefaultLocation: 'Peru',
 };

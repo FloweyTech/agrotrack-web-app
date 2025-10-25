@@ -1,6 +1,8 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
+import { WeatherApiEndpoint } from '../infrastructure/weather-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
+import { Weather } from '../domain/model/weather.entity';
 import { retry } from 'rxjs';
 
 /**
@@ -23,10 +25,19 @@ export class MonitoringStore {
   private readonly errorSignal = signal<string | null>(null);
   readonly error = this.errorSignal.asReadonly();
 
+  private readonly weatherSignal = signal<Weather | null>(null);
+  readonly weather = this.weatherSignal.asReadonly();
+
+  private readonly weatherLoadingSignal = signal<boolean>(false);
+  readonly weatherLoading = this.weatherLoadingSignal.asReadonly();
+
   // --- Computed values ---
   readonly readingCount = computed(() => this.readings().length);
 
-  constructor(private monitoringApi: MonitoringApiEndpoint) {}
+  constructor(
+    private monitoringApi: MonitoringApiEndpoint,
+    private weatherApi: WeatherApiEndpoint
+  ) {}
 
   /**
    * Loads all environmental readings from all plots.
@@ -132,6 +143,27 @@ export class MonitoringStore {
    */
   clearAlerts(): void {
     this.alertsSignal.set([]);
+  }
+
+  /**
+   * Loads current weather data for a specific location.
+   * @param location - Optional location query (defaults to environment location).
+   */
+  loadCurrentWeather(location?: string): void {
+    this.weatherLoadingSignal.set(true);
+
+    this.weatherApi.getCurrentWeather(location).pipe(retry(2)).subscribe({
+      next: (weather) => {
+        console.log('Loaded weather data:', weather);
+        this.weatherSignal.set(weather);
+        this.weatherLoadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading weather:', err);
+        this.weatherSignal.set(null);
+        this.weatherLoadingSignal.set(false);
+      }
+    });
   }
 
   /**
