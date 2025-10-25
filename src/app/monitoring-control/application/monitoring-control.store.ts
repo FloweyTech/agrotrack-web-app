@@ -81,6 +81,7 @@ export class MonitoringStore {
    * Evaluates a reading to determine if it is outside safe thresholds.
    * @param reading The EnvironmentalReading to evaluate.
    * @returns A string message if an alert is triggered, otherwise null.
+   * TODO: Pasarlo al backend
    */
   private evaluate(reading: EnvironmentalReading): string | null {
     switch (reading.type) {
