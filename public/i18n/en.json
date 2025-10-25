@@ -290,6 +290,59 @@
     "NO_RECORDS": "No plant records available",
     "BACK_TO_LIST": "Back to list"
   },
+  "weather": {
+    "title": "Weather Status",
+    "subtitle": "Meteorological monitoring for agriculture",
+    "location": "Current Location",
+    "defaultLocation": "Peru",
+    "loading": "Loading weather data...",
+    "refresh": "Refresh weather",
+    "changeLocation": "Change location",
+    "locationLabel": "City or region",
+    "locationPlaceholder": "Ex: Lima, Arequipa, Cusco, Peru",
+    "locationInstruction": "Enter your city, region or country name to get local weather.",
+    "applyLocation": "Apply location",
+    "status": {
+      "optimal": "Optimal conditions",
+      "suboptimal": "Non-optimal conditions"
+    },
+    "alerts": {
+      "title": "Weather Alerts",
+      "frost_risk": "⚠️ Frost risk - Protect sensitive crops",
+      "heat_stress": "🔥 Extreme heat stress - Critical risk for crops",
+      "cold_warning": "❄️ Low temperatures - Monitor crops closely",
+      "high_heat": "☀️ High heat - Increase irrigation frequency",
+      "storm_warning": "⛈️ Storm in progress - Suspend outdoor activities",
+      "flooding_risk": "💧 Flooding risk - Check drainage systems",
+      "strong_winds": "💨 Strong winds - Check supports and structures"
+    },
+    "recommendations": {
+      "title": "Agricultural Recommendations",
+      "protect_frost": "🛡️ Cover sensitive crops with thermal blankets or plastic",
+      "avoid_watering_morning": "⏰ Avoid watering in morning hours to prevent freezing",
+      "increase_irrigation": "💧 Increase irrigation frequency due to heat",
+      "provide_shade": "🌳 Provide artificial shade for delicate crops",
+      "optimal_growth": "✅ Ideal temperature for growth of most crops",
+      "suspend_irrigation": "🚫 Suspend scheduled irrigation due to rain",
+      "check_drainage": "🔍 Verify that drainage systems are working properly",
+      "monitor_soil_moisture": "📊 Monitor soil moisture levels regularly",
+      "water_evening": "🌙 Water in evening/night hours to reduce evaporation",
+      "postpone_activities": "⏸️ Postpone field activities until the storm passes",
+      "secure_structures": "🔒 Secure greenhouses, nets and temporary structures",
+      "check_supports": "🌱 Check stakes and supports for tall plants"
+    },
+    "info": {
+      "title": "Temperature Ranges for Crops",
+      "optimal_range": "Optimal Range",
+      "warning_range": "Caution",
+      "danger_range": "Danger"
+    },
+    "empty": {
+      "title": "No data available",
+      "subtitle": "Could not load weather data",
+      "action": "Retry"
+    }
+  },
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
