@@ -23,6 +23,16 @@ export class MonitoringApiEndpoint extends BaseApiEndpoint<EnvironmentalReading,
   }
 
   /**
+   * Retrieves all environmental readings.
+   * @returns Observable emitting an array of all EnvironmentalReading entities.
+   */
+  getAllReadings(): Observable<EnvironmentalReading[]> {
+    return this.http.get<EnvironmentalReadingResource[]>(this.endpointUrl).pipe(
+      map((resources) => resources.map(resource => this.assembler.toEntityFromResource(resource)))
+    );
+  }
+
+  /**
    * Retrieves all readings for a specific plot.
    * @param plotId - The ID of the plot to filter readings.
    * @returns Observable emitting an array of EnvironmentalReading entities.

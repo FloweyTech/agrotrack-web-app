@@ -2,14 +2,14 @@
   "organizations": [
     {
       "id": 2,
-      "name": "EcoHarvest Perúu",
+      "name": "EcoHarvest Perú",
       "members": [],
       "status": "active",
       "subscription": {
-        "id": 4274,
+        "id": 49,
         "plan": "AgroStart",
-        "startDate": "2025-10-07T21:10:17.885Z",
-        "endDate": "2025-11-07T21:10:17.885Z",
+        "startDate": "2025-10-25T03:02:00.831Z",
+        "endDate": "2025-11-25T03:02:00.831Z",
         "status": "Active"
       }
     },
@@ -422,6 +422,14 @@
       "value": 5,
       "unit": "pH",
       "measuredAt": "2025-10-09T10:27:54.360Z"
+    },
+    {
+      "id": 1761365324817,
+      "plotId": 4,
+      "type": "HUMIDITY",
+      "value": 45,
+      "unit": "%",
+      "measuredAt": "2025-10-25T04:08:44.817Z"
     }
   ],
   "users": [

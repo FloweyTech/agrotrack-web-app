@@ -4,7 +4,8 @@
     "reports": "Reports",
     "tasks": "Tasks",
     "settings": "Settings",
-    "monitoring": "Monitoring"
+    "monitoring": "Monitoring",
+    "weather": "Weather"
   },
   "auth": {
     "login": {

@@ -4,7 +4,8 @@
     "reports": "Reportes",
     "tasks": "Tareas",
     "settings": "Ajustes",
-    "monitoring": "Monitoreo"
+    "monitoring": "Monitoreo",
+    "weather": "Clima"
   },
   "auth": {
     "login": {

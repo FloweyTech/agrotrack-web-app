@@ -1,8 +1,7 @@
-import { Injectable, computed, signal, Signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
 import { retry } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Store for managing environmental readings and simulated IoT alerts.
@@ -30,6 +29,27 @@ export class MonitoringStore {
   constructor(private monitoringApi: MonitoringApiEndpoint) {}
 
   /**
+   * Loads all environmental readings from all plots.
+   */
+  loadAllReadings(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.monitoringApi.getAllReadings().subscribe({
+      next: (readings) => {
+        console.log('Loaded all readings:', readings);
+        this.readingsSignal.set(readings);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading all readings:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to load all readings'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
    * Loads all readings for a specific plot.
    * @param plotId The ID of the plot whose readings should be retrieved.
    */
@@ -37,13 +57,14 @@ export class MonitoringStore {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    this.monitoringApi.getReadingsByPlotId(plotId).pipe(takeUntilDestroyed()).subscribe({
+    this.monitoringApi.getReadingsByPlotId(plotId).subscribe({
       next: (readings) => {
-        console.log('Loaded readings:', readings);
+        console.log('Loaded readings for plot', plotId, ':', readings);
         this.readingsSignal.set(readings);
         this.loadingSignal.set(false);
       },
       error: (err) => {
+        console.error('Error loading readings for plot', plotId, ':', err);
         this.errorSignal.set(this.formatError(err, 'Failed to load readings'));
         this.loadingSignal.set(false);
       }
