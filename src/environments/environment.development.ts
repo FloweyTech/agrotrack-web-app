@@ -7,7 +7,7 @@ export const environment = {
   platformProviderPlantTypesEndpointPath: '/planttypes',
   platformProviderChecklistEndpointPath: '/checklist',
   platformProviderTaskEndpointPath: '/task',
-  platformProviderPlantSamplingSessionsEndpointPath: '/plantsamplingsession',
+  platformProviderPlantSamplingSessionsEndpointPath: '/plant-sampling-session',
   platformProviderPlantObservationEndpointPath: '/plantobservation',
   platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
   platformProviderProfileEndpointPath: '/profile',
