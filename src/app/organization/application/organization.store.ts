@@ -6,6 +6,8 @@ import {retry} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PlantType} from '../domain/model/plant-type.entity';
 import {Plot} from '../domain/model/plot.entity';
+import {Profile} from '../../profile/presentation/views/profile/profile';
+import {profile} from '../../profile/domain/model/profile.entity';
 
 /**
  * State management store for organization-related data using Angular signals.
@@ -28,17 +30,22 @@ export class OrganizationStore {
   readonly plots = this.plotsSignal.asReadonly();
   private readonly selectedPlantTypeSignal = signal<PlantType | null>(null);
   readonly selectedPlantType = this.selectedPlantTypeSignal.asReadonly();
+  private readonly profilesSignal = signal<profile[]>([]);
+  readonly profiles = this.profilesSignal.asReadonly();
 
   private readonly loadingSignal = signal<boolean>(false);
   readonly loading = this.loadingSignal.asReadonly();
   private readonly errorSignal = signal<string | null>(null);
   readonly error = this.errorSignal.asReadonly();
 
+
+
   constructor(private organizationApi: OrganizationApi) {
     this.loadOrganizations();
     this.loadSubscriptions();
     this.loadPlantTypes();
     this.loadPlots(); // Agregar carga de parcelas
+    this.loadProfiles();
   }
 
   /**
@@ -424,6 +431,77 @@ export class OrganizationStore {
     if (plantType) plot.plantType = plantType;
     return plot;
   }
+
+  loadProfiles(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.getProfiles().pipe(takeUntilDestroyed()).subscribe({
+      next: profiles => {
+        this.profilesSignal.set(profiles);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load profiles'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+  getMembersOfOrganization(orgId: number): Signal<profile[]> {
+    return computed(() => {
+      const org = this.organizations().find(o => o.id === orgId);
+      if (!org) return [];
+      const ids = new Set(org.members);
+      return this.profiles().filter(p => ids.has(p.id));
+    });
+  }
+
+  getAvailableProfilesForOrganization(orgId: number): Signal<profile[]> {
+    return computed(() => {
+      const org = this.organizations().find(o => o.id === orgId);
+      if (!org) return this.profiles();
+      const excluded = new Set<number>([org.ownerProfileId, ...org.members]);
+      return this.profiles().filter(p => !excluded.has(p.id));
+    });
+  }
+
+
+  addMemberToOrganization(orgId: number, profileId: number): void {
+    const org = this.organizations().find(o => o.id === orgId);
+    if (!org) return;
+    if (org.members.includes(profileId)) return;
+
+    const updated = new Organization({
+      id: org.id,
+      name: org.name,
+      ownerProfileId: org.ownerProfileId,
+      members: [...org.members, profileId],
+      status: org.status,
+      subscription: org.subscription
+    });
+
+    this.updateOrganization(updated);
+  }
+
+  removeMemberFromOrganization(orgId: number, profileId: number): void {
+    const org = this.organizations().find(o => o.id === orgId);
+    if (!org) return;
+    if (!org.members.includes(profileId)) return;
+
+    // (opcional) bloquear eliminar al dueño por si te llega mal el id
+    if (profileId === org.ownerProfileId) return;
+
+    const updated = new Organization({
+      id: org.id,
+      name: org.name,
+      ownerProfileId: org.ownerProfileId,
+      members: org.members.filter(id => id !== profileId),
+      status: org.status,
+      subscription: org.subscription
+    });
+
+    this.updateOrganization(updated);
+  }
+
 
   /**
    * Formats an error message for user-friendly display.
