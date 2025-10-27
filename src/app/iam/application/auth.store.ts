@@ -1,8 +1,9 @@
-import { Injectable, signal, computed } from '@angular/core';
+import {Injectable, signal, computed, inject} from '@angular/core';
 import { User } from '../domain/model/user.entity';
 import { UserRole } from '../domain/model/user.role.enum';
 import { AuthApi } from '../infrastructure/auth-api';
 import { UserStatus } from '../domain/model/user-status.enum';
+import {ProfileStore} from '../../profile/application/profile.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -21,6 +22,8 @@ export class AuthStore {
   );
   readonly isFarmer = computed(() => this.userSignal()?.role === UserRole.FARMER);
 
+  private readonly profileStore = inject(ProfileStore);
+
   constructor(private authApi: AuthApi) {
     this.restoreSession();
   }
@@ -34,8 +37,10 @@ export class AuthStore {
         if (user && user.isActive()) {
           this.userSignal.set(user);
           this.saveSession(user);
+          this.profileStore.hydrateFromUser(user);
         } else {
           this.errorSignal.set('Usuario inactivo o no encontrado');
+          this.profileStore.reset();
         }
         this.loadingSignal.set(false);
       },
@@ -51,6 +56,7 @@ export class AuthStore {
     this.userSignal.set(null);
     this.errorSignal.set(null);
     this.clearSession();
+    this.profileStore.reset();
   }
 
   register(email: string, password: string, role: UserRole): void {
@@ -94,10 +100,14 @@ export class AuthStore {
         const userData = JSON.parse(stored);
         const user = new User(userData);
         this.userSignal.set(user);
+        this.profileStore.hydrateFromUser(user);
+      } else {
+        this.profileStore.reset();
       }
     } catch (error) {
       console.error('Error restaurando sesión:', error);
       this.clearSession();
+      this.profileStore.reset();
     }
   }
 }
