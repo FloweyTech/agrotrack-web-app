@@ -38,4 +38,10 @@ export class OrganizationList {
   editOrganization(id: number): void {
     this.router.navigate(['/organization', id, 'edit']).then();
   }
+
+  navigateToMembers(id: number): void {
+    this.router.navigate(['/organization', id, 'members']).then();
+  }
+
+
 }
