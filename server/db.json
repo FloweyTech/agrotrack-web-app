@@ -129,6 +129,20 @@
         "endDate": "2025-11-27T08:46:11.529Z",
         "status": "Active"
       }
+    },
+    {
+      "id": 1761556181031,
+      "name": "Bandicoot",
+      "ownerProfileId": 4,
+      "members": [],
+      "status": "active",
+      "subscription": {
+        "id": 9145,
+        "plan": "AgroStart",
+        "startDate": "2025-10-27T09:09:41.031Z",
+        "endDate": "2025-11-27T09:09:41.031Z",
+        "status": "Active"
+      }
     }
   ],
   "subscriptions": [
@@ -322,38 +336,7 @@
       "organizationId": 1759728302399
     }
   ],
-  "reports": [
-    {
-      "id": 1,
-      "organizationId": 101,
-      "organizationName": "AgroTech Apurímac",
-      "reportType": "PARCEL",
-      "reportStatus": "GENERATED",
-      "periodStart": "2025-09-01T00:00:00.000Z",
-      "periodEnd": "2025-09-30T23:59:59.000Z",
-      "generate": true
-    },
-    {
-      "id": 2,
-      "organizationId": 102,
-      "organizationName": "Campo Verde SAC",
-      "reportType": "GENERAL",
-      "reportStatus": "REQUESTED",
-      "periodStart": "2025-09-01T00:00:00Z",
-      "periodEnd": "2025-09-30T23:59:59Z",
-      "generate": false
-    },
-    {
-      "id": 3,
-      "organizationId": 101,
-      "organizationName": "AgroTech Apurímac",
-      "reportType": "PARCEL",
-      "reportStatus": "PROCESSING",
-      "periodStart": "2025-08-01T00:00:00Z",
-      "periodEnd": "2025-08-31T23:59:59Z",
-      "generate": false
-    }
-  ],
+  "reports": [],
   "environmental-readings": [
     {
       "id": 1,
@@ -488,7 +471,7 @@
       "avatarUrl": "https://i.pravatar.cc/100?u=farmer@agrotrack.com"
     },
     {
-      "id": 1759962119827,
+      "id": 3,
       "email": "test2@gmail.com",
       "passwordHash": "1234",
       "role": "FARMER",
@@ -497,7 +480,7 @@
       "avatarUrl": "https://avatar.iran.liara.run/public/60"
     },
     {
-      "id": 1759986976102,
+      "id": 4,
       "email": "hola@prueba.com",
       "passwordHash": "12",
       "role": "AGRONOMIST",
