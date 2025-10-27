@@ -12,8 +12,9 @@ import {ProfileStore} from '../../../application/profile.store';
   styleUrl: './profile.css'
 })
 export class Profile {
-  private store = inject(ProfileStore);
+  private readonly store = inject(ProfileStore);
 
-  name = input<string>('Usuario');
-  avatarUrl = input<string | null>(null);
+
+  readonly name = this.store.name;              // Signal<string>
+  readonly avatarUrl = this.store.avatarUrl;    // Signal<string | null>
 }
