@@ -10,6 +10,7 @@ import {PlotsApiEndpoint} from './plots-api-endpoint';
 import {PlantType, PlantTypes} from '../domain/model/plant-type.entity';
 import {PlanttypesApiEndpoint} from './planttypes-api-endpoint';
 import {Plot} from '../domain/model/plot.entity';
+import {ProfilesApiEndpoint} from '../../profile/infrastructure/profiles-api-endpoint';
 
 /**
  * API service for managing endpoints in the learning context (organizations, subscriptions plots and plantTypes).
@@ -20,6 +21,7 @@ export class OrganizationApi extends BaseApi{
   private readonly subscriptionsEndpoint: SubscriptionsApiEndpoint;
   private readonly plotsEndpoint: PlotsApiEndpoint;
   private readonly plantTypesEndpoint: PlanttypesApiEndpoint;
+  private readonly profilesEndpoint: ProfilesApiEndpoint;
 
   constructor(http: HttpClient) {
     super();
@@ -27,6 +29,7 @@ export class OrganizationApi extends BaseApi{
     this.subscriptionsEndpoint = new SubscriptionsApiEndpoint(http);
     this.plotsEndpoint = new PlotsApiEndpoint(http);
     this.plantTypesEndpoint = new PlanttypesApiEndpoint(http);
+    this.profilesEndpoint = new ProfilesApiEndpoint(http);
   }
 
   /**
@@ -195,4 +198,10 @@ export class OrganizationApi extends BaseApi{
   deletePlantType(id: number): Observable<void> {
     return this.plantTypesEndpoint.delete(id);
   }
+
+
+
+
+  getProfiles() { return this.profilesEndpoint.getAll(); }
+  getProfilesByIds(ids: number[]) { return this.profilesEndpoint.getByIds(ids); }
 }
