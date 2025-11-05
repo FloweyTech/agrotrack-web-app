@@ -29,13 +29,14 @@ export class OrganizationAssembler implements BaseAssembler<Organization, Organi
    * @param resource - The resource to convert.
    * @return The converted Organization entity.
    */
-  toEntityFromResource(resource: OrganizationResource): Organization {
+  toEntityFromResource(r: OrganizationResource): Organization {
     return new Organization({
-      id: resource.id,
-      name: resource.name,
-      members: resource.members,
-      status: resource.status as OrganizationStatus,
-      subscription: this.subscriptionAssembler.toEntityFromResource(resource.subscription)
+      id: r.id,
+      name: r.name,
+      ownerProfileId: r.ownerProfileId,  // 👈
+      members: r.members,
+      status: r.status as OrganizationStatus,
+      subscription: this.subscriptionAssembler.toEntityFromResource(r.subscription)
     });
   }
 
@@ -44,13 +45,14 @@ export class OrganizationAssembler implements BaseAssembler<Organization, Organi
    * @param entity - The Organization entity to convert.
    * @return The converted OrganizationResource.
    */
-  toResourceFromEntity(entity: Organization): OrganizationResource {
+  toResourceFromEntity(e: Organization): OrganizationResource {
     return {
-      id: entity.id,
-      name: entity.name,
-      members: entity.members,
-      status: entity.status,
-      subscription: this.subscriptionAssembler.toResourceFromEntity(entity.subscription)
-    } as OrganizationResource;
+      id: e.id,
+      name: e.name,
+      ownerProfileId: e.ownerProfileId,
+      members: e.members,
+      status: e.status,
+      subscription: this.subscriptionAssembler.toResourceFromEntity(e.subscription)
+    };
   }
 }

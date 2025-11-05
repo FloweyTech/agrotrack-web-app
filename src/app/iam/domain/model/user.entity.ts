@@ -8,6 +8,8 @@ export class User implements BaseEntity {
   passwordHash: string;
   role: UserRole;
   status: UserStatus;
+  name?: string;
+  avatarUrl?: string;
 
   constructor(props: {
     id: number;
@@ -15,12 +17,16 @@ export class User implements BaseEntity {
     passwordHash: string;
     role: UserRole;
     status?: UserStatus;
+    name?: string;          // <-- nuevo
+    avatarUrl?: string;
   }) {
     this.id = props.id;
     this.email = props.email;
     this.passwordHash = props.passwordHash;
     this.role = props.role;
     this.status = props.status ?? UserStatus.ACTIVE;
+    this.name = props.name;
+    this.avatarUrl = props.avatarUrl;
   }
 
   matchCredentials(email: string, password: string): boolean {

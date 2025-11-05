@@ -27,6 +27,8 @@ export class Organization implements BaseEntity {
 
   private _subscription : Subscription;
 
+  private _ownerProfileId: number;
+
 
   /**
    * Creates an instance of the Organization entity.
@@ -39,6 +41,7 @@ export class Organization implements BaseEntity {
     members: Array<number>;
     status: OrganizationStatus;
     subscription : Subscription;
+    ownerProfileId: number;
     }) {
 
     this._id = organization.id;
@@ -46,6 +49,8 @@ export class Organization implements BaseEntity {
     this._members = organization.members;
     this._status = organization.status;
     this._subscription = organization.subscription;
+    this._ownerProfileId = organization.ownerProfileId;
+
   }
 
 
@@ -100,6 +105,8 @@ export class Organization implements BaseEntity {
   set subscription(value: Subscription){
     this._subscription = value;
   }
+  get ownerProfileId() { return this._ownerProfileId; }
+  set ownerProfileId(v: number) { this._ownerProfileId = v; }
 
 }
 

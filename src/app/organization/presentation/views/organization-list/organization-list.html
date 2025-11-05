@@ -51,6 +51,11 @@
               {{ 'organization.enter' | translate }}
             </button>
 
+
+            <button mat-raised-button color="accent" (click)="navigateToMembers(org.id)">
+              {{ 'organization.members' | translate }}
+            </button>
+
             <button mat-raised-button color="warn" (click)="deleteOrganization(org.id)">
               {{ 'organization.delete' | translate }}
             </button>

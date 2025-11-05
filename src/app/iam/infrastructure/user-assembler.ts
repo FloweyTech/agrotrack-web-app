@@ -5,23 +5,26 @@ import { UserStatus } from '../domain/model/user-status.enum';
 import { UserRole } from '../domain/model/user.role.enum';
 
 export class UserAssembler implements BaseAssembler<User, UserResource, UserResource[]> {
-  toEntityFromResource(resource: UserResource): User {
+  toEntityFromResource(r: UserResource): User {
     return new User({
-      id: resource.id,
-      email: resource.email,
-      passwordHash: resource.passwordHash,
-      role: resource.role as UserRole,
-      status: resource.status as UserStatus,
+      id: r.id,
+      email: r.email,
+      passwordHash: r.passwordHash,
+      role: r.role as UserRole,
+      status: r.status as UserStatus,
+      name: r.name,
+      avatarUrl: r.avatarUrl,
     });
   }
-
-  toResourceFromEntity(entity: User): UserResource {
+  toResourceFromEntity(e: User): UserResource {
     return {
-      id: entity.id,
-      email: entity.email,
-      passwordHash: entity.passwordHash,
-      role: entity.role,
-      status: entity.status,
+      id: e.id,
+      email: e.email,
+      passwordHash: e.passwordHash,
+      role: e.role,
+      status: e.status,
+      name: e.name,
+      avatarUrl: e.avatarUrl,
     };
   }
 

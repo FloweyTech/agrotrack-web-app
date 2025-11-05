@@ -4,4 +4,6 @@ export interface UserResource {
   passwordHash: string;
   role: string;
   status: string;
+  name?: string;
+  avatarUrl?: string;
 }

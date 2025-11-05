@@ -293,5 +293,11 @@
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
     "go-home": "Ir a Inicio"
+  },
+  "members": {
+    "button-back": "Volver a organizaciones",
+    "title": "Miembros de la organización",
+    "button-add": "Agregar",
+    "select": "Selecciona un perfil"
   }
 }

@@ -26,6 +26,8 @@ export interface OrganizationResource extends BaseResource{
    */
   subscription : SubscriptionResource;
 
+  ownerProfileId: number;
+
 }
 
 
