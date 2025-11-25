@@ -3,20 +3,24 @@ import { AuthStore } from '../../../application/auth.store';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {TranslatePipe} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
   email = '';
   password = '';
+  activeLang = 'en';
 
-  constructor(public store: AuthStore, private router: Router) {
+  constructor(public store: AuthStore, private router: Router, private translate: TranslateService) {
+    this.activeLang = this.translate.currentLang || (localStorage.getItem('preferred-language') ?? this.translate.getDefaultLang() ?? 'en');
+    this.translate.use(this.activeLang);
+
     this.store.logout();
 
     effect(() => {
@@ -24,23 +28,17 @@ export class LoginComponent {
       const loading = this.store.loading();
       const error = this.store.error();
 
-      console.log('Login Effect - Estado actual:', {
-        user: user,
-        loading: loading,
-        error: error,
-        userActive: user ? user.isActive() : null
-      });
-
       if (!loading && user && !error && user.isActive()) {
-        console.log('Login exitoso, redirigiendo a /organization');
-        this.router.navigate(['/organization']).then(
-          (success) => console.log('Navegación exitosa:', success),
-          (error) => console.error('Error en navegación:', error)
-        );
-      } else if (!loading && error) {
-        console.error('Error en login:', error);
+        this.router.navigate(['/organization']);
       }
     });
+  }
+
+  setLanguage(lang: 'en' | 'es'): void {
+    if (this.activeLang === lang) return;
+    this.translate.use(lang);
+    localStorage.setItem('preferred-language', lang);
+    this.activeLang = lang;
   }
 
   onLogin(): void {
@@ -48,8 +46,6 @@ export class LoginComponent {
       console.error('Email y password son requeridos');
       return;
     }
-
-    console.log('Intentando login con:', this.email);
     this.store.login(this.email, this.password);
   }
 }
