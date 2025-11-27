@@ -175,6 +175,12 @@
       "name": "Arandanos",
       "type": "Custom",
       "isCustom": true
+    },
+    {
+      "id": 1763011192813,
+      "name": "ffgfsgf",
+      "type": "Custom",
+      "isCustom": true
     }
   ],
   "plots": [
@@ -209,13 +215,13 @@
       "name": "Huerto de Lechugas",
       "area": 1.2,
       "location": "Invernadero Central",
-      "organizationId": 3,
       "plantType": {
-        "id": 4,
-        "name": "Lechuga",
-        "type": "LETTUCE",
-        "isCustom": false
-      }
+        "id": 1763011192813,
+        "name": "ffgfsgf",
+        "type": "Custom",
+        "isCustom": true
+      },
+      "organizationId": 3
     },
     {
       "id": 4,
@@ -430,6 +436,38 @@
       "value": 45,
       "unit": "%",
       "measuredAt": "2025-10-25T04:08:44.817Z"
+    },
+    {
+      "id": 1761530916694,
+      "plotId": 2,
+      "type": "TEMPERATURE",
+      "value": 10,
+      "unit": "°C",
+      "measuredAt": "2025-10-27T02:08:36.694Z"
+    },
+    {
+      "id": 1761530951271,
+      "plotId": 3,
+      "type": "HUMIDITY",
+      "value": 11,
+      "unit": "%",
+      "measuredAt": "2025-10-27T02:09:11.271Z"
+    },
+    {
+      "id": 1761530999071,
+      "plotId": 2,
+      "type": "PH_LEVEL",
+      "value": 10,
+      "unit": "pH",
+      "measuredAt": "2025-10-27T02:09:59.071Z"
+    },
+    {
+      "id": 1761531024804,
+      "plotId": 3,
+      "type": "TEMPERATURE",
+      "value": 100,
+      "unit": "°C",
+      "measuredAt": "2025-10-27T02:10:24.804Z"
     }
   ],
   "users": [
@@ -466,6 +504,13 @@
       "email": "hola@prueba2.com",
       "passwordHash": "123",
       "role": "AGRONOMIST",
+      "status": "ACTIVE"
+    },
+    {
+      "id": 1763011064579,
+      "email": "hola@prueba2.com",
+      "passwordHash": "123",
+      "role": "FARMER",
       "status": "ACTIVE"
     }
   ]

@@ -5,11 +5,10 @@ export const environment = {
   platformProviderOrganizationsEndpointPath: '/organizations',
   platformProviderPlotsEndpointPath: '/plots',
   platformProviderPlantTypesEndpointPath: '/planttypes',
-  platformProviderChecklistEndpointPath: '/checklist',
   platformProviderTaskEndpointPath: '/task',
   platformProviderPlantSamplingSessionsEndpointPath: '/plant-sampling-session',
-  platformProviderPlantObservationEndpointPath: '/plantobservation',
-  platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
+  platformProviderPlantObservationEndpointPath: '/plant-observation',
+  platformProviderEnvironmentalReadingEndpointPath: '/environment-readings',
   platformProviderProfileEndpointPath: '/profile',
   platformProviderReportsEndpointPath: '/reports',
 
