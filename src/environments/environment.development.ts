@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  platformProviderApiBaseUrl: 'http://localhost:3000',
+  platformProviderApiBaseUrl: 'https://agrotrack-mockapi.azurewebsites.net/api/v1',
   platformProviderSubscriptionsEndpointPath: '/subscriptions',
   platformProviderOrganizationsEndpointPath: '/organizations',
   platformProviderPlotsEndpointPath: '/plots',

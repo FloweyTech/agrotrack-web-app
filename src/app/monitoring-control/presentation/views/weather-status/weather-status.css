@@ -3,31 +3,45 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .weather-content {
-  display: grid;
-  grid-template-columns: 2fr 1.2fr; /* main card más ancha */
-  grid-template-areas:
-    "main right";
-  gap: 24px;
-  align-items: start;
-}
-
-.weather-main-card {
-  grid-area: main;
-}
-
-.right-column {
-  grid-area: right;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
+  align-items: stretch;
+  margin-top: 10px;
 }
 
+
+.right-column {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
 
 .list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 55px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.location-controls button {
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.location-controls button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Header */
@@ -117,15 +131,10 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Weather Content */
-.weather-content {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: 1fr;
-}
 
 /* Main Weather Card */
 .weather-main-card {
+  width: 100%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border-radius: 16px;
@@ -454,6 +463,11 @@
     padding: 16px;
   }
 
+  .right-column {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .header {
     margin-top: 30px;
   }
@@ -483,5 +497,78 @@
   .location {
     font-size: 20px;
   }
+}
+
+.location-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+
+.location-form-card {
+  max-width: 450px;
+  width: 90%;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-left: none;
+  animation: modalScaleUp 0.3s ease-out;
+}
+
+.location-form-card mat-card-content {
+  padding: 16px 0 0 0 !important;
+}
+
+.form-instruction {
+  font-size: 15px;
+  color: #495057;
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.location-input {
+  margin-bottom: 24px;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+
+.form-actions button[mat-stroked-button] {
+  border-color: #ced4da;
+  color: #495057;
+}
+
+.form-actions button[mat-stroked-button]:hover {
+  background-color: #f8f9fa;
+  border-color: #dc3545;
+  color: #dc3545;
 }
 

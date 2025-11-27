@@ -16,29 +16,32 @@
 
     <!-- Location Form -->
     @if (showLocationForm()) {
-      <mat-card class="location-form-card">
-        <mat-card-content>
-          <p class="form-instruction">{{ 'weather.locationInstruction' | translate }}</p>
-          <mat-form-field appearance="outline" class="location-input">
-            <mat-label>{{ 'weather.locationLabel' | translate }}</mat-label>
-            <input matInput
-                   [(ngModel)]="customLocation"
-                   [placeholder]="'weather.locationPlaceholder' | translate"
-                   (keyup.enter)="updateLocation()">
-            <mat-icon matPrefix>search</mat-icon>
-          </mat-form-field>
-          <div class="form-actions">
-            <button mat-raised-button color="primary" (click)="updateLocation()" [disabled]="!customLocation().trim()">
-              <mat-icon>check</mat-icon>
-              {{ 'weather.applyLocation' | translate }}
-            </button>
-            <button mat-stroked-button (click)="cancelLocationChange()">
-              <mat-icon>close</mat-icon>
-              {{ 'actions.cancel' | translate }}
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <div class="location-modal-backdrop">
+        <mat-card class="location-form-card">
+          <mat-card-content>
+            <p class="form-instruction">{{ 'weather.locationInstruction' | translate }}</p>
+            <mat-form-field appearance="outline" class="location-input">
+              <mat-label>{{ 'weather.locationLabel' | translate }}</mat-label>
+              <input matInput
+                     [(ngModel)]="customLocation"
+                     [placeholder]="'weather.locationPlaceholder' | translate"
+                     (keyup.enter)="updateLocation()">
+              <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+            <div class="form-actions">
+              <button mat-raised-button color="primary" (click)="updateLocation()" [disabled]="!customLocation().trim()">
+                <mat-icon>check</mat-icon>
+                {{ 'weather.applyLocation' | translate }}
+              </button>
+              <button mat-stroked-button (click)="cancelLocationChange()">
+                <mat-icon>close</mat-icon>
+                {{ 'actions.cancel' | translate }}
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
     }
     <!-- Weather Data -->
     <!-- Loading State -->
