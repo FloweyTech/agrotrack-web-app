@@ -1,4 +1,4 @@
-import {BaseEntity} from '../../../shared/infrastructure/base-entity';
+import {BaseEntity} from '../../../shared/domain/model/base-entity';
 import {PlantType} from './plant-type.entity';
 
 export class Plot implements BaseEntity{

@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  platformProviderApiBaseUrl: 'https://agrotrack-mockapi.azurewebsites.net/api/v1',
+  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
   platformProviderSubscriptionsEndpointPath: '/subscriptions',
   platformProviderOrganizationsEndpointPath: '/organizations',
   platformProviderPlotsEndpointPath: '/plots',
@@ -10,6 +10,8 @@ export const environment = {
   platformProviderPlantObservationEndpointPath: '/plant-observation',
   platformProviderEnvironmentalReadingEndpointPath: '/environment-readings',
   platformProviderProfileEndpointPath: '/profile',
+  platformProviderSignInEndpointPath: '/authentication/sign-in',
+  platformProviderSignUpEndpointPath: '/authentication/sign-up',
   platformProviderReportsEndpointPath: '/reports',
 
   weatherApiBaseUrl: 'https://api.weatherapi.com/v1',

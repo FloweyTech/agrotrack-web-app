@@ -2,7 +2,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {BaseEntity} from './base-entity';
+import {BaseEntity} from '../domain/model/base-entity';
 import {BaseResource, BaseResponse} from './base-response';
 import {BaseAssembler} from './base-assembler';
 

@@ -19,13 +19,11 @@
         <input id="password" type="password" [(ngModel)]="password" name="password" required [placeholder]="'auth.login.passwordPlaceholder' | translate" />
       </div>
 
-      <p *ngIf="store.error()" class="error">{{ store.error() }}</p>
-
       <div class="links">
         <a routerLink="/register">{{ 'auth.login.notRegistered' | translate }}</a>
       </div>
 
-      <button type="submit" class="primary-btn" [disabled]="store.loading()">{{ 'auth.login.signIn' | translate }}</button>
+      <button type="submit" class="primary-btn" [disabled]="store.isLoadingUsers()">{{ 'auth.login.signIn' | translate }}</button>
     </form>
   </div>
 </div>

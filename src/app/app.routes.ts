@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {iamGuard} from './iam/infrastructure/iam.guard';
 
 const baseTitle = 'Agrotrack';
 
@@ -16,20 +17,20 @@ export const routes: Routes = [
   },
   {
     path: 'organization',
-    loadChildren: () =>
-      import('./organization/presentation/views/organization.routes').then(m => m.organizationRoutes),
+    loadChildren: () => import('./organization/presentation/views/organization.routes').then(m => m.organizationRoutes),
+    canActivate: [iamGuard],
     title: `${baseTitle} | Organizations`
   },
   {
     path: 'report',
-    loadChildren: () =>
-      import('./report/presentation/views/report.routes').then(m => m.reportRoutes),
+    loadChildren: () => import('./report/presentation/views/report.routes').then(m => m.reportRoutes),
+    canActivate: [iamGuard],
     title: `${baseTitle} | Reports`
   },
   {
     path: 'monitoring',
-    loadChildren: () =>
-      import('./monitoring-control/presentation/views/monitoring.routes').then(m => m.monitoringRoutes),
+    loadChildren: () => import('./monitoring-control/presentation/views/monitoring.routes').then(m => m.monitoringRoutes),
+    canActivate: [iamGuard],
     title: `${baseTitle} | Monitoring`
   },
   {
@@ -38,6 +39,9 @@ export const routes: Routes = [
       import('./monitoring-control/presentation/views/task.routes').then(m => m.taskRoutes),
     title: `${baseTitle} | Tasks`
   },
-  { path: '**', loadComponent:() => import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound),
-  title: `${baseTitle} | Page Not Found`}
+  {
+    path: '**',
+    loadComponent:() => import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound),
+    title: `${baseTitle} | Page Not Found`
+  }
 ];

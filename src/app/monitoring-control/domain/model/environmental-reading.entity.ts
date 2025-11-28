@@ -1,4 +1,4 @@
-import {BaseEntity} from '../../../shared/infrastructure/base-entity';
+import {BaseEntity} from '../../../shared/domain/model/base-entity';
 
 export class EnvironmentalReading implements BaseEntity {
   private _id: number;
