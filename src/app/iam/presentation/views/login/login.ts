@@ -1,10 +1,16 @@
-import { Component, effect } from '@angular/core';
-import { AuthStore } from '../../../application/auth.store';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {IamStore} from '../../../application/iam.store';
+import {SignInCommand} from '../../../domain/model/sign-in.command';
 
+/**
+ * @summary Component for the user sign-in view in the presentation layer.
+ * @description Provides the user interface for entering credentials (email and password), handling language preferences, and initiating the authentication process by interacting with the IAM Store.
+ * @author FloweyTech
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,23 +23,29 @@ export class LoginComponent {
   password = '';
   activeLang = 'en';
 
-  constructor(public store: AuthStore, private router: Router, private translate: TranslateService) {
+
+  public store = inject(IamStore);
+
+  /**
+   * @summary Initializes the LoginComponent.
+   * @description Sets up the default language based on local storage and clears any existing session to ensure a fresh login state.
+   * @param router The Angular Router service for navigation.
+   * @param translate The TranslateService for internationalization.
+   */
+  constructor(private router: Router, private translate: TranslateService) {
     this.activeLang = (localStorage.getItem('preferred-language') || 'en') as 'en' | 'es';
     this.translate.use(this.activeLang);
 
-    this.store.logout();
+    // Clears the session upon entry to ensure a clean state.
+    this.store.signOut(this.router);
 
-    effect(() => {
-      const user = this.store.user();
-      const loading = this.store.loading();
-      const error = this.store.error();
-
-      if (!loading && user && !error && user.isActive()) {
-        this.router.navigate(['/organization']);
-      }
-    });
   }
 
+  /**
+   * @summary Switches the application language.
+   * @description Updates the active language in the translation service and persists the preference in local storage.
+   * @param lang The language code to switch to ('en' or 'es').
+   */
   setLanguage(lang: 'en' | 'es'): void {
     if (this.activeLang === lang) return;
     this.translate.use(lang);
@@ -41,11 +53,23 @@ export class LoginComponent {
     this.activeLang = lang;
   }
 
+  /**
+   * @summary Handles the sign-in form submission.
+   * @description Validates the input fields, creates a SignInCommand, and delegates the authentication process to the IamStore.
+   */
   onLogin(): void {
     if (!this.email || !this.password) {
       console.error('Email y password son requeridos');
       return;
     }
-    this.store.login(this.email, this.password);
+
+    // Create the command object
+    const signInCommand = new SignInCommand({
+      identifier: this.email,
+      password: this.password
+    });
+
+    // Delegate execution to the store
+    this.store.signIn(signInCommand, this.router);
   }
 }
