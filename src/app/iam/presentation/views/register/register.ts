@@ -14,43 +14,24 @@ import {TranslatePipe} from '@ngx-translate/core';
   styleUrl: './register.css'
 })
 export class RegisterComponent {
-  name = '';
+  username = '';
+  firstName = '';
+  lastName = '';
   email = '';
   password = '';
   confirmPassword = '';
-  roleAgronomist = false;
-  roleFarmer = false;
+  photoUrl = '';
+  selectedRole: UserRole | null = null;
+  
+  readonly UserRole = UserRole;
 
   constructor(public store: AuthStore, private router: Router) {
     this.store.logout();
-
-    effect(() => {
-      const user = this.store.user();
-      const loading = this.store.loading();
-      const error = this.store.error();
-
-      console.log('Register Effect - Estado actual:', {
-        user: user,
-        loading: loading,
-        error: error,
-        userActive: user ? user.isActive() : null
-      });
-
-      if (!loading && user && !error && user.isActive()) {
-        console.log('Registro exitoso, redirigiendo a /organization');
-        this.router.navigate(['/organization']).then(
-          (success) => console.log('Navegación exitosa:', success),
-          (error) => console.error('Error en navegación:', error)
-        );
-      } else if (!loading && error) {
-        console.error('Error en registro:', error);
-      }
-    });
   }
 
   onRegister(): void {
     // Validaciones
-    if (!this.name || !this.email || !this.password || !this.confirmPassword) {
+    if (!this.username || !this.firstName || !this.lastName || !this.email || !this.password || !this.confirmPassword) {
       console.error('Todos los campos son requeridos');
       alert('Todos los campos son requeridos');
       return;
@@ -62,14 +43,38 @@ export class RegisterComponent {
       return;
     }
 
-    if (!this.roleAgronomist && !this.roleFarmer) {
-      console.error('Debe seleccionar al menos un rol');
-      alert('Debe seleccionar al menos un rol (Agronomist o Farmer)');
+    if (!this.selectedRole) {
+      console.error('Debe seleccionar un rol');
+      alert('Debe seleccionar un rol (Agronomist o Farmer)');
       return;
     }
 
-    const role = this.roleAgronomist ? UserRole.AGRONOMIST : UserRole.FARMER;
-    console.log('Intentando registro con:', { email: this.email, role });
-    this.store.register(this.email, this.password, role);
+    console.log('Intentando registro con:', { 
+      username: this.username, 
+      email: this.email, 
+      role: this.selectedRole,
+      firstName: this.firstName,
+      lastName: this.lastName 
+    });
+    
+    this.store.register(
+      this.username, 
+      this.email, 
+      this.password, 
+      this.selectedRole,
+      this.firstName,
+      this.lastName,
+      this.photoUrl
+    ).subscribe({
+      next: (user) => {
+        console.log('Registro exitoso:', user);
+        alert('Registro exitoso. Por favor, inicia sesión con tus credenciales.');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Error en registro:', err);
+        alert('Error al registrar usuario: ' + (err.message || 'Error desconocido'));
+      }
+    });
   }
 }

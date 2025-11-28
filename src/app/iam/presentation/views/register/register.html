@@ -5,8 +5,14 @@
   <p class="subtitle">{{ 'auth.register.subtitle' | translate }}</p>
 
   <form (ngSubmit)="onRegister()" #form="ngForm">
-    <label>{{ 'auth.register.name' | translate }}</label>
-    <input type="text" [(ngModel)]="name" name="name" required [placeholder]="'auth.register.namePlaceholder' | translate" />
+    <label>{{ 'auth.register.username' | translate }}</label>
+    <input type="text" [(ngModel)]="username" name="username" required placeholder="Usuario" />
+
+    <label>{{ 'auth.register.firstName' | translate }}</label>
+    <input type="text" [(ngModel)]="firstName" name="firstName" required placeholder="Nombre" />
+
+    <label>{{ 'auth.register.lastName' | translate }}</label>
+    <input type="text" [(ngModel)]="lastName" name="lastName" required placeholder="Apellido" />
 
     <label>{{ 'auth.register.email' | translate }}</label>
     <input type="email" [(ngModel)]="email" name="email" required [placeholder]="'auth.register.emailPlaceholder' | translate" />
@@ -23,9 +29,13 @@
       [placeholder]="'auth.register.passwordPlaceholder' | translate"
     />
 
+    <label>{{ 'auth.register.photoUrl' | translate }}</label>
+    <input type="url" [(ngModel)]="photoUrl" name="photoUrl" placeholder="URL de foto (opcional)" />
+
     <div class="roles">
-      <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" /> {{ 'auth.register.agronomist' | translate }}</label>
-      <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" /> {{ 'auth.register.farmer' | translate }}</label>
+      <label>{{ 'auth.register.role' | translate }}</label>
+      <label><input type="radio" [(ngModel)]="selectedRole" name="role" [value]="UserRole.FARMER" /> {{ 'auth.register.farmer' | translate }}</label>
+      <label><input type="radio" [(ngModel)]="selectedRole" name="role" [value]="UserRole.AGRONOMIST" /> {{ 'auth.register.agronomist' | translate }}</label>
     </div>
 
     <div class="links">
