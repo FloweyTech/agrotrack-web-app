@@ -1,6 +1,8 @@
-<div *ngIf="showLayout() && !isCurrentlyAuthRoute()" class="layout-container">
-  <app-layout></app-layout>
+<div *ngIf="showLayout()" class="layout-container">
+  <app-layout>
+  </app-layout>
 </div>
-<div *ngIf="!showLayout() || isCurrentlyAuthRoute()" class="auth-container">
+
+<div [class.auth-container]="!showLayout()" [class.content-container]="showLayout()">
   <router-outlet></router-outlet>
 </div>
