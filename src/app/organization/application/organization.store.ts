@@ -7,6 +7,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PlantType} from '../domain/model/plant-type.entity';
 import {Plot} from '../domain/model/plot.entity';
 import {OrganizationByOwnerResponse} from '../infrastructure/organization-by-owner-response';
+import {PlotByOrganizationResponse} from '../infrastructure/plot-by-organization-response';
 
 /**
  * State management store for organization-related data using Angular signals.
@@ -29,6 +30,14 @@ export class OrganizationStore {
   readonly planttypes = this.plantTypeSignal.asReadonly();
   private readonly plotsSignal = signal<Plot[]>([]);
   readonly plots = this.plotsSignal.asReadonly();
+  private readonly plotsByOrganizationSignal = signal<PlotByOrganizationResponse[]>([]);
+  readonly plotsByOrganization = this.plotsByOrganizationSignal.asReadonly();
+  private readonly plantTypesListSignal = signal<any[]>([]);
+  readonly plantTypesList = this.plantTypesListSignal.asReadonly();
+  private readonly profileMembersSignal = signal<any[]>([]);
+  readonly profileMembers = this.profileMembersSignal.asReadonly();
+  private readonly profileSearchResultsSignal = signal<any[]>([]);
+  readonly profileSearchResults = this.profileSearchResultsSignal.asReadonly();
   private readonly selectedPlantTypeSignal = signal<PlantType | null>(null);
   readonly selectedPlantType = this.selectedPlantTypeSignal.asReadonly();
 
@@ -128,6 +137,250 @@ export class OrganizationStore {
    */
   getSubscriptionById(id: number): Signal<Subscription | undefined> {
     return computed(() => id ? this.subscriptions().find(s => s.id === id) : undefined);
+  }
+
+  /**
+   * Creates a new plot.
+   * @param request The plot creation request.
+   * @param organizationId The organization ID to reload plots after creation.
+   */
+  createPlot(request: any, organizationId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.createPlot(request).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Plot created successfully');
+        this.loadPlotsByOrganization(organizationId);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to create plot'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Loads all plant types from the API.
+   */
+  loadAllPlantTypes(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.getAllPlantTypes().pipe(retry(2)).subscribe({
+      next: plantTypes => {
+        console.log('Plant types loaded:', plantTypes);
+        this.plantTypesListSignal.set(plantTypes);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load plant types'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Searches plant types by name.
+   * @param name The name to search for.
+   */
+  searchPlantTypesByName(name: string): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.getPlantTypesByName(name).pipe(retry(2)).subscribe({
+      next: plantTypes => {
+        console.log('Plant types found:', plantTypes);
+        this.plantTypesListSignal.set(plantTypes);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to search plant types'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Searches profiles by name.
+   * @param searchTerm The search term.
+   */
+  searchProfiles(searchTerm: string): void {
+    if (!searchTerm || searchTerm.length < 2) {
+      this.profileSearchResultsSignal.set([]);
+      return;
+    }
+
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.searchProfiles(searchTerm).pipe(retry(2)).subscribe({
+      next: profiles => {
+        console.log('Profiles found:', profiles);
+        this.profileSearchResultsSignal.set(profiles);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to search profiles'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Adds a profile to an organization.
+   * @param organizationId The organization ID.
+   * @param profileId The profile ID to add.
+   */
+  addProfileToOrganization(organizationId: number, profileId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.addProfileToOrganization(organizationId, { profileId }).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Profile added to organization successfully');
+        // Reload organizations to get updated profileIds
+        const ownerProfileId = sessionStorage.getItem('profile_id');
+        if (ownerProfileId) {
+          this.organizationApi.getOrganizationsByOwner(parseInt(ownerProfileId, 10)).subscribe({
+            next: orgs => {
+              this.organizationsByOwnerSignal.set(orgs);
+              // After organizations are updated, reload the members for this specific organization
+              const updatedOrg = orgs.find(org => org.organizationId === organizationId);
+              if (updatedOrg && updatedOrg.profileIds) {
+                this.loadProfileMembers(updatedOrg.profileIds);
+              }
+              this.loadingSignal.set(false);
+            },
+            error: err => {
+              this.errorSignal.set(this.formatError(err, 'Failed to reload organizations'));
+              this.loadingSignal.set(false);
+            }
+          });
+        } else {
+          this.loadingSignal.set(false);
+        }
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to add profile to organization'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Removes a profile from an organization.
+   * @param organizationId The organization ID.
+   * @param profileId The profile ID to remove.
+   */
+  removeProfileFromOrganization(organizationId: number, profileId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.removeProfileFromOrganization(organizationId, { profileId }).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Profile removed from organization successfully');
+        // Reload organizations to get updated profileIds
+        const ownerProfileId = sessionStorage.getItem('profile_id');
+        if (ownerProfileId) {
+          this.organizationApi.getOrganizationsByOwner(parseInt(ownerProfileId, 10)).subscribe({
+            next: orgs => {
+              this.organizationsByOwnerSignal.set(orgs);
+              // After organizations are updated, reload the members for this specific organization
+              const updatedOrg = orgs.find(org => org.organizationId === organizationId);
+              if (updatedOrg && updatedOrg.profileIds) {
+                this.loadProfileMembers(updatedOrg.profileIds);
+              }
+              this.loadingSignal.set(false);
+            },
+            error: err => {
+              this.errorSignal.set(this.formatError(err, 'Failed to reload organizations'));
+              this.loadingSignal.set(false);
+            }
+          });
+        } else {
+          this.loadingSignal.set(false);
+        }
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to remove profile from organization'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Clears profile search results.
+   */
+  clearProfileSearchResults(): void {
+    this.profileSearchResultsSignal.set([]);
+  }
+
+  /**
+   * Loads profile members by their IDs.
+   * @param profileIds Array of profile IDs to load.
+   */
+  loadProfileMembers(profileIds: number[]): void {
+    if (!profileIds || profileIds.length === 0) {
+      this.profileMembersSignal.set([]);
+      return;
+    }
+
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    
+    // Fetch all profiles in parallel
+    const profileRequests = profileIds.map(id => 
+      this.organizationApi.getProfileById(id)
+    );
+
+    // Use forkJoin to wait for all requests to complete
+    import('rxjs').then(({ forkJoin }) => {
+      forkJoin(profileRequests).pipe(retry(2)).subscribe({
+        next: profiles => {
+          console.log('Profile members loaded:', profiles);
+          this.profileMembersSignal.set(profiles);
+          this.loadingSignal.set(false);
+        },
+        error: err => {
+          this.errorSignal.set(this.formatError(err, 'Failed to load profile members'));
+          this.loadingSignal.set(false);
+        }
+      });
+    });
+  }
+
+  /**
+   * Loads plots by organization ID from the API.
+   * @param organizationId The ID of the organization.
+   */
+  loadPlotsByOrganization(organizationId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.getPlotsByOrganization(organizationId).pipe(
+      retry(2)
+    ).subscribe({
+      next: plots => {
+        console.log('Plots by organization loaded:', plots);
+        // Fetch plant type details for each plot
+        plots.forEach(plot => {
+          this.organizationApi.getPlantTypeById(plot.plantTypeId).subscribe({
+            next: plantType => {
+              plot.plantTypeDetails = {
+                plantType: plantType.plantType,
+                name: plantType.name
+              };
+              // Update the signal to trigger UI refresh
+              this.plotsByOrganizationSignal.set([...plots]);
+            },
+            error: err => {
+              console.error('Failed to load plant type:', err);
+            }
+          });
+        });
+        this.plotsByOrganizationSignal.set(plots);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load plots'));
+        this.loadingSignal.set(false);
+      }
+    });
   }
 
   /**
@@ -329,13 +582,13 @@ export class OrganizationStore {
   }
 
   /**
-   * Adds a new plot to an organization.
+   * Adds a new plot to an organization (old method - kept for compatibility).
    * @param plot The Plot entity to create.
    */
   addPlot(plot: Plot): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
-    this.organizationApi.createPlot(plot).pipe(retry(2)).subscribe({
+    this.organizationApi.createPlotOld(plot).pipe(retry(2)).subscribe({
       next: createdPlot => {
         this.plotsSignal.update(plots => [...plots, createdPlot]);
         this.loadingSignal.set(false);

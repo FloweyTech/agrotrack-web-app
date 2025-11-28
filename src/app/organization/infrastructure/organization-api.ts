@@ -12,6 +12,11 @@ import {PlanttypesApiEndpoint} from './planttypes-api-endpoint';
 import {Plot} from '../domain/model/plot.entity';
 import {OrganizationByOwnerResponse} from './organization-by-owner-response';
 import {CreateSubscriptionRequest, CreateSubscriptionResponse} from './create-subscription-request';
+import {PlotByOrganizationResponse} from './plot-by-organization-response';
+import {PlantTypeResponse} from './planttype-response';
+import {CreatePlotRequest} from './create-plot-request';
+import {ProfileDetailsResponse} from './profile-details-response';
+import {AddProfileToOrganizationRequest} from './add-profile-request';
 import {environment} from '../../../environments/environment';
 
 /**
@@ -60,6 +65,97 @@ export class OrganizationApi extends BaseApi{
   activateSubscription(subscriptionId: number): Observable<void> {
     const url = `${environment.platformProviderApiBaseUrl}/api/v1/subscriptions/${subscriptionId}/activate`;
     return this.http.put<void>(url, {});
+  }
+
+  /**
+   * Retrieves plots by organization ID.
+   * @param organizationId - The ID of the organization.
+   * @returns An Observable of an array of PlotByOrganizationResponse objects.
+   */
+  getPlotsByOrganization(organizationId: number): Observable<PlotByOrganizationResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/plots/organization/${organizationId}`;
+    return this.http.get<PlotByOrganizationResponse[]>(url);
+  }
+
+  /**
+   * Retrieves plant type by ID.
+   * @param plantTypeId - The ID of the plant type.
+   * @returns An Observable of PlantTypeResponse object.
+   */
+  getPlantTypeById(plantTypeId: number): Observable<PlantTypeResponse> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/plant-types/${plantTypeId}`;
+    return this.http.get<PlantTypeResponse>(url);
+  }
+
+  /**
+   * Creates a new plot.
+   * @param request - The plot creation request.
+   * @returns An Observable of void.
+   */
+  createPlot(request: CreatePlotRequest): Observable<void> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/plots`;
+    return this.http.post<void>(url, request);
+  }
+
+  /**
+   * Retrieves profile details by profile ID.
+   * @param profileId - The ID of the profile.
+   * @returns An Observable of ProfileDetailsResponse object.
+   */
+  getProfileById(profileId: number): Observable<ProfileDetailsResponse> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/profiles/${profileId}`;
+    return this.http.get<ProfileDetailsResponse>(url);
+  }
+
+  /**
+   * Searches profiles by name.
+   * @param searchTerm - The search term.
+   * @returns An Observable of an array of ProfileDetailsResponse objects.
+   */
+  searchProfiles(searchTerm: string): Observable<ProfileDetailsResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/profiles/search?name=${encodeURIComponent(searchTerm)}`;
+    return this.http.get<ProfileDetailsResponse[]>(url);
+  }
+
+  /**
+   * Adds a profile to an organization.
+   * @param organizationId - The ID of the organization.
+   * @param request - The request with profileId.
+   * @returns An Observable of void.
+   */
+  addProfileToOrganization(organizationId: number, request: AddProfileToOrganizationRequest): Observable<void> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/organizations/${organizationId}/profiles/add`;
+    return this.http.put<void>(url, request);
+  }
+
+  /**
+   * Removes a profile from an organization.
+   * @param organizationId - The ID of the organization.
+   * @param request - The request with profileId.
+   * @returns An Observable of void.
+   */
+  removeProfileFromOrganization(organizationId: number, request: AddProfileToOrganizationRequest): Observable<void> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/organizations/${organizationId}/profiles/remove`;
+    return this.http.put<void>(url, request);
+  }
+
+  /**
+   * Retrieves all plant types.
+   * @returns An Observable of an array of PlantTypeResponse objects.
+   */
+  getAllPlantTypes(): Observable<PlantTypeResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/plant-types`;
+    return this.http.get<PlantTypeResponse[]>(url);
+  }
+
+  /**
+   * Retrieves plant types by name.
+   * @param name - The name to search for.
+   * @returns An Observable of an array of PlantTypeResponse objects.
+   */
+  getPlantTypesByName(name: string): Observable<PlantTypeResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/plant-types/by-name/${name}`;
+    return this.http.get<PlantTypeResponse[]>(url);
   }
 
   /**
@@ -169,11 +265,11 @@ export class OrganizationApi extends BaseApi{
   }
 
   /**
-   * Creates a new plot.
+   * Creates a new plot (old method - kept for compatibility).
    * @param plot - The plot to create.
    * @returns An Observable of the created Plot object.
    */
-  createPlot(plot: Plot): Observable<Plot> {
+  createPlotOld(plot: Plot): Observable<Plot> {
     return this.plotsEndpoint.create(plot);
   }
 
