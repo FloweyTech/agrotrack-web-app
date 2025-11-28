@@ -10,7 +10,7 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import {AuthStore} from '../../../../iam/application/auth.store';
+import { IamStore } from '../../../../iam/application/iam.store';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class OrganizationForm {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private store = inject(OrganizationStore);
-  private auth = inject(AuthStore)
+  private iamStore = inject(IamStore);
 
 
 
@@ -70,7 +70,7 @@ export class OrganizationForm {
     const ownerProfileId =
       this.isEdit
         ? (this.currentOwnerProfileId as number)
-        : (this.auth.user()?.id ?? 0);
+        : (this.iamStore.currentUserId() ?? 0);
 
     const organization = new Organization({
       id: this.organizationId ?? Date.now(),
