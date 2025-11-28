@@ -18,7 +18,7 @@ export class LoginComponent {
   activeLang = 'en';
 
   constructor(public store: AuthStore, private router: Router, private translate: TranslateService) {
-    this.activeLang = this.translate.currentLang || (localStorage.getItem('preferred-language') ?? this.translate.getDefaultLang() ?? 'en');
+    this.activeLang = (localStorage.getItem('preferred-language') || 'en') as 'en' | 'es';
     this.translate.use(this.activeLang);
 
     this.store.logout();
