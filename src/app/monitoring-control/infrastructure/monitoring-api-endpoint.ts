@@ -28,7 +28,7 @@ export class MonitoringApiEndpoint extends BaseApiEndpoint<EnvironmentalReading,
    * @returns Observable emitting an array of EnvironmentalReading entities.
    */
   getReadingsByPlotId(plotId: number): Observable<EnvironmentalReading[]> {
-    const url = `${this.endpointUrl}?plotId=${plotId}`;
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/environment-readings/plot/${plotId}`;
     return this.http.get<EnvironmentalReadingResource[]>(url).pipe(
       map((resources) => resources.map(resource => this.assembler.toEntityFromResource(resource)))
     );
@@ -41,7 +41,8 @@ export class MonitoringApiEndpoint extends BaseApiEndpoint<EnvironmentalReading,
    */
   createReading(reading: EnvironmentalReading): Observable<EnvironmentalReading> {
     const resource = this.assembler.toResourceFromEntity(reading);
-    return this.http.post<EnvironmentalReadingResource>(this.endpointUrl, resource).pipe(
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/environment-readings`;
+    return this.http.post<EnvironmentalReadingResource>(url, resource).pipe(
       map((res) => this.assembler.toEntityFromResource(res))
     );
   }

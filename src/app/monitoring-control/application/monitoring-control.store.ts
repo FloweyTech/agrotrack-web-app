@@ -2,7 +2,6 @@ import { Injectable, computed, signal, Signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
 import { retry } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Store for managing environmental readings and simulated IoT alerts.
@@ -37,10 +36,13 @@ export class MonitoringStore {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    this.monitoringApi.getReadingsByPlotId(plotId).pipe(takeUntilDestroyed()).subscribe({
+    this.monitoringApi.getReadingsByPlotId(plotId).subscribe({
       next: (readings) => {
-        console.log('Loaded readings:', readings);
-        this.readingsSignal.set(readings);
+        // Remove old readings for this plot and add new ones
+        const currentReadings = this.readingsSignal();
+        const filteredReadings = currentReadings.filter(r => r.plotId !== plotId);
+        this.readingsSignal.set([...filteredReadings, ...readings]);
+        
         this.loadingSignal.set(false);
       },
       error: (err) => {

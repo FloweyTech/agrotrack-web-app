@@ -1,13 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MonitoringStore } from '../../../application/monitoring-control.store';
 import { OrganizationStore } from '../../../../organization/application/organization.store';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
-import {RouterLink} from '@angular/router';
+import { DatePipe, CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { AuthStore } from '../../../../iam/application/auth.store';
 
 /**
  * Displays the list of environmental readings and alerts.
@@ -21,8 +23,10 @@ import {RouterLink} from '@angular/router';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatExpansionModule,
     TranslatePipe,
     DatePipe,
+    CommonModule,
     RouterLink
   ],
   styleUrls: ['./reading-list.css']
@@ -30,36 +34,87 @@ import {RouterLink} from '@angular/router';
 export class ReadingList implements OnInit {
   readonly monitoringStore = inject(MonitoringStore);
   readonly organizationStore = inject(OrganizationStore);
+  private readonly authStore = inject(AuthStore);
   private readonly translateService = inject(TranslateService);
 
   /** Columns to display in the Material table. */
-  displayedColumns: string[] = ['plot', 'type', 'value', 'measuredAt'];
+  displayedColumns: string[] = ['type', 'value', 'measuredAt'];
+
+  // Signal to store organization data with plots and readings
+  organizationData = signal<any[]>([]);
+
+  // Computed signal for active organizations
+  readonly activeOrganizations = computed(() => 
+    this.organizationStore.organizationsByOwner().filter(org => org.isActive)
+  );
 
   ngOnInit(): void {
-    // Los plots ya se cargan automáticamente en el constructor del OrganizationStore
-    // Esperamos un poco para que se carguen y luego cargamos las lecturas
-    setTimeout(() => {
-      this.loadAllReadings();
-    }, 100);
-  }
-
-  /** Loads readings for all plots */
-  private loadAllReadings(): void {
-    const plots = this.organizationStore.plots();
-    if (plots.length > 0) {
-      // Para mostrar datos, cargaremos las lecturas del primer plot disponible
-      this.monitoringStore.loadReadingsByPlotId(plots[0].id);
-    } else {
-      // Si no hay plots, podemos cargar con un ID por defecto o mostrar un mensaje
-      console.warn('No plots available, using default plot ID 1');
-      this.monitoringStore.loadReadingsByPlotId(1);
+    const profileIdStr = sessionStorage.getItem('profile_id');
+    const profileId = profileIdStr ? parseInt(profileIdStr, 10) : null;
+    if (profileId) {
+      // Load organizations by owner
+      this.organizationStore.loadOrganizationsByOwner(profileId);
+      
+      // Wait for organizations to load, then load plots and readings
+      setTimeout(() => {
+        this.loadOrganizationsData();
+      }, 500);
     }
   }
 
-  /** Gets the plot name by ID. */
+  /** Loads data for all active organizations */
+  private loadOrganizationsData(): void {
+    const organizations = this.organizationStore.organizationsByOwner()
+      .filter(org => org.isActive);
+
+    const orgData: any[] = [];
+
+    organizations.forEach(org => {
+      // Load plots for this organization
+      this.organizationStore.loadPlotsByOrganization(org.organizationId);
+      
+      // Wait a bit for plots to load
+      setTimeout(() => {
+        const plots = this.organizationStore.plotsByOrganization();
+
+        const plotsWithReadings: any[] = [];
+
+        plots.forEach(plot => {
+          // Load readings for each plot
+          this.monitoringStore.loadReadingsByPlotId(plot.plotId);
+          
+          plotsWithReadings.push({
+            ...plot,
+            readings: [] // Will be populated by the store
+          });
+        });
+
+        orgData.push({
+          organization: org,
+          plots: plotsWithReadings
+        });
+
+        this.organizationData.set([...orgData]);
+      }, 300);
+    });
+  }
+
+  /** Gets plots for a specific organization */
+  getPlotsForOrganization(organizationId: number) {
+    return this.organizationStore.plotsByOrganization().filter(p => p.organizationId === organizationId);
+  }
+
+  /** Gets readings for a specific plot */
+  getReadingsForPlot(plotId: number) {
+    // Filter readings from store by plotId
+    return this.monitoringStore.readings().filter(r => r.plotId === plotId);
+  }
+
+  /** Gets the plot name by ID */
   getPlotName(plotId: number): string {
-    const plot = this.organizationStore.plots().find(p => p.id === plotId);
-    return plot ? plot.name : '—';
+    const plots = this.organizationStore.plotsByOrganization();
+    const plot = plots.find(p => p.plotId === plotId);
+    return plot ? plot.plotName : '—';
   }
 
   /** Clears alert messages. */
@@ -141,7 +196,6 @@ export class ReadingList implements OnInit {
 
   /** Handles row click event */
   onRowClick(reading: any): void {
-    console.log('Clicked reading:', reading);
-    // Aquí podrías agregar navegación a una vista de detalle
+    // Future: Navigate to reading details or open edit dialog
   }
 }
