@@ -30,15 +30,15 @@
       />
 
       <div class="roles">
-        <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" /> {{ 'auth.register.agronomist' | translate }}</label>
-        <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" /> {{ 'auth.register.farmer' | translate }}</label>
+        <label><input type="checkbox" [(ngModel)]="roleAgronomist" name="agronomist" (change)="roleFarmer = !roleAgronomist"/> {{ 'auth.register.agronomist' | translate }}</label>
+        <label><input type="checkbox" [(ngModel)]="roleFarmer" name="farmer" (change)="roleAgronomist = !roleFarmer"/> {{ 'auth.register.farmer' | translate }}</label>
       </div>
 
       <div class="links">
         <a routerLink="/login">{{ 'auth.register.alreadyHaveAccount' | translate }}</a>
       </div>
 
-      <button type="submit" [disabled]="store.loading()" class="primary-btn">{{ 'auth.register.createAccount' | translate }}</button>
+      <button type="submit" [disabled]="store.isLoadingUsers()" class="primary-btn">{{ 'auth.register.createAccount' | translate }}</button>
     </form>
   </div>
 </div>
