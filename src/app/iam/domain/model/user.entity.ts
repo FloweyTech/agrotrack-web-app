@@ -1,7 +1,12 @@
-import { BaseEntity } from '../../../shared/infrastructure/base-entity';
+import { BaseEntity } from '../../../shared/domain/model/base-entity';
 import { UserStatus } from './user-status.enum';
 import { UserRole } from './user.role.enum';
 
+/**
+ * @summary Represents a user entity in the domain layer of the IAM bounded context.
+ * @description Encapsulates the core identity information of a user, including credentials, role, status, and profile details. Implements the BaseEntity interface.
+ * @author FloweyTech
+ */
 export class User implements BaseEntity {
   id: number;
   email: string;
@@ -11,6 +16,11 @@ export class User implements BaseEntity {
   name?: string;
   avatarUrl?: string;
 
+  /**
+   * @summary Creates a new User instance.
+   * @description Initializes the user entity with the provided properties. Sets the status to ACTIVE by default if not provided.
+   * @param props An object containing the user's initialization data.
+   */
   constructor(props: {
     id: number;
     email: string;
