@@ -4,7 +4,8 @@
     "reports": "Reportes",
     "tasks": "Tareas",
     "settings": "Ajustes",
-    "monitoring": "Monitoreo"
+    "monitoring": "Monitoreo",
+    "weather": "Clima"
   },
   "auth": {
     "login": {
@@ -288,6 +289,59 @@
     "SAVE_SESSION": "Guardar registro promediado",
     "NO_RECORDS": "No hay registros de plantas disponibles",
     "BACK_TO_LIST": "Volver a la lista"
+  },
+  "weather": {
+    "title": "Estado del Clima",
+    "subtitle": "Monitoreo meteorológico para agricultura",
+    "location": "Ubicación Actual",
+    "defaultLocation": "Puno",
+    "loading": "Cargando datos del clima...",
+    "refresh": "Actualizar clima",
+    "changeLocation": "Cambiar ubicación",
+    "locationLabel": "Ciudad o región",
+    "locationPlaceholder": "Ej: Lima, Arequipa, Cusco, Peru",
+    "locationInstruction": "Ingresa el nombre de tu ciudad, región o país para obtener el clima local.",
+    "applyLocation": "Aplicar ubicación",
+    "status": {
+      "optimal": "Condiciones óptimas",
+      "suboptimal": "Condiciones no óptimas"
+    },
+    "alerts": {
+      "title": "Alertas Climáticas",
+      "frost_risk": "⚠️ Riesgo de heladas - Proteger cultivos sensibles",
+      "heat_stress": "🔥 Estrés térmico extremo - Riesgo crítico para los cultivos",
+      "cold_warning": "❄️ Temperaturas bajas - Monitorear cultivos de cerca",
+      "high_heat": "☀️ Calor elevado - Aumentar frecuencia de riego",
+      "storm_warning": "⛈️ Tormenta en curso - Suspender actividades al aire libre",
+      "flooding_risk": "💧 Riesgo de inundación - Verificar drenajes",
+      "strong_winds": "💨 Vientos fuertes - Revisar soportes y estructuras"
+    },
+    "recommendations": {
+      "title": "Recomendaciones Agrícolas",
+      "protect_frost": "🛡️ Cubrir cultivos sensibles con mantas térmicas o plástico",
+      "avoid_watering_morning": "⏰ Evitar riego en horas de la mañana para prevenir congelamiento",
+      "increase_irrigation": "💧 Incrementar la frecuencia de riego debido al calor",
+      "provide_shade": "🌳 Proporcionar sombra artificial a cultivos delicados",
+      "optimal_growth": "✅ Temperatura ideal para el crecimiento de la mayoría de cultivos",
+      "suspend_irrigation": "🚫 Suspender el riego programado debido a las lluvias",
+      "check_drainage": "🔍 Verificar que los sistemas de drenaje estén funcionando correctamente",
+      "monitor_soil_moisture": "📊 Monitorear los niveles de humedad del suelo regularmente",
+      "water_evening": "🌙 Regar en horas de la tarde/noche para reducir evaporación",
+      "postpone_activities": "⏸️ Posponer actividades de campo hasta que pase la tormenta",
+      "secure_structures": "🔒 Asegurar invernaderos, mallas y estructuras temporales",
+      "check_supports": "🌱 Verificar tutores y soportes de plantas altas"
+    },
+    "info": {
+      "title": "Rangos de Temperatura para Cultivos",
+      "optimal_range": "Rango Óptimo",
+      "warning_range": "Precaución",
+      "danger_range": "Peligro"
+    },
+    "empty": {
+      "title": "No hay datos disponibles",
+      "subtitle": "No se pudieron cargar los datos del clima",
+      "action": "Reintentar"
+    }
   },
   "page-not-found": {
     "title": "Página no encontrada",

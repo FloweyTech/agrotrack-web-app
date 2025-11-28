@@ -36,24 +36,8 @@ export class ReadingList implements OnInit {
   displayedColumns: string[] = ['plot', 'type', 'value', 'measuredAt'];
 
   ngOnInit(): void {
-    // Los plots ya se cargan automáticamente en el constructor del OrganizationStore
-    // Esperamos un poco para que se carguen y luego cargamos las lecturas
-    setTimeout(() => {
-      this.loadAllReadings();
-    }, 100);
-  }
-
-  /** Loads readings for all plots */
-  private loadAllReadings(): void {
-    const plots = this.organizationStore.plots();
-    if (plots.length > 0) {
-      // Para mostrar datos, cargaremos las lecturas del primer plot disponible
-      this.monitoringStore.loadReadingsByPlotId(plots[0].id);
-    } else {
-      // Si no hay plots, podemos cargar con un ID por defecto o mostrar un mensaje
-      console.warn('No plots available, using default plot ID 1');
-      this.monitoringStore.loadReadingsByPlotId(1);
-    }
+    // Cargar todas las lecturas ambientales al iniciar
+    this.monitoringStore.loadAllReadings();
   }
 
   /** Gets the plot name by ID. */

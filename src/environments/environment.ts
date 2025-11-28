@@ -7,9 +7,12 @@ export const environment = {
   platformProviderPlantTypesEndpointPath: '/planttypes',
   platformProviderChecklistEndpointPath: '/checklist',
   platformProviderTaskEndpointPath: '/task',
-  platformProviderPlantSamplingSessionsEndpointPath: '/plantsamplingsession',
+  platformProviderPlantSamplingSessionsEndpointPath: '/plant-sampling-session',
   platformProviderPlantObservationEndpointPath: '/plantobservation',
   platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
   platformProviderProfileEndpointPath: '/profile',
   platformProviderReportsEndpointPath: '/reports',
+  weatherApiBaseUrl: 'https://api.weatherapi.com/v1',
+  weatherApiKey: 'd8020360b6a448fe9e1172139250810',
+  weatherApiDefaultLocation: 'Peru',
 };

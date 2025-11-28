@@ -1,8 +1,9 @@
-import { Injectable, computed, signal, Signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
+import { WeatherApiEndpoint } from '../infrastructure/weather-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
+import { Weather } from '../domain/model/weather.entity';
 import { retry } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Store for managing environmental readings and simulated IoT alerts.
@@ -24,10 +25,40 @@ export class MonitoringStore {
   private readonly errorSignal = signal<string | null>(null);
   readonly error = this.errorSignal.asReadonly();
 
+  private readonly weatherSignal = signal<Weather | null>(null);
+  readonly weather = this.weatherSignal.asReadonly();
+
+  private readonly weatherLoadingSignal = signal<boolean>(false);
+  readonly weatherLoading = this.weatherLoadingSignal.asReadonly();
+
   // --- Computed values ---
   readonly readingCount = computed(() => this.readings().length);
 
-  constructor(private monitoringApi: MonitoringApiEndpoint) {}
+  constructor(
+    private monitoringApi: MonitoringApiEndpoint,
+    private weatherApi: WeatherApiEndpoint
+  ) {}
+
+  /**
+   * Loads all environmental readings from all plots.
+   */
+  loadAllReadings(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.monitoringApi.getAllReadings().subscribe({
+      next: (readings) => {
+        console.log('Loaded all readings:', readings);
+        this.readingsSignal.set(readings);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading all readings:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to load all readings'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
 
   /**
    * Loads all readings for a specific plot.
@@ -37,13 +68,14 @@ export class MonitoringStore {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    this.monitoringApi.getReadingsByPlotId(plotId).pipe(takeUntilDestroyed()).subscribe({
+    this.monitoringApi.getReadingsByPlotId(plotId).subscribe({
       next: (readings) => {
-        console.log('Loaded readings:', readings);
+        console.log('Loaded readings for plot', plotId, ':', readings);
         this.readingsSignal.set(readings);
         this.loadingSignal.set(false);
       },
       error: (err) => {
+        console.error('Error loading readings for plot', plotId, ':', err);
         this.errorSignal.set(this.formatError(err, 'Failed to load readings'));
         this.loadingSignal.set(false);
       }
@@ -81,6 +113,7 @@ export class MonitoringStore {
    * Evaluates a reading to determine if it is outside safe thresholds.
    * @param reading The EnvironmentalReading to evaluate.
    * @returns A string message if an alert is triggered, otherwise null.
+   * TODO: Pasarlo al backend
    */
   private evaluate(reading: EnvironmentalReading): string | null {
     switch (reading.type) {
@@ -110,6 +143,27 @@ export class MonitoringStore {
    */
   clearAlerts(): void {
     this.alertsSignal.set([]);
+  }
+
+  /**
+   * Loads current weather data for a specific location.
+   * @param location - Optional location query (defaults to environment location).
+   */
+  loadCurrentWeather(location?: string): void {
+    this.weatherLoadingSignal.set(true);
+
+    this.weatherApi.getCurrentWeather(location).pipe(retry(2)).subscribe({
+      next: (weather) => {
+        console.log('Loaded weather data:', weather);
+        this.weatherSignal.set(weather);
+        this.weatherLoadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading weather:', err);
+        this.weatherSignal.set(null);
+        this.weatherLoadingSignal.set(false);
+      }
+    });
   }
 
   /**
