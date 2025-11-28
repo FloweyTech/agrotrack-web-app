@@ -3,13 +3,16 @@ import {BaseApi} from '../../shared/infrastructure/base-api';
 import {OrganizationsApiEndpoint} from './organizations-api-endpoint';
 import {SubscriptionsApiEndpoint} from './subscriptions-api-endpoint';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, map} from 'rxjs';
 import {Organization} from '../domain/model/organization.entity';
 import {Subscription} from '../domain/model/subscription.entity';
 import {PlotsApiEndpoint} from './plots-api-endpoint';
 import {PlantType, PlantTypes} from '../domain/model/plant-type.entity';
 import {PlanttypesApiEndpoint} from './planttypes-api-endpoint';
 import {Plot} from '../domain/model/plot.entity';
+import {OrganizationByOwnerResponse} from './organization-by-owner-response';
+import {CreateSubscriptionRequest, CreateSubscriptionResponse} from './create-subscription-request';
+import {environment} from '../../../environments/environment';
 
 /**
  * API service for managing endpoints in the learning context (organizations, subscriptions plots and plantTypes).
@@ -21,12 +24,42 @@ export class OrganizationApi extends BaseApi{
   private readonly plotsEndpoint: PlotsApiEndpoint;
   private readonly plantTypesEndpoint: PlanttypesApiEndpoint;
 
-  constructor(http: HttpClient) {
+  constructor(private http: HttpClient) {
     super();
     this.organizationsEndpoint = new OrganizationsApiEndpoint(http);
     this.subscriptionsEndpoint = new SubscriptionsApiEndpoint(http);
     this.plotsEndpoint = new PlotsApiEndpoint(http);
     this.plantTypesEndpoint = new PlanttypesApiEndpoint(http);
+  }
+
+  /**
+   * Retrieves organizations by owner profile ID.
+   * @param ownerProfileId - The profile ID of the owner.
+   * @returns An Observable for an array of simplified organization data.
+   */
+  getOrganizationsByOwner(ownerProfileId: number): Observable<OrganizationByOwnerResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/organizations/by-owner/${ownerProfileId}`;
+    return this.http.get<OrganizationByOwnerResponse[]>(url);
+  }
+
+  /**
+   * Creates a new organization with subscription.
+   * @param request - The subscription and organization data.
+   * @returns An Observable of the created organization response.
+   */
+  createOrganizationWithSubscription(request: CreateSubscriptionRequest): Observable<CreateSubscriptionResponse> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/subscriptions`;
+    return this.http.post<CreateSubscriptionResponse>(url, request);
+  }
+
+  /**
+   * Activates a subscription by ID.
+   * @param subscriptionId - The ID of the subscription to activate.
+   * @returns An Observable of void.
+   */
+  activateSubscription(subscriptionId: number): Observable<void> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/subscriptions/${subscriptionId}/activate`;
+    return this.http.put<void>(url, {});
   }
 
   /**

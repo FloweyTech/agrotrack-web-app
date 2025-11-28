@@ -6,6 +6,7 @@ import {retry} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PlantType} from '../domain/model/plant-type.entity';
 import {Plot} from '../domain/model/plot.entity';
+import {OrganizationByOwnerResponse} from '../infrastructure/organization-by-owner-response';
 
 /**
  * State management store for organization-related data using Angular signals.
@@ -20,6 +21,8 @@ export class OrganizationStore {
   readonly plotyCount = computed(()=> this.plots().length);
   private readonly organizationsSignal = signal<Organization[]>([]);
   readonly organizations = this.organizationsSignal.asReadonly();
+  private readonly organizationsByOwnerSignal = signal<OrganizationByOwnerResponse[]>([]);
+  readonly organizationsByOwner = this.organizationsByOwnerSignal.asReadonly();
   private readonly subscriptionsSignal = signal<Subscription[]>([]);
   readonly subscriptions = this.subscriptionsSignal.asReadonly();
   private readonly plantTypeSignal = signal<PlantType[]>([]);
@@ -39,6 +42,74 @@ export class OrganizationStore {
     this.loadSubscriptions();
     this.loadPlantTypes();
     this.loadPlots(); // Agregar carga de parcelas
+  }
+
+  /**
+   * Loads organizations by owner profile ID.
+   * @param ownerProfileId The profile ID of the owner.
+   */
+  loadOrganizationsByOwner(ownerProfileId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.getOrganizationsByOwner(ownerProfileId).pipe(retry(2)).subscribe({
+      next: organizations => {
+        console.log('Organizations by owner loaded:', organizations);
+        this.organizationsByOwnerSignal.set(organizations);
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load organizations'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Creates a new organization with subscription.
+   * @param request The subscription and organization data.
+   */
+  createOrganizationWithSubscription(request: any): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.createOrganizationWithSubscription(request).pipe(retry(2)).subscribe({
+      next: response => {
+        console.log('Organization created:', response);
+        // Reload organizations list
+        const profileId = sessionStorage.getItem('profile_id');
+        if (profileId) {
+          this.loadOrganizationsByOwner(parseInt(profileId, 10));
+        }
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to create organization'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Activates a subscription.
+   * @param subscriptionId The ID of the subscription to activate.
+   */
+  activateSubscription(subscriptionId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.organizationApi.activateSubscription(subscriptionId).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Subscription activated successfully');
+        // Reload organizations list to update isActive status
+        const profileId = sessionStorage.getItem('profile_id');
+        if (profileId) {
+          this.loadOrganizationsByOwner(parseInt(profileId, 10));
+        }
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to activate subscription'));
+        this.loadingSignal.set(false);
+      }
+    });
   }
 
   /**
