@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { retry } from 'rxjs';
 import {CreateReportCommand} from '../domain/model/create-report.command';
 import {Router} from '@angular/router';
+import {GetReportsQuery} from '../domain/model/get-reports.query';
 
 /**
  * Application service store for managing Reports state.
@@ -22,6 +23,31 @@ export class ReportStore {
 
   constructor(private reportApi: ReportApi) {}
 
+  /**
+   * Loads all reports from the API and updates the state.
+   * @remarks Uses GetReportsQuery to fetch data.
+   * @author FloweyTech developer team
+   */
+  loadReports(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    const query = new GetReportsQuery();
+
+    this.reportApi.getAll(query).subscribe({
+      next: (reports) => {
+        this.reportsSignal.set(reports);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        // Asumimos que err es un Error object gracias al ErrorHandlingEnabledBaseType
+        this.errorSignal.set(err.message || 'Error loading reports');
+        this.loadingSignal.set(false);
+        // Opcional: limpiar la lista si hay error
+        // this.reportsSignal.set([]);
+      }
+    });
+  }
 
   /**
    * Creates a new report via the API and updates the state.
@@ -47,24 +73,5 @@ export class ReportStore {
       }
     });
   }
-  /**
-   * Loads all reports from the API.
-   */
-  /*loadReports(): void {
-  this.loadingSignal.set(true);
-  this.errorSignal.set(null);
-
-  this.reportApi.getReports().subscribe({
-    next: (reports) => {
-      this.reportsSignal.set(reports);
-      this.loadingSignal.set(false);
-    },
-    error: (err) => {
-      this.errorSignal.set(this.formatError(err, 'Error al cargar reportes'));
-      this.loadingSignal.set(false);
-    }
-  });
-   */
-
 }
 
