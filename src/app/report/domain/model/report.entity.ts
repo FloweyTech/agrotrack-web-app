@@ -1,6 +1,4 @@
 import { BaseEntity } from '../../../shared/domain/model/base-entity';
-import { ReportStatus } from './report-status.entity';
-import { ReportType } from './report-type.enum';
 
 /**
  * Represents a Report entity in the domain layer.
@@ -11,7 +9,7 @@ import { ReportType } from './report-type.enum';
 
 export class Report implements BaseEntity {
   private _id: number;
-  private _status: string; // O ReportStatus si el backend devuelve strings exactos
+  private _status: string;
   private _plotId: number;
   private _organizationId: number;
   private _type: string;
@@ -19,8 +17,8 @@ export class Report implements BaseEntity {
   private _periodStart: Date;
   private _periodEnd: Date;
   private _generatedAt: Date | null;
-  // Puedes agregar un objeto para metrics si lo deseas, por ahora lo simplifico
-  // private _metrics: any;
+  private _metrics: any;
+  private _reportMetrics: any;
 
   /**
    * Initializes a new instance of the Report class.
@@ -36,6 +34,7 @@ export class Report implements BaseEntity {
     periodStart: Date;
     periodEnd: Date;
     generatedAt?: Date | null;
+    reportMetrics?: any;
   }) {
     this._id = props.id;
     this._status = props.status;
@@ -46,6 +45,7 @@ export class Report implements BaseEntity {
     this._periodStart = props.periodStart;
     this._periodEnd = props.periodEnd;
     this._generatedAt = props.generatedAt || null;
+    this._reportMetrics = props.reportMetrics || {};
   }
 
   get id(): number { return this._id; }
@@ -57,4 +57,5 @@ export class Report implements BaseEntity {
   get periodStart(): Date { return this._periodStart; }
   get periodEnd(): Date { return this._periodEnd; }
   get generatedAt(): Date | null { return this._generatedAt; }
+  get reportMetrics(): any { return this._reportMetrics; }
 }
