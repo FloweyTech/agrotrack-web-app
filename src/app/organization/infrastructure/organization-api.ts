@@ -48,6 +48,16 @@ export class OrganizationApi extends BaseApi{
   }
 
   /**
+   * Retrieves organizations by profile ID (where the profile is a member).
+   * @param profileId - The profile ID.
+   * @returns An Observable for an array of organization data.
+   */
+  getOrganizationsByProfile(profileId: number): Observable<OrganizationByOwnerResponse[]> {
+    const url = `${environment.platformProviderApiBaseUrl}/api/v1/organizations/by-profile/${profileId}`;
+    return this.http.get<OrganizationByOwnerResponse[]>(url);
+  }
+
+  /**
    * Creates a new organization with subscription.
    * @param request - The subscription and organization data.
    * @returns An Observable of the created organization response.

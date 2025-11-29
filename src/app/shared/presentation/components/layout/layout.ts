@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
@@ -45,6 +45,8 @@ export class Layout implements OnInit, OnDestroy{
     { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
 
+  private router = inject(Router);
+
   constructor(private bp: BreakpointObserver) {}
 
   ngOnInit() {
@@ -71,5 +73,13 @@ export class Layout implements OnInit, OnDestroy{
       this.sidenav.open().catch(() => {});
       this.isCollapsed = !this.isCollapsed;
     }
+  }
+
+  logout() {
+    // Clear session storage
+    sessionStorage.clear();
+    
+    // Redirect to login
+    this.router.navigate(['/login']);
   }
 }

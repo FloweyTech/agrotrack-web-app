@@ -36,6 +36,22 @@
           }
         </a>
       }
+
+      <!-- Logout Button -->
+      <a
+        mat-list-item
+        (click)="logout()"
+        class="logout-item"
+        [attr.aria-label]="'Cerrar Sesión'"
+        [matTooltip]="isCollapsed ? 'Cerrar Sesión' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon matListItemIcon>logout</mat-icon>
+
+        @if (!isCollapsed) {
+          <span matListItemTitle>Cerrar Sesión</span>
+        }
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
