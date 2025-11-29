@@ -3,7 +3,86 @@
     "organization": "Organización",
     "reports": "Reportes",
     "tasks": "Tareas",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "monitoring": "Monitoreo"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "subtitle": "¡Bienvenido!",
+      "email": "Nombre o email:",
+      "password": "Contraseña:",
+      "emailPlaceholder": "ejemplo@gmail.com",
+      "passwordPlaceholder": "*********",
+      "signIn": "Iniciar sesión",
+      "notRegistered": "¿No tienes cuenta? Haz clic aquí",
+      "error": {
+        "required": "Email y contraseña son requeridos",
+        "invalid": "Usuario inactivo o no encontrado",
+        "generic": "Error al iniciar sesión"
+      }
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "subtitle": "¡REGÍSTRATE AHORA!",
+      "name": "Nombre:",
+      "email": "Email:",
+      "password": "Contraseña:",
+      "confirmPassword": "Confirmar Contraseña:",
+      "namePlaceholder": "Nombre",
+      "emailPlaceholder": "ejemplo@gmail.com",
+      "passwordPlaceholder": "*********",
+      "agronomist": "Agrónomo",
+      "farmer": "Agricultor",
+      "createAccount": "Crear cuenta",
+      "alreadyHaveAccount": "¿Ya tienes cuenta? Iniciar sesión",
+      "error": {
+        "allRequired": "Todos los campos son requeridos",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "roleRequired": "Debe seleccionar al menos un rol (Agrónomo o Agricultor)",
+        "generic": "Error al registrar usuario"
+      }
+    }
+  },
+  "report": {
+    "title": "Reportes",
+    "refresh": "Actualizar",
+    "loading": "Cargando reportes...",
+    "filterBy": "Filtrar por Organización:",
+    "allOrganizations": "Todas las organizaciones",
+    "columns": {
+      "id": "ID",
+      "organization": "Organización",
+      "type": "Tipo",
+      "status": "Estado",
+      "period": "Periodo",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "generate": "Generar",
+      "viewDetail": "Ver detalle"
+    },
+    "detail": {
+      "title": "Detalle del Reporte #",
+      "back": "Volver",
+      "type": "Tipo",
+      "status": "Estado",
+      "startDate": "Fecha Inicio",
+      "endDate": "Fecha Fin",
+      "downloadExcel": "Descargar Excel",
+      "excelPreview": "Previsualización Excel",
+      "notFound": "No se encontró el reporte solicitado"
+    },
+    "types": {
+      "PARCEL": "Parcela",
+      "GENERAL": "General"
+    },
+    "statuses": {
+      "REQUESTED": "Solicitado",
+      "PROCESSING": "Procesando",
+      "GENERATED": "Generado",
+      "FAILED": "Fallido"
+    }
   },
   "organization": {
     "title": "Organizaciones",
@@ -28,5 +107,99 @@
     "error": {
       "name-required": "El nombre de la organización es obligatorio."
     }
+  },
+  "plot": {
+    "plantType": "Tipo de planta",
+    "addNewPlantType": "Añadir nuevo tipo",
+    "newPlantTypeName": "Nombre del nuevo tipo de planta",
+    "placeholderNewType": "Ejemplo: Quinua, Yuca, Mango...",
+    "newTitle": "Registrar nueva parcela",
+    "editTitle": "Editar parcela",
+    "name": "Nombre de la parcela",
+    "area": "Área (hectáreas)",
+    "location": "Ubicación",
+    "error": {
+      "nameRequired": "El nombre es obligatorio",
+      "areaRequired": "El área es obligatoria",
+      "areaMin": "El área mínima debe ser 0.1 hectáreas"
+    },
+    "title": "Parcelas registradas",
+    "create": "Agregar parcela",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Estás seguro de eliminar esta parcela?",
+    "edit": "Editar",
+    "no-plots": "No hay parcelas registradas.",
+    "no-location": "Sin ubicación registrada"
+  },
+  "actions": {
+    "save": "Guardar",
+    "update": "Actualizar",
+    "cancel": "Cancelar"
+  },
+  "custom": "Personalizado",
+  "monitoring": {
+    "title": "Monitoreo Ambiental",
+    "new-reading": "Nueva Lectura",
+    "readings-list": "Lista de Lecturas",
+    "readings-found": "lecturas encontradas",
+    "active-alerts": "Alertas Activas",
+    "clear-alerts": "Limpiar Alertas",
+    "no-readings": "No hay lecturas registradas",
+    "plot": "Parcela",
+    "type": "Tipo",
+    "value": "Valor",
+    "unit": "Unidad",
+    "measuredAt": "Fecha de Medición",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "loading": "Cargando lecturas...",
+    "form": {
+      "title": "Registrar Lectura Ambiental",
+      "subtitle": "Registra una nueva lectura ambiental para monitorear tus cultivos",
+      "plotSection": "Seleccionar Parcela",
+      "typeSection": "Tipo de Lectura",
+      "valueSection": "Valor de la Medición",
+      "dateSection": "Fecha y Hora",
+      "plotHint": "Selecciona la parcela donde se realizará la lectura",
+      "dateHint": "La lectura se registrará con la fecha y hora actual",
+      "saving": "Guardando...",
+      "selectType": "Por favor selecciona un tipo de lectura",
+      "enterValue": "Ingresa un valor válido",
+      "success": "Lectura guardada exitosamente"
+    },
+    "types": {
+      "TEMPERATURE": "Temperatura",
+      "HUMIDITY": "Humedad",
+      "PH_LEVEL": "Nivel pH"
+    },
+    "hints": {
+      "temperature": "Rango normal: 15-35°C",
+      "humidity": "Rango normal: 40-80%",
+      "ph": "Rango normal: 5.5-7.5 pH"
+    },
+    "placeholders": {
+      "temperature": "Ej: 25.5",
+      "humidity": "Ej: 65.2",
+      "ph": "Ej: 6.8",
+      "value": "Ingresa el valor"
+    },
+    "time": {
+      "moment": "Hace un momento",
+      "minutes": "Hace {{count}} min",
+      "hours": "Hace {{count}} horas",
+      "days": "Hace {{count}} días",
+      "week": "Hace más de una semana"
+    }
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
+  },
+  "members": {
+    "button-back": "Volver a organizaciones",
+    "title": "Miembros de la organización",
+    "button-add": "Agregar",
+    "select": "Selecciona un perfil"
   }
 }

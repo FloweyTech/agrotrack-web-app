@@ -49,5 +49,32 @@
   position: fixed;
   top: 120px;
   right: 2rem;
-  z-index: 1000;
+}
+
+/* Estilos personalizados para botones - Selectores más específicos */
+.organization-list .mat-mdc-raised-button.mat-primary {
+  background-color: #4CAF50 !important; /* Verde */
+  color: white !important;
+}
+
+.organization-list .mat-mdc-raised-button.mat-primary:hover {
+  background-color: #45a049 !important; /* Verde más oscuro al hover */
+}
+
+.organization-list .mat-mdc-raised-button.mat-warn {
+  background-color: #f44336 ; /* Rojo para delete */
+  color: white !important;
+}
+
+.organization-list .mat-mdc-raised-button.mat-warn:hover {
+  background-color: #d32f2f !important; /* Rojo más oscuro */
+}
+
+.organization-list .mat-mdc-icon-button.mat-primary {
+  color: #2196F3 !important; /* Azul para el botón de editar */
+}
+
+.organization-list .mat-mdc-icon-button.mat-primary:hover {
+  color: #1976D2 !important;
+  background-color: rgba(33, 150, 243, 0.1) !important;
 }

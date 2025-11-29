@@ -10,6 +10,7 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { IamStore } from '../../../../iam/application/iam.store';
 
 
 @Component({
@@ -34,6 +35,9 @@ export class OrganizationForm {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private store = inject(OrganizationStore);
+  private iamStore = inject(IamStore);
+
+
 
   form = this.fb.group({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -43,6 +47,7 @@ export class OrganizationForm {
 
   isEdit = false;
   organizationId: number | null = null;
+  private currentOwnerProfileId: number | null = null;
 
   constructor() {
     this.route.params.subscribe(params => {
@@ -53,6 +58,7 @@ export class OrganizationForm {
         const organization = this.store.getOrganizationById(this.organizationId)();
         if (organization) {
           this.form.patchValue({ name: organization.name });
+          this.currentOwnerProfileId = organization.ownerProfileId;
         }
       }
     });
@@ -61,16 +67,24 @@ export class OrganizationForm {
   submit() {
     if (!this.form.valid) return;
 
+    const ownerProfileId =
+      this.isEdit
+        ? (this.currentOwnerProfileId as number)
+        : (this.iamStore.currentUserId() ?? 0);
+
     const organization = new Organization({
       id: this.organizationId ?? Date.now(),
       name: this.form.value.name!,
+      ownerProfileId,
       members: [],
-      status: OrganizationStatus.ACTIVE,
+      status: (this.form.value.status === 'inactive'
+        ? OrganizationStatus.INACTIVE
+        : OrganizationStatus.ACTIVE),
       subscription: new Subscription({
         id: Math.floor(Math.random() * 10000),
         plan: SubscriptionPlan.AGROSTART,
         startDate: new Date(),
-        endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)), // +1 año
+        endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
         status: SubscriptionStatus.ACTIVE
       })
     });
@@ -81,9 +95,9 @@ export class OrganizationForm {
       this.store.addOrganization(organization);
     }
 
-
     this.router.navigate(['/organization']).then();
   }
+
   goBack(): void {
     this.router.navigate(['/organization']).then();
   }

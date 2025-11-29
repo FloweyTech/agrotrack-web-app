@@ -3,7 +3,86 @@
     "organization": "Organization",
     "reports": "Reports",
     "tasks": "Tasks",
-    "settings": "Settings"
+    "settings": "Settings",
+    "monitoring": "Monitoring"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome!",
+      "email": "Name or email:",
+      "password": "Password:",
+      "emailPlaceholder": "example@gmail.com",
+      "passwordPlaceholder": "*********",
+      "signIn": "Sign in",
+      "notRegistered": "Not registered yet? Click here",
+      "error": {
+        "required": "Email and password are required",
+        "invalid": "Inactive user or not found",
+        "generic": "Error logging in"
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "REGISTER NOW!",
+      "name": "Name:",
+      "email": "Email:",
+      "password": "Password:",
+      "confirmPassword": "Confirm Password:",
+      "namePlaceholder": "Name",
+      "emailPlaceholder": "example@gmail.com",
+      "passwordPlaceholder": "*********",
+      "agronomist": "Agronomist",
+      "farmer": "Farmer",
+      "createAccount": "Create account",
+      "alreadyHaveAccount": "Already have an account? Sign in",
+      "error": {
+        "allRequired": "All fields are required",
+        "passwordMismatch": "Passwords do not match",
+        "roleRequired": "Must select at least one role (Agronomist or Farmer)",
+        "generic": "Error registering user"
+      }
+    }
+  },
+  "report": {
+    "title": "Reports",
+    "refresh": "Refresh",
+    "loading": "Loading reports...",
+    "filterBy": "Filter by Organization:",
+    "allOrganizations": "All organizations",
+    "columns": {
+      "id": "ID",
+      "organization": "Organization",
+      "type": "Type",
+      "status": "Status",
+      "period": "Period",
+      "actions": "Actions"
+    },
+    "actions": {
+      "generate": "Generate",
+      "viewDetail": "View detail"
+    },
+    "detail": {
+      "title": "Report Detail #",
+      "back": "Back",
+      "type": "Type",
+      "status": "Status",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "downloadExcel": "Download Excel",
+      "excelPreview": "Excel Preview",
+      "notFound": "Requested report not found"
+    },
+    "types": {
+      "PARCEL": "Parcel",
+      "GENERAL": "General"
+    },
+    "statuses": {
+      "REQUESTED": "Requested",
+      "PROCESSING": "Processing",
+      "GENERATED": "Generated",
+      "FAILED": "Failed"
+    }
   },
   "organization": {
     "title": "Organizations",
@@ -28,5 +107,99 @@
     "error": {
       "name-required": "Organization name is required."
     }
+  },
+  "plot": {
+    "plantType": "Plant type",
+    "addNewPlantType": "Add new type",
+    "newPlantTypeName": "New plant type name",
+    "placeholderNewType": "Example: Quinoa, Yuca, Mango...",
+    "newTitle": "Register new plot",
+    "editTitle": "Edit plot",
+    "name": "Plot name",
+    "area": "Area (hectares)",
+    "location": "Location",
+    "error": {
+      "nameRequired": "Name is required",
+      "areaRequired": "Area is required",
+      "areaMin": "Minimum area must be 0.1 hectares"
+    },
+    "title": "Registered plots",
+    "create": "Add plot",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this plot?",
+    "edit": "Edit",
+    "no-plots": "No plots registered.",
+    "no-location": "No location registered"
+  },
+  "actions": {
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+  "custom": "Custom",
+  "monitoring": {
+    "title": "Environmental Monitoring",
+    "new-reading": "New Reading",
+    "readings-list": "Readings List",
+    "readings-found": "readings found",
+    "active-alerts": "Active Alerts",
+    "clear-alerts": "Clear Alerts",
+    "no-readings": "No readings registered",
+    "plot": "Plot",
+    "type": "Type",
+    "value": "Value",
+    "unit": "Unit",
+    "measuredAt": "Measurement Date",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading readings...",
+    "form": {
+      "title": "Register Environmental Reading",
+      "subtitle": "Register a new environmental reading to monitor your crops",
+      "plotSection": "Select Plot",
+      "typeSection": "Reading Type",
+      "valueSection": "Measurement Value",
+      "dateSection": "Date and Time",
+      "plotHint": "Select the plot where the reading will be taken",
+      "dateHint": "The reading will be registered with the current date and time",
+      "saving": "Saving...",
+      "selectType": "Please select a reading type",
+      "enterValue": "Enter a valid value",
+      "success": "Reading saved successfully"
+    },
+    "types": {
+      "TEMPERATURE": "Temperature",
+      "HUMIDITY": "Humidity",
+      "PH_LEVEL": "pH Level"
+    },
+    "hints": {
+      "temperature": "Normal range: 15-35°C",
+      "humidity": "Normal range: 40-80%",
+      "ph": "Normal range: 5.5-7.5 pH"
+    },
+    "placeholders": {
+      "temperature": "Ex: 25.5",
+      "humidity": "Ex: 65.2",
+      "ph": "Ex: 6.8",
+      "value": "Enter the value"
+    },
+    "time": {
+      "moment": "A moment ago",
+      "minutes": "{{count}} min ago",
+      "hours": "{{count}} hours ago",
+      "days": "{{count}} days ago",
+      "week": "More than a week ago"
+    }
+  },
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
+    "go-home": "Go Home"
+  },
+  "members": {
+    "button-back": "Go back to organization",
+    "title": "Organization members",
+    "button-add": "Add",
+    "select": "Select a profile"
   }
 }
