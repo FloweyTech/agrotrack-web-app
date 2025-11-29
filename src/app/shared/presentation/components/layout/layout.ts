@@ -12,6 +12,9 @@ import {NgOptimizedImage} from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject, takeUntil } from 'rxjs';
 import {Profile} from '../../../../profile/presentation/views/profile/profile';
+// 1. IMPORTAMOS LOS STORES
+import { IamStore } from '../../../../iam/application/iam.store';
+import { ProfileStore } from '../../../../profile/application/profile.store';
 
 
 @Component({
@@ -46,16 +49,30 @@ export class Layout implements OnInit, OnDestroy{
   ];
 
   private router = inject(Router);
+  // 2. INYECTAMOS LOS STORES
+  private iamStore = inject(IamStore);
+  private profileStore = inject(ProfileStore);
 
   constructor(private bp: BreakpointObserver) {}
 
   ngOnInit() {
+    // Lógica Responsive
     this.bp.observe(['(max-width: 800px)'])
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.isMobile = state.matches;
         if (this.isMobile) this.isMenuOpen = false;
       });
+
+    // 3. MAGIA DE HIDRATACIÓN (Aquí se carga tu perfil al entrar)
+    const userId = this.iamStore.currentUserIdValue;
+
+    if (userId) {
+      // Como ya estamos dentro de la zona segura (Layout),
+      // pedimos cargar los datos del usuario para que salgan en la foto del header y settings.
+      console.log('Layout: Cargando perfil del usuario...', userId);
+      this.profileStore.loadProfilesByIds([userId]);
+    }
   }
 
   ngOnDestroy() {
@@ -76,10 +93,9 @@ export class Layout implements OnInit, OnDestroy{
   }
 
   logout() {
-    // Clear session storage
-    sessionStorage.clear();
-    
-    // Redirect to login
-    this.router.navigate(['/login']);
+    // 4. LOGOUT CENTRALIZADO
+    // Limpiamos los stores y salimos usando la lógica del IamStore
+    this.profileStore.clearProfiles();
+    this.iamStore.signOut(this.router);
   }
 }

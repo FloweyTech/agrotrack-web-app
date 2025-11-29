@@ -15,6 +15,7 @@ import { MonitoringStore } from '../../../application/monitoring-control.store';
 import { OrganizationStore } from '../../../../organization/application/organization.store';
 import { ProfileStore } from '../../../../profile/application/profile.store';
 import { Task } from '../../../domain/model/task.entity';
+import {IamStore} from '../../../../iam/application/iam.store';
 
 interface OrganizationOption {
   id: number;
@@ -53,11 +54,14 @@ export class TaskCreate implements OnInit {
   readonly monitoringStore = inject(MonitoringStore);
   readonly organizationStore = inject(OrganizationStore);
   readonly profileStore = inject(ProfileStore);
+  private readonly iamStore = inject(IamStore);
 
   taskForm!: FormGroup;
   organizations: OrganizationOption[] = [];
   profiles: ProfileOption[] = [];
   assigneeProfileId: number = 0;
+
+
 
   ngOnInit(): void {
     this.initForm();
@@ -82,10 +86,11 @@ export class TaskCreate implements OnInit {
   }
 
   private loadAssigneeProfile(): void {
-    const profileIdStr = sessionStorage.getItem('profile_id');
-    if (profileIdStr) {
-      this.assigneeProfileId = parseInt(profileIdStr, 10);
-    }
+    const currentId = this.iamStore.currentUserIdValue;
+    this.assigneeProfileId = currentId ? currentId : 0;
+
+    // Debug
+    console.log('Task Create - Loaded Profile ID:', this.assigneeProfileId);
   }
 
   private loadOrganizations(): void {
@@ -105,21 +110,23 @@ export class TaskCreate implements OnInit {
 
   onOrganizationChange(organizationId: number): void {
     const selectedOrg = this.organizationsFromStore.find(org => org.id === organizationId);
-    
-    if (selectedOrg && selectedOrg.profileIds.length > 0) {
-      // Load profiles for selected organization
+
+    // Habilitar siempre para evitar bloqueos
+    this.taskForm.get('assignedToProfileId')?.enable();
+
+    if (selectedOrg && selectedOrg.profileIds && selectedOrg.profileIds.length > 0) {
+      console.log('Cargando miembros:', selectedOrg.profileIds);
+      // AHORA ESTO FUNCIONARÁ (usará /profiles/1 en vez de /profiles?id=1)
       this.profileStore.loadProfilesByIds(selectedOrg.profileIds);
-      
-      // Enable assigned profile field
-      this.taskForm.get('assignedToProfileId')?.enable();
     } else {
-      this.profiles = [];
-      this.taskForm.get('assignedToProfileId')?.disable();
-      this.taskForm.get('assignedToProfileId')?.setValue(null);
+      // Solo si no hay IDs intentamos cargar todos (que puede fallar si el backend no quiere)
+      console.warn('No se encontraron miembros, intentando cargar todos...');
+      this.profileStore.loadProfiles();
     }
   }
 
   get profilesFromStore() {
+    // Ahora solo leemos del ProfileStore, que es la fuente de la verdad
     return this.profileStore.profiles();
   }
 
@@ -143,7 +150,7 @@ export class TaskCreate implements OnInit {
     }
 
     const formValue = this.taskForm.value;
-    
+
     const task: Task = new Task({
       assigneeProfileId: this.assigneeProfileId,
       assignedToProfileId: formValue.assignedToProfileId,
@@ -157,7 +164,7 @@ export class TaskCreate implements OnInit {
     });
 
     this.monitoringStore.createTask(task);
-    
+
     // Navigate back to task list
     this.router.navigate(['/tasks']);
   }

@@ -19,6 +19,9 @@ import { IamStore } from '../../../../iam/application/iam.store';
 import { UserRole } from '../../../../iam/domain/model/user.role.enum';
 import { Router } from '@angular/router';
 import { Inject } from '@angular/core';
+import {OrganizationStore} from '../../../../organization/application/organization.store';
+
+
 
 @Component({
   selector: 'app-task-list',
@@ -46,6 +49,7 @@ import { Inject } from '@angular/core';
 export class TaskList implements OnInit {
   readonly monitoringStore = inject(MonitoringStore);
   readonly iamStore = inject(IamStore);
+  readonly organizationStore = inject(OrganizationStore)
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
@@ -54,97 +58,7 @@ export class TaskList implements OnInit {
   startDateFilter: Date | null = null;
   endDateFilter: Date | null = null;
 
-  // Mock data for demo (will be replaced with API data)
-  mockTasks = [
-    {
-      id: 'task1',
-      titleKey: 'tasks.list.task1.title',
-      descriptionKey: 'tasks.list.task1.description',
-      categoryKey: 'tasks.categories.irrigation',
-      priority: 'high',
-      status: 'pending',
-      assignedBy: 'Dr. María González',
-      dueDate: '2025-01-12',
-      completed: false
-    },
-    {
-      id: 'task2',
-      titleKey: 'tasks.list.task2.title',
-      descriptionKey: 'tasks.list.task2.description',
-      categoryKey: 'tasks.categories.fertilization',
-      priority: 'medium',
-      status: 'pending',
-      assignedBy: 'Ing. Carlos Rodríguez',
-      dueDate: '2025-01-15',
-      completed: false
-    },
-    {
-      id: 'task3',
-      titleKey: 'tasks.list.task3.title',
-      descriptionKey: 'tasks.list.task3.description',
-      categoryKey: 'tasks.categories.pest_control',
-      priority: 'high',
-      status: 'inProgress',
-      assignedBy: 'Dr. María González',
-      dueDate: '2025-01-10',
-      completed: false
-    },
-    {
-      id: 'task4',
-      titleKey: 'tasks.list.task4.title',
-      descriptionKey: 'tasks.list.task4.description',
-      categoryKey: 'tasks.categories.monitoring',
-      priority: 'medium',
-      status: 'completed',
-      assignedBy: 'Ing. Ana López',
-      dueDate: '2025-01-08',
-      completed: true
-    },
-    {
-      id: 'task5',
-      titleKey: 'tasks.list.task5.title',
-      descriptionKey: 'tasks.list.task5.description',
-      categoryKey: 'tasks.categories.maintenance',
-      priority: 'low',
-      status: 'pending',
-      assignedBy: 'Dr. María González',
-      dueDate: '2025-01-20',
-      completed: false
-    },
-    {
-      id: 'task6',
-      titleKey: 'tasks.list.task6.title',
-      descriptionKey: 'tasks.list.task6.description',
-      categoryKey: 'tasks.categories.soil_preparation',
-      priority: 'high',
-      status: 'pending',
-      assignedBy: 'Ing. Carlos Rodríguez',
-      dueDate: '2025-01-14',
-      completed: false
-    },
-    {
-      id: 'task7',
-      titleKey: 'tasks.list.task7.title',
-      descriptionKey: 'tasks.list.task7.description',
-      categoryKey: 'tasks.categories.harvest',
-      priority: 'medium',
-      status: 'pending',
-      assignedBy: 'Ing. Ana López',
-      dueDate: '2025-01-11',
-      completed: false
-    },
-    {
-      id: 'task8',
-      titleKey: 'tasks.list.task8.title',
-      descriptionKey: 'tasks.list.task8.description',
-      categoryKey: 'tasks.categories.pest_control',
-      priority: 'high',
-      status: 'completed',
-      assignedBy: 'Dr. María González',
-      dueDate: '2025-01-09',
-      completed: true
-    }
-  ];
+
 
   get filteredTasks() {
     return this.tasks.filter(task => {
@@ -169,24 +83,24 @@ export class TaskList implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.loadData();
   }
 
-  /** Load tasks based on user role */
-  loadTasks(): void {
+  loadData(): void {
     const profileId = this.iamStore.currentUserIdValue;
+    if (!profileId) return;
 
-    if (!profileId) {
-      console.error('No profile ID found');
-      return;
-    }
-
-    if (this.iamStore.isFarmer()) {
+    // 1. Cargar Tareas
+    if (this.isFarmer) {
       this.monitoringStore.loadTasksAssignedTo(profileId);
-    } else if (this.iamStore.isAgronomist()) {
+    } else if (this.isAgronomist) {
       this.monitoringStore.loadTasksByAssignee(profileId);
     }
+
+    // 2. Cargar Organizaciones (Para poder mostrar los nombres)
+    this.organizationStore.loadOrganizationsByOwner(profileId);
   }
+
 
   /** Get tasks from store */
   get tasks() {
@@ -206,15 +120,14 @@ export class TaskList implements OnInit {
     this.router.navigate(['/tasks/create']);
   }
 
-  /** Get unique organizations from tasks */
+  /** Get unique organizations from tasks for the filter dropdown */
   get uniqueOrganizations() {
-    const orgMap = new Map<number, string>();
-    this.tasks.forEach(task => {
-      if (task.organizationId && task.organizationName) {
-        orgMap.set(task.organizationId, task.organizationName);
-      }
-    });
-    return Array.from(orgMap.entries()).map(([id, name]) => ({ id, name }));
+    // Usamos las organizaciones cargadas en el store en lugar de deducirlas de las tareas
+    // para tener nombres más fiables.
+    return this.organizationStore.organizationsByOwner().map(org => ({
+      id: org.id,
+      name: org.organizationName
+    }));
   }
 
   /** Clear date filters */

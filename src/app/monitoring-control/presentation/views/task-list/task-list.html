@@ -60,14 +60,13 @@
   </mat-card>
 
   <!-- Header with Create Button for Agronomist -->
-  @if (isAgronomist) {
     <div class="action-bar">
       <button mat-raised-button color="primary" (click)="navigateToCreateTask()">
         <mat-icon>add</mat-icon>
         Asignar Nueva Tarea
       </button>
     </div>
-  }
+
 
   <!-- Tasks List -->
   <div class="tasks-grid">

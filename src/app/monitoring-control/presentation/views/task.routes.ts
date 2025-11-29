@@ -1,7 +1,12 @@
-const taskList = () => import('./task-list/task-list').then(m => m.TaskList);
-const taskCreate = () => import('./task-create/task-create').then(m => m.TaskCreate);
+import { Routes } from '@angular/router';
 
-export const taskRoutes = [
-  { path: '', loadComponent: taskList },
-  { path: 'create', loadComponent: taskCreate },
+export const taskRoutes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./task-list/task-list').then(m => m.TaskList)
+  },
+  {
+    path: 'create',
+    loadComponent: () => import('./task-create/task-create').then(m => m.TaskCreate)
+  }
 ];
