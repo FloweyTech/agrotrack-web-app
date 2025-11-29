@@ -10,8 +10,8 @@
     <label for="orgFilter">{{ 'report.filterBy' | translate }}</label>
     <select id="orgFilter" (change)="filterByOrganization($event)">
       <option value="">{{ 'report.allOrganizations' | translate }}</option>
-      <option *ngFor="let org of organizations" [value]="org">
-        {{ org }}
+      <option *ngFor="let orgId of organizations" [value]="orgId">
+        {{ 'Organization ' + orgId }}
       </option>
     </select>
   </div>
@@ -19,14 +19,15 @@
   <p *ngIf="store.loading()" class="loading-text">{{ 'report.loading' | translate }}</p>
 
   <table *ngIf="!store.loading()" mat-table [dataSource]="filteredReports" class="mat-elevation-z2">
+
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>{{ 'report.columns.id' | translate }}</th>
       <td mat-cell *matCellDef="let r">{{ r.id }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="organizationName">
+    <ng-container matColumnDef="organizationId">
       <th mat-header-cell *matHeaderCellDef>{{ 'report.columns.organization' | translate }}</th>
-      <td mat-cell *matCellDef="let r">{{ r.organizationName }}</td>
+      <td mat-cell *matCellDef="let r">{{ r.organizationId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="type">
@@ -36,7 +37,9 @@
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>{{ 'report.columns.status' | translate }}</th>
-      <td mat-cell *matCellDef="let r">{{ ('report.statuses.' + r.status) | translate }}</td>
+      <td mat-cell *matCellDef="let r" [class]="'status-' + r.status.toLowerCase()">
+        {{ ('report.statuses.' + r.status) | translate }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="period">
@@ -49,7 +52,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{ 'report.columns.actions' | translate }}</th>
       <td mat-cell *matCellDef="let r">
-        <button mat-raised-button color="primary" (click)="generate(r)">
+        <button *ngIf="r.status !== 'GENERATED'" mat-raised-button color="primary" (click)="generate(r)">
           {{ 'report.actions.generate' | translate }}
         </button>
         <a mat-raised-button color="accent" [routerLink]="[r.id]">
