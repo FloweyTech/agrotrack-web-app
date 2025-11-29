@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { IamStore } from '../../../iam/application/iam.store';
 
 interface ProfileData {
   id: number;
@@ -39,16 +40,16 @@ interface ProfileData {
 export class Settings implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly http = inject(HttpClient);
+  private readonly iamStore = inject(IamStore);
 
   profileForm!: FormGroup;
   photoForm!: FormGroup;
   profile: ProfileData | null = null;
   loading = false;
-  profileId: number = 0;
+  profileId: number | null = null;
 
   ngOnInit(): void {
     this.initForms();
-    this.loadProfileId();
     this.loadProfile();
   }
 
@@ -63,18 +64,14 @@ export class Settings implements OnInit {
     });
   }
 
-  private loadProfileId(): void {
-    const profileIdStr = sessionStorage.getItem('profile_id');
-    if (profileIdStr) {
-      this.profileId = parseInt(profileIdStr, 10);
-    }
-  }
 
   private loadProfile(): void {
+    this.profileId = this.iamStore.currentUserIdValue;
+
     if (!this.profileId) return;
 
     this.loading = true;
-    const url = `${environment.platformProviderApiBaseUrl}/api/v1/profiles/${this.profileId}`;
+    const url = `${environment.platformProviderApiBaseUrl}/profiles/${this.profileId}`;
 
     this.http.get<ProfileData>(url).subscribe({
       next: (data) => {
@@ -102,7 +99,7 @@ export class Settings implements OnInit {
     }
 
     this.loading = true;
-    const url = `${environment.platformProviderApiBaseUrl}/api/v1/profiles/${this.profileId}/person-name`;
+    const url = `${environment.platformProviderApiBaseUrl}profiles/${this.profileId}/person-name`;
     const body = this.profileForm.value;
 
     this.http.put(url, body).subscribe({
@@ -125,7 +122,7 @@ export class Settings implements OnInit {
     }
 
     this.loading = true;
-    const url = `${environment.platformProviderApiBaseUrl}/api/v1/profiles/${this.profileId}/photo-url`;
+    const url = `${environment.platformProviderApiBaseUrl}/profiles/${this.profileId}/photo-url`;
     const body = this.photoForm.value;
 
     this.http.put(url, body).subscribe({

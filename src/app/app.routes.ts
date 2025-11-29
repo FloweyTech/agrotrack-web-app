@@ -44,7 +44,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        loadComponent: () => import('./settings/presentation/views/settings').then(m => m.Settings),
+        loadChildren: () => import('./settings/presentation/views/settings.routes').then(m => m.settingsRoutes),
         title: `${baseTitle} | Settings`
       }
     ]
