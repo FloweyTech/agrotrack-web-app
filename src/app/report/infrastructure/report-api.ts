@@ -7,6 +7,7 @@ import {ReportAssembler} from './report-assembler';
 import {ReportEndpoint} from './report-endpoint';
 import {CreateReportCommand} from '../domain/model/create-report.command';
 import {map} from 'rxjs/operators';
+import {GetReportsQuery} from '../domain/model/get-reports.query';
 
 /**
  * API service for Reports operations.
@@ -22,6 +23,18 @@ export class ReportApi extends BaseApi {
     super();
     this.assembler = new ReportAssembler();
     this.endpoint = new ReportEndpoint(http, this.assembler);
+  }
+
+  /**
+   * Retrieves all reports based on the provided query.
+   * @param query - The query criteria.
+   * @returns An Observable of Report entities.
+   * @author FloweyTech developer team
+   */
+  getAll(query: GetReportsQuery): Observable<Report[]> {
+    return this.endpoint.fetchReports(query).pipe(
+      map(resources => this.assembler.toEntitiesFromResources(resources))
+    );
   }
 
   /**
