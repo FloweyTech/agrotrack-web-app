@@ -6,6 +6,7 @@ import {ReportAssembler} from './report-assembler';
 import {CreateReportCommand} from '../domain/model/create-report.command';
 import { Observable, catchError, map } from 'rxjs';
 import {ReportResource} from './report-resource';
+import {GetReportsQuery} from '../domain/model/get-reports.query';
 
 
 /**
@@ -39,6 +40,22 @@ export class ReportEndpoint extends ErrorHandlingEnabledBaseType {
     return this.http.post<ReportResource>(url, requestBody).pipe(
       map(resource => resource), // No conversion needed here, handled in API facade or Store
       catchError(this.handleError('Failed to create report'))
+    );
+  }
+  /**
+   * Sends a GET request to retrieve all reports for the authenticated user.
+   * @param query - The query object (currently empty, but prepared for filters).
+   * @returns An Observable of ReportResource array.
+   * @author FloweyTech developer team
+   */
+  fetchReports(query: GetReportsQuery): Observable<ReportResource[]> {
+    // El endpoint es base + /reports. El interceptor pondrá el token.
+    const url = `${this.baseUrl}/reports`;
+
+    // Si tuvieras filtros en el query, usarías HttpParams aquí.
+
+    return this.http.get<ReportResource[]>(url).pipe(
+      catchError(this.handleError('Failed to fetch reports'))
     );
   }
 
