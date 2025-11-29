@@ -64,13 +64,22 @@
     },
     "detail": {
       "title": "Detalle del Reporte #",
+      "metricType": "Tipo de Métrica",
+      "generatedAt": "Generado el",
       "back": "Volver",
       "type": "Tipo",
       "status": "Estado",
       "startDate": "Fecha Inicio",
       "endDate": "Fecha Fin",
       "downloadExcel": "Descargar Excel",
-      "excelPreview": "Previsualización Excel",
+      "results": "Resultados / Métricas",
+      "processingOrFailed": "El reporte se está procesando o falló. No hay datos disponibles.",
+      "metrics": {
+        "average": "Promedio",
+        "max": "Valor Máx",
+        "min": "Valor Mín",
+        "count": "Registros"
+      },
       "notFound": "No se encontró el reporte solicitado"
     },
     "types": {
@@ -81,6 +90,7 @@
       "REQUESTED": "Solicitado",
       "PROCESSING": "Procesando",
       "GENERATED": "Generado",
+      "CREATED": "Creado",
       "FAILED": "Fallido"
     }
   },
