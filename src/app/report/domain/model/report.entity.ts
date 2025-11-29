@@ -3,78 +3,58 @@ import { ReportStatus } from './report-status.entity';
 import { ReportType } from './report-type.enum';
 
 /**
- * Class: Report
- * Represents a report entity with its properties and lifecycle methods.
+ * Represents a Report entity in the domain layer.
+ * @remarks
+ * Matches the structure returned by the backend, including metrics.
+ * @author FloweyTech developer team
  */
 
 export class Report implements BaseEntity {
-  id: number;
-  requestedBy: number | null;
-  plotId: number | null;
-  organizationId: number;
-  organizationName: string;
-  type: ReportType;
-  status: ReportStatus;
-  periodStart: Date;
-  periodEnd: Date;
-  generatedAt: Date | null;
-  generate: boolean;
+  private _id: number;
+  private _status: string; // O ReportStatus si el backend devuelve strings exactos
+  private _plotId: number;
+  private _organizationId: number;
+  private _type: string;
+  private _metricType: string;
+  private _periodStart: Date;
+  private _periodEnd: Date;
+  private _generatedAt: Date | null;
+  // Puedes agregar un objeto para metrics si lo deseas, por ahora lo simplifico
+  // private _metrics: any;
 
   /**
    * Initializes a new instance of the Report class.
+   * @param props - The properties to initialize the report.
    */
   constructor(props: {
     id: number;
-    requestedBy?: number | null;
-    plotId?: number | null;
+    status: string;
+    plotId: number;
     organizationId: number;
-    organizationName: string;
-    type: ReportType;
-    status?: ReportStatus;
+    type: string;
+    metricType: string;
     periodStart: Date;
     periodEnd: Date;
     generatedAt?: Date | null;
-    generate?: boolean;
   }) {
-    this.id = props.id;
-    this.requestedBy = props.requestedBy ?? null;
-    this.plotId = props.plotId ?? null;
-    this.organizationId = props.organizationId;
-    this.organizationName = props.organizationName;
-    this.type = props.type;
-    this.status = props.status ?? ReportStatus.REQUESTED;
-    this.periodStart = props.periodStart;
-    this.periodEnd = props.periodEnd;
-    this.generatedAt = props.generatedAt ?? null;
-    this.generate = props.generate ?? false;
+    this._id = props.id;
+    this._status = props.status;
+    this._plotId = props.plotId;
+    this._organizationId = props.organizationId;
+    this._type = props.type;
+    this._metricType = props.metricType;
+    this._periodStart = props.periodStart;
+    this._periodEnd = props.periodEnd;
+    this._generatedAt = props.generatedAt || null;
   }
-  /**
-   * Sets the report status to REQUESTED and marks it as not generated.
-   */
-  request(): void {
-    this.status = ReportStatus.REQUESTED;
-    this.generate = false;
-  }
-  /**
-   * Sets the report status to PROCESSING.
-   */
-  startProcessing(): void {
-    this.status = ReportStatus.PROCESSING;
-  }
-  /**
-   * Marks the report as GENERATED, sets the generated date, and marks it as generated.
-   */
-  markGenerated(date: Date): void {
-    this.status = ReportStatus.GENERATED;
-    this.generate = true;
-    this.generatedAt = date;
-  }
-  /**
-   * Marks the report as FAILED, logs the reason, and marks it as not generated.
-   */
-  markFailed(reason: string): void {
-    console.error(`Report generation failed: ${reason}`);
-    this.status = ReportStatus.FAILED;
-    this.generate = false;
-  }
+
+  get id(): number { return this._id; }
+  get status(): string { return this._status; }
+  get plotId(): number { return this._plotId; }
+  get organizationId(): number { return this._organizationId; }
+  get type(): string { return this._type; }
+  get metricType(): string { return this._metricType; }
+  get periodStart(): Date { return this._periodStart; }
+  get periodEnd(): Date { return this._periodEnd; }
+  get generatedAt(): Date | null { return this._generatedAt; }
 }

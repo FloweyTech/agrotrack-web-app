@@ -1,53 +1,43 @@
-import { BaseAssembler } from "../../shared/infrastructure/base-assembler";
-import { ReportStatus } from "../domain/model/report-status.entity";
-import { ReportType } from "../domain/model/report-type.enum";
 import { Report } from "../domain/model/report.entity";
 import { ReportResource } from "./report-resource";
-import { ReportsResponse } from "./reports-response";
+import {CreateReportCommand} from '../domain/model/create-report.command';
+import {CreateReportRequest} from './create-report.request';
 
 /**
- * ReportAssembler
- * Converts between domain entities (Report)
- * and infrastructure resources (ReportResource / ReportsResponse).
+ * Assembler for converting between report commands, requests, and entities.
+ * @author FloweyTech developer team
  */
-export class ReportAssembler implements BaseAssembler<Report, ReportResource, ReportsResponse> {
-
+export class ReportAssembler {
   /**
-   * Converts a JSON resource into a domain entity.
+   * Converts a CreateReportCommand to a CreateReportRequest (Body only).
+   * @param command - The creation command.
+   * @returns The request body object.
    */
-  toEntityFromResource(resource: ReportResource): Report {
-    return new Report({
-      id: resource.id,
-      organizationId: resource.organizationId,
-      organizationName: resource.organizationName,
-      type: resource.reportType as ReportType,
-      status: resource.reportStatus as ReportStatus,
-      periodStart: new Date(resource.periodStart),
-      periodEnd: new Date(resource.periodEnd),
-      generate: resource.generate
-    });
-  }
-
-  /**
-   * Converts a domain entity into a JSON resource ready for sending.
-   */
-  toResourceFromEntity(entity: Report): ReportResource {
+  toRequestFromCommand(command: CreateReportCommand): CreateReportRequest {
     return {
-      id: entity.id,
-      organizationId: entity.organizationId,
-      organizationName: entity.organizationName,
-      reportType: entity.type,
-      reportStatus: entity.status,
-      periodStart: entity.periodStart.toISOString(),
-      periodEnd: entity.periodEnd.toISOString(),
-      generate: entity.generate
+      type: command.type,
+      metricType: command.metricType,
+      periodStart: command.periodStart,
+      periodEnd: command.periodEnd
     };
   }
 
   /**
-   * Converts an API response with multiple reports into domain entities.
+   * Converts a ReportResource (JSON) to a Report (Entity).
+   * @param resource - The resource from the API.
+   * @returns The domain entity.
    */
-  toEntitiesFromResponse(response: ReportsResponse): Report[] {
-    return response.reports.map(r => this.toEntityFromResource(r));
+  toEntityFromResource(resource: ReportResource): Report {
+    return new Report({
+      id: resource.id,
+      status: resource.status,
+      plotId: resource.plotId,
+      organizationId: resource.organizationId,
+      type: resource.type,
+      metricType: resource.metricType,
+      periodStart: new Date(resource.periodStart),
+      periodEnd: new Date(resource.periodEnd),
+      generatedAt: resource.generatedAt ? new Date(resource.generatedAt) : null
+    });
   }
 }
