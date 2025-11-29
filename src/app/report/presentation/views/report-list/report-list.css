@@ -1,174 +1,179 @@
+/* Contenedor Principal */
 .report-list-container {
   max-width: 1200px;
-  margin: 80px auto 0;
+  margin: 40px auto;
   padding: 24px;
 }
 
+/* Header de la página (Título y Botón Refresh) */
 .header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #e8f5e8;
+  margin-bottom: 30px;
 }
 
 h2 {
   margin: 0;
-  color: #63a880;
-  font-weight: 500;
-  font-size: 28px;
-}
-
-.filters {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding: 16px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid #63a880;
-}
-
-.filters label {
-  font-weight: 500;
-  color: #424242;
-  white-space: nowrap;
-}
-
-.filters select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  background: white;
-  min-width: 200px;
-  transition: border-color 0.3s ease;
-}
-
-.filters select:focus {
-  outline: none;
-  border-color: #63a880;
-  box-shadow: 0 0 0 2px rgba(99, 168, 128, 0.2);
+  color: #1b4d3e; /* Verde oscuro elegante */
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -0.5px;
 }
 
 .refresh-button {
-  background-color: #63a880;
-  color: white;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: none;
-  cursor: pointer;
+  background-color: #63a880 !important; /* Forzamos el color */
+  color: white !important;
+  border-radius: 25px;
+  padding: 0 24px;
+  height: 42px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(99, 168, 128, 0.3);
+}
+
+/* Sección de Filtros */
+.filters {
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 }
 
-.refresh-button:hover {
-  background-color: #4a7a5c;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.filters label {
+  font-weight: 600;
+  color: #555;
 }
 
-.loading-text {
-  text-align: center;
-  font-weight: 500;
+/* Custom Select Styling */
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select-wrapper select {
+  appearance: none;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  padding: 10px 40px 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  min-width: 220px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+}
+
+.custom-select-wrapper select:focus {
+  border-color: #63a880;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 168, 128, 0.1);
+}
+
+.custom-select-wrapper mat-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #666;
-  margin: 40px 0;
-  font-size: 16px;
+  pointer-events: none;
+}
+
+/* --- ESTILOS DE LA TABLA (Aquí está la magia del header) --- */
+
+.table-container {
+  border-radius: 12px;
+  overflow: hidden; /* Importante para que el header respete los bordes redondos */
+  background: white;
+  border: 1px solid #eee;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-th {
-  background-color: #63a880;
-  color: white;
-  text-align: left;
-  padding: 16px 12px;
-  font-weight: 500;
+/* Header Row (Fondo Verde) */
+.mat-mdc-header-row {
+  background-color: #63a880 !important; /* Tu verde */
+  height: 56px;
+}
+
+/* Header Cells (Texto Blanco) */
+.mat-mdc-header-cell {
+  color: white !important;
+  font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #f0f0f0;
-  color: #333;
+/* Filas de datos */
+.data-row {
+  transition: background-color 0.2s;
+  height: 60px;
 }
 
-tr:hover {
-  background-color: #f8f9fa;
+.data-row:hover {
+  background-color: #f9fbf9; /* Verde muy muy pálido al pasar el mouse */
 }
 
-tr:last-child td {
-  border-bottom: none;
+.mat-mdc-cell {
+  color: #444;
+  font-size: 14px;
+  border-bottom-color: #f0f0f0;
 }
 
-/* Estilos para los botones de acciones */
-.mat-mdc-button {
-  margin-right: 8px;
+/* Estilos Específicos de Columnas */
+.id-cell {
+  font-weight: 700;
+  color: #63a880;
+}
+
+.period-cell {
+  color: #666;
+  display: flex; /* Para alinear el icono y el texto si usas flex en la celda */
+  align-items: center;
+  gap: 8px;
+}
+
+.small-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #999;
+}
+
+/* Badges para el Tipo */
+.type-badge {
+  background-color: #eef4f1;
+  color: #1b4d3e;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Estados */
+.status-indicator {
+  font-weight: 600;
+  padding: 4px 8px;
   border-radius: 4px;
-  font-weight: 500;
-  text-transform: none;
 }
 
-.mat-mdc-button[color="primary"] {
-  background-color: #63a880;
-  color: white;
+.status-created { color: #2196f3; background: #e3f2fd; }
+.status-generated { color: #4caf50; background: #e8f5e9; }
+.status-failing, .status-failed { color: #f44336; background: #ffebee; }
+
+/* Acciones */
+.view-btn {
+  color: #63a880 !important;
+  border-color: #63a880 !important;
 }
 
-.mat-mdc-button[color="accent"] {
-  background-color: #42a5f5;
-  color: white;
-}
-
-.mat-mdc-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .report-list-container {
-    margin: 20px;
-    padding: 16px;
-  }
-  
-  .filters {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  .filters select {
-    width: 100%;
-    min-width: unset;
-  }
-  
-  table {
-    font-size: 14px;
-  }
-  
-  th, td {
-    padding: 8px;
-  }
-  
-  .mat-mdc-button {
-    margin-right: 4px;
-    font-size: 12px;
-    padding: 4px 8px;
-  }
+/* Loading & No Data */
+.loading-shade, .no-data {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
 }
