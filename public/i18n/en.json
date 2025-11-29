@@ -65,13 +65,22 @@
     },
     "detail": {
       "title": "Report Detail #",
+      "metricType": "Metric Type",
+      "generatedAt": "Generated at",
       "back": "Back",
       "type": "Type",
       "status": "Status",
       "startDate": "Start Date",
       "endDate": "End Date",
       "downloadExcel": "Download Excel",
-      "excelPreview": "Excel Preview",
+      "results": "Results / Metrics",
+      "processingOrFailed": "Report is processing or failed. No data available.",
+      "metrics": {
+        "average": "Average",
+        "max": "Max Value",
+        "min": "Min Value",
+        "count": "Data Count"
+      },
       "notFound": "Requested report not found"
     },
     "types": {
@@ -82,6 +91,7 @@
       "REQUESTED": "Requested",
       "PROCESSING": "Processing",
       "GENERATED": "Generated",
+      "CREATED": "Created",
       "FAILED": "Failed"
     }
   },

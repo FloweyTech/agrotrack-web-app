@@ -1,8 +1,1 @@
-<div *ngIf="showLayout()" class="layout-container">
-  <app-layout>
-  </app-layout>
-</div>
-
-<div [class.auth-container]="!showLayout()" [class.content-container]="showLayout()">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
