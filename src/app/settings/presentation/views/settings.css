@@ -4,14 +4,10 @@
   align-items: flex-start;
   min-height: calc(100vh - 100px);
 
-  /* CAMBIO: Aumentar el padding-top.
-     Si tu header mide 64px, ponle unos 80px o 100px para que respire. */
   padding: 100px 20px 40px 20px;
 
   background-color: #f5f5f5;
 
-  /* Opcional: Si el problema persiste, fuerza un margen superior */
-  /* margin-top: 64px; */
 }
 
 .loading-container {

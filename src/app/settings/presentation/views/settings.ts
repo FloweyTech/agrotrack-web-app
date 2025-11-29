@@ -48,6 +48,18 @@ export class Settings implements OnInit {
   loading = false;
   profileId: number | null = null;
 
+  get firstNameControl() {
+    return this.profileForm.get('firstName');
+  }
+
+  get lastNameControl() {
+    return this.profileForm.get('lastName');
+  }
+
+  get photoUrlControl() {
+    return this.photoForm.get('photoUrl');
+  }
+
   ngOnInit(): void {
     this.initForms();
     this.loadProfile();
@@ -99,7 +111,7 @@ export class Settings implements OnInit {
     }
 
     this.loading = true;
-    const url = `${environment.platformProviderApiBaseUrl}profiles/${this.profileId}/person-name`;
+    const url = `${environment.platformProviderApiBaseUrl}/profiles/${this.profileId}/person-name`;
     const body = this.profileForm.value;
 
     this.http.put(url, body).subscribe({
