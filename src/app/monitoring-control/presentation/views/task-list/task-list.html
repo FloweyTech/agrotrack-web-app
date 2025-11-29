@@ -1,0 +1,161 @@
+<div class="task-list-container">
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">{{ 'tasks.title' | translate }}</h1>
+    <p class="subtitle">{{ 'tasks.subtitle' | translate }}</p>
+  </div>
+
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-row">
+        <!-- Status Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Estado</mat-label>
+          <mat-select [(value)]="selectedStatus">
+            <mat-option value="all">Todos</mat-option>
+            <mat-option value="PENDING">Pendiente</mat-option>
+            <mat-option value="IN_PROGRESS">En Progreso</mat-option>
+            <mat-option value="COMPLETED">Completado</mat-option>
+            <mat-option value="CANCELLED">Cancelado</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>filter_list</mat-icon>
+        </mat-form-field>
+
+        <!-- Organization Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Organización</mat-label>
+          <mat-select [(value)]="selectedOrganization">
+            <mat-option value="all">Todas</mat-option>
+            @for (org of uniqueOrganizations; track org.id) {
+              <mat-option [value]="org.id.toString()">{{ org.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>business</mat-icon>
+        </mat-form-field>
+
+        <!-- Start Date Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Desde</mat-label>
+          <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDateFilter">
+          <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- End Date Filter -->
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDateFilter">
+          <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Clear Filters Button -->
+        <button mat-icon-button color="accent" (click)="clearDateFilters()" class="clear-filters-btn"
+                matTooltip="Limpiar filtros de fecha">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Header with Create Button for Agronomist -->
+  @if (isAgronomist) {
+    <div class="action-bar">
+      <button mat-raised-button color="primary" (click)="navigateToCreateTask()">
+        <mat-icon>add</mat-icon>
+        Asignar Nueva Tarea
+      </button>
+    </div>
+  }
+
+  <!-- Tasks List -->
+  <div class="tasks-grid">
+    <mat-card
+      *ngFor="let task of filteredTasks; trackBy: trackByTaskId"
+      class="task-card">
+
+      <mat-card-header>
+        <div class="task-header">
+          <!-- Task Title -->
+          <div class="task-title-section">
+            <h3 class="task-title">
+              {{ task.title }}
+            </h3>
+
+            <!-- Status Badge -->
+            <div class="chips-container">
+              <mat-chip-set>
+                <mat-chip [style.background-color]="getStatusColor(task.taskStatus)" selected>
+                  <mat-icon>info</mat-icon>
+                  {{ getStatusDisplayName(task.taskStatus) }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Task Description -->
+        <p class="task-description">
+          {{ task.description }}
+        </p>
+
+        <!-- Task Details -->
+        <div class="task-details">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">business</mat-icon>
+            <span class="detail-label">Organización:</span>
+            <span class="detail-value">{{ task.organizationName || 'Cargando...' }}</span>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon class="detail-icon">calendar_today</mat-icon>
+            <span class="detail-label">Fecha Inicio:</span>
+            <span class="detail-value">{{ formatDate(task.startDate) }}</span>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon class="detail-icon">event</mat-icon>
+            <span class="detail-label">Fecha Fin:</span>
+            <span class="detail-value">{{ formatDate(task.endDate) }}</span>
+          </div>
+
+          @if (task.materialsUsed && task.materialsUsed.length > 0) {
+            <div class="materials-section">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <mat-icon class="detail-icon">inventory</mat-icon>
+                <span class="detail-label">Materiales:</span>
+              </div>
+              <div class="materials-list">
+                @for (material of task.materialsUsed.slice(0, 2); track $index) {
+                  <span class="material-item">
+                    {{ material.materialName }}: {{ material.quantity }} {{ material.unit }}
+                  </span>
+                }
+              </div>
+              @if (task.materialsUsed.length > 2) {
+                <span class="more-materials">+ {{ task.materialsUsed.length - 2 }} materiales más</span>
+              }
+            </div>
+          }
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button color="primary" class="action-button" (click)="openTaskDetails(task)">
+          <mat-icon>visibility</mat-icon>
+          Ver Detalles
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredTasks.length === 0" class="empty-state">
+    <mat-icon class="empty-icon">assignment</mat-icon>
+    <h3>No hay tareas que coincidan con los filtros</h3>
+    <p>Intenta cambiar los filtros para ver más tareas</p>
+  </div>
+</div>

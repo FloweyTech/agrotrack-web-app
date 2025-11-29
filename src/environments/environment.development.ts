@@ -12,5 +12,6 @@ export const environment = {
   platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
   platformProviderProfileEndpointPath: '/profile',
   platformProviderSignInEndpointPath: '/authentication/sign-in',
-  platformProviderSignUpEndpointPath: '/authentication/sign-up'
+  platformProviderSignUpEndpointPath: '/authentication/sign-up',
+  platformProviderReportsEndpointPath: '/reports',
 };

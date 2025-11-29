@@ -201,6 +201,104 @@
       "week": "Hace más de una semana"
     }
   },
+  "tasks": {
+    "title": "Lista de Tareas Agrícolas",
+    "subtitle": "Tareas asignadas por el agrónomo",
+    "assignedBy": "Asignado por:",
+    "dueDate": "Fecha límite:",
+    "status": {
+      "pending": "Pendiente",
+      "inProgress": "En progreso",
+      "completed": "Completada"
+    },
+    "priority": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "categories": {
+      "irrigation": "Riego",
+      "fertilization": "Fertilización",
+      "pest_control": "Control de plagas",
+      "harvest": "Cosecha",
+      "soil_preparation": "Preparación del suelo",
+      "monitoring": "Monitoreo",
+      "maintenance": "Mantenimiento"
+    },
+    "list": {
+      "task1": {
+        "title": "Revisar sistema de riego por goteo",
+        "description": "Inspeccionar todos los goteros y verificar que no haya obstrucciones en las líneas principales.",
+        "category": "irrigation"
+      },
+      "task2": {
+        "title": "Aplicar fertilizante NPK 15-15-15",
+        "description": "Aplicar 50kg por hectárea de fertilizante NPK en las parcelas de tomate. Regar inmediatamente después.",
+        "category": "fertilization"
+      },
+      "task3": {
+        "title": "Monitorear presencia de pulgones",
+        "description": "Revisar el envés de las hojas en busca de pulgones. Documentar cualquier signo de infestación.",
+        "category": "pest_control"
+      },
+      "task4": {
+        "title": "Medir pH del suelo en parcela norte",
+        "description": "Tomar 5 muestras de suelo a 15cm de profundidad y medir el pH. Registrar resultados.",
+        "category": "monitoring"
+      },
+      "task5": {
+        "title": "Podar ramas secas en frutales",
+        "description": "Eliminar ramas muertas, enfermas o que crezcan hacia adentro en los árboles frutales.",
+        "category": "maintenance"
+      },
+      "task6": {
+        "title": "Preparar camas de siembra",
+        "description": "Labrar el suelo, incorporar compost y formar camas de 1.2m de ancho para la nueva siembra.",
+        "category": "soil_preparation"
+      },
+      "task7": {
+        "title": "Cosechar lechugas maduras",
+        "description": "Cosechar lechugas que hayan alcanzado el tamaño comercial. Cortar en horas frescas del día.",
+        "category": "harvest"
+      },
+      "task8": {
+        "title": "Aplicar tratamiento preventivo contra hongos",
+        "description": "Rociar fungicida preventivo en cultivos susceptibles. Usar equipo de protección personal.",
+        "category": "pest_control"
+      }
+    },
+    "filters": {
+      "all": "Todas las tareas",
+      "pending": "Pendientes",
+      "completed": "Completadas",
+      "category": "Categoría:",
+      "priority": "Prioridad:"
+    },
+    "actions": {
+      "markCompleted": "Marcar como completada",
+      "markPending": "Marcar como pendiente",
+      "viewDetails": "Ver detalles"
+    }
+  },
+  "PLANT_REGISTRATION": {
+    "TITLE": "Registro de plantas de parcela",
+    "HEIGHT": "Altura (cm)",
+    "LEAVES": "Número de hojas",
+    "FRUITS": "Número de frutos",
+    "DATE": "Fecha de registro",
+    "ADD": "Agregar planta",
+    "ADD_TO_SESSION": "Agregar a sesión",
+    "ADD_RECORD": "Agregar registro",
+    "LIST_TITLE": "Plantas registradas",
+    "SESSION_PLANTS": "Plantas en esta sesión",
+    "CALCULATE_AVERAGE": "Calcular promedio",
+    "CLEAR_SESSION": "Limpiar sesión",
+    "AVERAGE_TITLE": "Promedio de la muestra",
+    "PLANTS_COUNT": "Cantidad de plantas",
+    "SAVE_SESSION": "Guardar registro promediado",
+    "NO_RECORDS": "No hay registros de plantas disponibles",
+    "BACK_TO_LIST": "Volver a la lista"
+  },
   "page-not-found": {
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",

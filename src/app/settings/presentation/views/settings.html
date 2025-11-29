@@ -1,0 +1,126 @@
+<div class="settings-container">
+  @if (loading && !profile) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando perfil...</p>
+    </div>
+  }
+
+  @if (profile) {
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>person</mat-icon>
+          Mi Perfil
+        </mat-card-title>
+        <mat-card-subtitle>Administra tu información personal</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Profile Photo Section -->
+        <div class="photo-section">
+          <div class="photo-circle">
+            @if (profile.photoUrl) {
+              <img [src]="profile.photoUrl" [alt]="profile.fullName" />
+            } @else {
+              <mat-icon>person</mat-icon>
+            }
+          </div>
+          <h2 class="user-name">{{ profile.fullName }}</h2>
+        </div>
+
+        <!-- Photo URL Form -->
+        <form [formGroup]="photoForm" class="form-section">
+          <h3>
+            <mat-icon>image</mat-icon>
+            Foto de Perfil
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>URL de la Foto</mat-label>
+            <input matInput formControlName="photoUrl" placeholder="https://ejemplo.com/foto.jpg">
+            <mat-icon matPrefix>link</mat-icon>
+            @if (photoForm.get('photoUrl')?.hasError('required') && photoForm.get('photoUrl')?.touched) {
+              <mat-error>La URL es requerida</mat-error>
+            }
+            @if (photoForm.get('photoUrl')?.hasError('pattern')) {
+              <mat-error>Debe ser una URL válida (http:// o https://)</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" (click)="cancelPhotoEdit()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="button" 
+                    (click)="updatePhoto()" [disabled]="photoForm.invalid || loading">
+              <mat-icon>save</mat-icon>
+              Actualizar Foto
+            </button>
+          </div>
+        </form>
+
+        <!-- Name Form -->
+        <form [formGroup]="profileForm" class="form-section">
+          <h3>
+            <mat-icon>badge</mat-icon>
+            Información Personal
+          </h3>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="firstName" placeholder="Ej: Juan">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            @if (profileForm.get('firstName')?.hasError('required') && profileForm.get('firstName')?.touched) {
+              <mat-error>El nombre es requerido</mat-error>
+            }
+            @if (profileForm.get('firstName')?.hasError('minlength')) {
+              <mat-error>Mínimo 2 caracteres</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="lastName" placeholder="Ej: Pérez">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            @if (profileForm.get('lastName')?.hasError('required') && profileForm.get('lastName')?.touched) {
+              <mat-error>El apellido es requerido</mat-error>
+            }
+            @if (profileForm.get('lastName')?.hasError('minlength')) {
+              <mat-error>Mínimo 2 caracteres</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" (click)="cancelNameEdit()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="button" 
+                    (click)="updateName()" [disabled]="profileForm.invalid || loading">
+              <mat-icon>save</mat-icon>
+              Actualizar Nombre
+            </button>
+          </div>
+        </form>
+
+        <!-- Additional Info (Read-only) -->
+        <div class="info-section">
+          <h3>
+            <mat-icon>info</mat-icon>
+            Información Adicional
+          </h3>
+          <div class="info-row">
+            <span class="info-label">ID de Usuario:</span>
+            <span class="info-value">{{ profile.userId }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">ID de Perfil:</span>
+            <span class="info-value">{{ profile.profileId }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

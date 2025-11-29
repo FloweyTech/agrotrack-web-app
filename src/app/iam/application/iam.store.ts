@@ -65,6 +65,23 @@ export class IamStore {
   readonly isLoadingUsers = this.loadingUsers.asReadonly();
 
   /**
+   * Helper para saber si es Agrónomo
+   */
+  readonly isAgronomist = computed(() => this.currentRoleSignal() === UserRole.AGRONOMIST);
+
+  /**
+   * Helper para saber si es Agricultor
+   */
+  readonly isFarmer = computed(() => this.currentRoleSignal() === UserRole.FARMER);
+
+  /**
+   * Helper para obtener el ID actual (reemplaza a getProfileId del antiguo store)
+   */
+  get currentUserIdValue(): number | null {
+    return this.currentUserIdSignal();
+  }
+
+  /**
    * @summary Initializes the IamStore dependency.
    * @param iamApi The infrastructure service for IAM API communication.
    */

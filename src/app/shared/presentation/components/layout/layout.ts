@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
@@ -40,10 +40,12 @@ export class Layout implements OnInit, OnDestroy{
   options = [
     { labelKey: 'nav.organization', icon: 'business',            route: '/organization' },
     { labelKey: 'nav.reports',      icon: 'assessment',          route: '/report' },
-    { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/subscriptions' },
+    { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/tasks' },
     { labelKey: 'nav.monitoring',   icon: 'visibility',          route: '/monitoring' },
     { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
+
+  private router = inject(Router);
 
   constructor(private bp: BreakpointObserver) {}
 
@@ -71,5 +73,13 @@ export class Layout implements OnInit, OnDestroy{
       this.sidenav.open().catch(() => {});
       this.isCollapsed = !this.isCollapsed;
     }
+  }
+
+  logout() {
+    // Clear session storage
+    sessionStorage.clear();
+    
+    // Redirect to login
+    this.router.navigate(['/login']);
   }
 }

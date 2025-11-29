@@ -8,6 +8,29 @@
   <!-- Main Form -->
   <form [formGroup]="form" (ngSubmit)="submit()" class="reading-form" [class.form-loading]="isSubmitting">
 
+    <!-- Organization Selection Section -->
+    <div class="form-section">
+      <div class="section-title">
+        <mat-icon>business</mat-icon>
+        Organización
+      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Selecciona una organización</mat-label>
+        <mat-select formControlName="organizationId" required (selectionChange)="onOrganizationChange($event.value)">
+          @for (org of organizations; track org.organizationId) {
+            <mat-option [value]="org.organizationId">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <mat-icon>business</mat-icon>
+                {{ org.organizationName }}
+              </div>
+            </mat-option>
+          }
+        </mat-select>
+        <mat-icon matPrefix>business</mat-icon>
+        <mat-hint>Primero selecciona la organización</mat-hint>
+      </mat-form-field>
+    </div>
+
     <!-- Plot Selection Section -->
     <div class="form-section">
       <div class="section-title">
@@ -17,11 +40,11 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>{{ 'monitoring.plot' | translate }}</mat-label>
         <mat-select formControlName="plotId" required>
-          @for (plot of plots; track plot.id) {
-            <mat-option [value]="plot.id">
+          @for (plot of plots; track plot.plotId) {
+            <mat-option [value]="plot.plotId">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <mat-icon>place</mat-icon>
-                {{ plot.name }} - {{ plot.location }}
+                {{ plot.plotName }} - {{ plot.location }}
               </div>
             </mat-option>
           }
@@ -38,12 +61,12 @@
         {{ 'monitoring.form.typeSection' | translate }}
       </div>
       <div class="type-selection">
-        @for (type of readingTypes; track type) {
+        @for (type of readingTypes; track type.value) {
           <div class="type-card"
-               [class.selected]="form.get('type')?.value === type"
-               (click)="selectReadingType(type)">
-            <mat-icon [style.color]="getTypeIconColor(type)">{{ getTypeIcon(type) }}</mat-icon>
-            <div class="type-name">{{ getTypeDisplayName(type) }}</div>
+               [class.selected]="form.get('type')?.value === type.value"
+               (click)="selectReadingType(type.value)">
+            <mat-icon [style.color]="getTypeIconColor(type.value)">{{ getTypeIcon(type.value) }}</mat-icon>
+            <div class="type-name">{{ type.label }}</div>
           </div>
         }
       </div>
@@ -123,11 +146,15 @@
               class="save-btn"
               [disabled]="form.invalid || isSubmitting">
         @if (isSubmitting) {
-          <mat-icon>refresh</mat-icon>
-          {{ 'monitoring.form.saving' | translate }}
+          <ng-container>
+            <mat-icon>refresh</mat-icon>
+            {{ 'monitoring.form.saving' | translate }}
+          </ng-container>
         } @else {
-          <mat-icon>save</mat-icon>
-          {{ 'monitoring.save' | translate }}
+          <ng-container>
+            <mat-icon>save</mat-icon>
+            {{ 'monitoring.save' | translate }}
+          </ng-container>
         }
       </button>
     </div>
