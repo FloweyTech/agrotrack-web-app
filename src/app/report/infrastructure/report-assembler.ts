@@ -37,7 +37,23 @@ export class ReportAssembler {
       metricType: resource.metricType,
       periodStart: new Date(resource.periodStart),
       periodEnd: new Date(resource.periodEnd),
-      generatedAt: resource.generatedAt ? new Date(resource.generatedAt) : null
+      generatedAt: resource.generatedAt ? new Date(resource.generatedAt) : null,
+      reportMetrics: resource.reportMetrics ? {
+        averageValue: resource.reportMetrics.averageValue,
+        maxValue: resource.reportMetrics.maxValue,
+        minValue: resource.reportMetrics.minValue,
+        dataCount: resource.reportMetrics.dataCount
+      } : undefined
     });
+  }
+
+  /**
+   * Converts an array of ReportResources (JSON) to an array of Report entities.
+   * @param resources - The array of resources from the API.
+   * @returns An array of domain entities.
+   * @author FloweyTech developer team
+   */
+  toEntitiesFromResources(resources: ReportResource[]): Report[] {
+    return resources.map(resource => this.toEntityFromResource(resource));
   }
 }
