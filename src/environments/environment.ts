@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'https://agrotrack-web-service.up.railway.app',
+  platformProviderApiBaseUrl: 'https://agrotrack-web-service.up.railway.app/api/v1',
   platformProviderSubscriptionsEndpointPath: '/subscriptions',
   platformProviderOrganizationsEndpointPath: '/organizations',
   platformProviderPlotsEndpointPath: '/plots',
