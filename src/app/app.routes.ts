@@ -43,6 +43,12 @@ export const routes: Routes = [
         title: `${baseTitle} | Tasks`
       },
       {
+        path: 'sampling-sessions',
+        loadChildren: () =>
+          import('./monitoring-control/presentation/views/plant-session.routes').then(m => m.plantSessionRoutes),
+        title: `${baseTitle} | Sampling Sessions`
+      },
+      {
         path: 'settings',
         loadChildren: () => import('./settings/presentation/views/settings.routes').then(m => m.settingsRoutes),
         title: `${baseTitle} | Settings`
