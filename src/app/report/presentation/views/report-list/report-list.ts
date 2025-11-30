@@ -8,11 +8,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-report-list',
   standalone: true,
   imports: [
+    MatIcon,
     CommonModule,
     MatTableModule,
     MatButtonModule,

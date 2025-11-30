@@ -35,19 +35,22 @@ export const routes: Routes = [
         path: 'monitoring',
         loadChildren: () => import('./monitoring-control/presentation/views/monitoring.routes').then(m => m.monitoringRoutes),
         title: `${baseTitle} | Monitoring`
+      },
+      {
+        path: 'tasks',
+        loadChildren: () =>
+          import('./monitoring-control/presentation/views/task.routes').then(m => m.taskRoutes),
+        title: `${baseTitle} | Tasks`
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./settings/presentation/views/settings.routes').then(m => m.settingsRoutes),
+        title: `${baseTitle} | Settings`
       }
     ]
   },
 
-  {
-    path: 'tasks',
-    loadChildren: () =>
-      import('./monitoring-control/presentation/views/task.routes').then(m => m.taskRoutes),
-    title: `${baseTitle} | Tasks`
-  },
-  {
-    path: '**',
-    loadComponent: () => import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound),
-    title: `${baseTitle} | Page Not Found`
-  }
+  { path: '**', loadComponent:() => import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound),
+  title: `${baseTitle} | Page Not Found`}
+
 ];

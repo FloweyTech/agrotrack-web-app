@@ -1,12 +1,14 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
+import { TaskApiEndpoint } from '../infrastructure/task-api-endpoint';
 import { WeatherApiEndpoint } from '../infrastructure/weather-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
+import { Task } from '../domain/model/task.entity';
 import { Weather } from '../domain/model/weather.entity';
-import { retry } from 'rxjs';
+import { retry, forkJoin, map, switchMap, of } from 'rxjs';
 
 /**
- * Store for managing environmental readings and simulated IoT alerts.
+ * Store for managing environmental readings, tasks, and simulated IoT alerts.
  */
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,9 @@ export class MonitoringStore {
   // --- Signals ---
   private readonly readingsSignal = signal<EnvironmentalReading[]>([]);
   readonly readings = this.readingsSignal.asReadonly();
+
+  private readonly tasksSignal = signal<Task[]>([]);
+  readonly tasks = this.tasksSignal.asReadonly();
 
   private readonly alertsSignal = signal<string[]>([]);
   readonly alerts = this.alertsSignal.asReadonly();
@@ -33,10 +38,12 @@ export class MonitoringStore {
 
   // --- Computed values ---
   readonly readingCount = computed(() => this.readings().length);
+  readonly taskCount = computed(() => this.tasks().length);
 
   constructor(
     private monitoringApi: MonitoringApiEndpoint,
-    private weatherApi: WeatherApiEndpoint
+    private weatherApi: WeatherApiEndpoint,
+    private taskApi: TaskApiEndpoint
   ) {}
 
   /**
@@ -60,6 +67,7 @@ export class MonitoringStore {
     });
   }
 
+
   /**
    * Loads all readings for a specific plot.
    * @param plotId The ID of the plot whose readings should be retrieved.
@@ -70,8 +78,11 @@ export class MonitoringStore {
 
     this.monitoringApi.getReadingsByPlotId(plotId).subscribe({
       next: (readings) => {
-        console.log('Loaded readings for plot', plotId, ':', readings);
-        this.readingsSignal.set(readings);
+        // Remove old readings for this plot and add new ones
+        const currentReadings = this.readingsSignal();
+        const filteredReadings = currentReadings.filter(r => r.plotId !== plotId);
+        this.readingsSignal.set([...filteredReadings, ...readings]);
+
         this.loadingSignal.set(false);
       },
       error: (err) => {
@@ -162,6 +173,201 @@ export class MonitoringStore {
         console.error('Error loading weather:', err);
         this.weatherSignal.set(null);
         this.weatherLoadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Loads tasks assigned to a profile (for FARMER role)
+   */
+  loadTasksAssignedTo(assignedToProfileId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.getTasksAssignedTo(assignedToProfileId).pipe(
+      switchMap((tasks) => {
+        if (tasks.length === 0) {
+          return of(tasks);
+        }
+        // Get unique organization IDs
+        const orgIds = [...new Set(tasks.map(t => t.organizationId))];
+        // Fetch all organization names in parallel
+        const orgRequests = orgIds.map(id =>
+          this.taskApi.getOrganizationName(id).pipe(
+            map(name => ({ id, name }))
+          )
+        );
+        return forkJoin(orgRequests).pipe(
+          map(orgNames => {
+            const orgMap = new Map(orgNames.map(o => [o.id, o.name]));
+            // Enrich tasks with organization names
+            return tasks.map(task => ({
+              ...task,
+              organizationName: orgMap.get(task.organizationId)
+            }));
+          })
+        );
+      })
+    ).subscribe({
+      next: (tasks) => {
+        this.tasksSignal.set(tasks);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load assigned tasks'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Loads tasks created by a profile (for AGRONOMIST role)
+   */
+  loadTasksByAssignee(assigneeProfileId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.getTasksByAssignee(assigneeProfileId).pipe(
+      switchMap((tasks) => {
+        if (tasks.length === 0) {
+          return of(tasks);
+        }
+        // Get unique organization IDs
+        const orgIds = [...new Set(tasks.map(t => t.organizationId))];
+        // Fetch all organization names in parallel
+        const orgRequests = orgIds.map(id =>
+          this.taskApi.getOrganizationName(id).pipe(
+            map(name => ({ id, name }))
+          )
+        );
+        return forkJoin(orgRequests).pipe(
+          map(orgNames => {
+            const orgMap = new Map(orgNames.map(o => [o.id, o.name]));
+            // Enrich tasks with organization names
+            return tasks.map(task => ({
+              ...task,
+              organizationName: orgMap.get(task.organizationId)
+            }));
+          })
+        );
+      })
+    ).subscribe({
+      next: (tasks) => {
+        this.tasksSignal.set(tasks);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to load tasks'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Creates a new task
+   */
+  createTask(task: Task): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.createTask(task).pipe(retry(2)).subscribe({
+      next: (created) => {
+        this.tasksSignal.update((tasks) => [...tasks, created]);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to create task'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Cancel a task (change status to CANCELLED)
+   */
+  cancelTask(taskId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.cancelTask(taskId).pipe(retry(2)).subscribe({
+      next: () => {
+        this.tasksSignal.update((tasks) =>
+          tasks.map(task =>
+            task.taskId === taskId ? { ...task, taskStatus: 'CANCELLED' } : task
+          )
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to cancel task'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Mark task as in progress
+   */
+  markInProgress(taskId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.markInProgress(taskId).pipe(retry(2)).subscribe({
+      next: () => {
+        this.tasksSignal.update((tasks) =>
+          tasks.map(task =>
+            task.taskId === taskId ? { ...task, taskStatus: 'IN_PROGRESS' } : task
+          )
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to mark task in progress'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Mark task as completed
+   */
+  markCompleted(taskId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.markCompleted(taskId).pipe(retry(2)).subscribe({
+      next: () => {
+        this.tasksSignal.update((tasks) =>
+          tasks.map(task =>
+            task.taskId === taskId ? { ...task, taskStatus: 'COMPLETED' } : task
+          )
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to mark task as completed'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Delete a task
+   */
+  deleteTask(taskId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.taskApi.deleteTask(taskId).pipe(retry(2)).subscribe({
+      next: () => {
+        this.tasksSignal.update((tasks) =>
+          tasks.filter(task => task.taskId !== taskId)
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        this.errorSignal.set(this.formatError(err, 'Failed to delete task'));
+        this.loadingSignal.set(false);
       }
     });
   }

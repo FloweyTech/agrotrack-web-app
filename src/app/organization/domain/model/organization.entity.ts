@@ -29,6 +29,8 @@ export class Organization implements BaseEntity {
 
   private _ownerProfileId: number;
 
+  profileIds: number[];
+
 
   /**
    * Creates an instance of the Organization entity.
@@ -42,6 +44,7 @@ export class Organization implements BaseEntity {
     status: OrganizationStatus;
     subscription : Subscription;
     ownerProfileId: number;
+    profileIds?: number[]
     }) {
 
     this._id = organization.id;
@@ -50,6 +53,7 @@ export class Organization implements BaseEntity {
     this._status = organization.status;
     this._subscription = organization.subscription;
     this._ownerProfileId = organization.ownerProfileId;
+    this.profileIds = organization.profileIds || [];
 
   }
 

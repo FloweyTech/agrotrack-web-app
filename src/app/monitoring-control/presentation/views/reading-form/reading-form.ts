@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MonitoringStore } from '../../../application/monitoring-control.store';
@@ -10,7 +10,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import {MatIcon} from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
 
 /**
  * Form component for creating or simulating an IoT environmental reading.
@@ -31,10 +31,10 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon
   ]
 })
-export class ReadingForm {
+export class ReadingForm implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly monitoringControlStore = inject(MonitoringStore);
-  private readonly organizationStore = inject(OrganizationStore);
+  readonly organizationStore = inject(OrganizationStore);
   private readonly router = inject(Router);
 
   /** Loading state for form submission */
@@ -42,18 +42,54 @@ export class ReadingForm {
 
   /** Reactive form definition */
   form = this.fb.group({
-    plotId: new FormControl<number | null>(null, { validators: [Validators.required] }),
+    organizationId: new FormControl<number | null>(null, { validators: [Validators.required] }),
+    plotId: new FormControl<number | null>({ value: null, disabled: true }, { validators: [Validators.required] }),
     type: new FormControl<ReadingType | null>(null, { validators: [Validators.required] }),
     value: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(0)] }),
     unit: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
   });
 
-  /** Enum values for select options */
-  readonly readingTypes = Object.values(ReadingType);
+  /** Enum values for reading types */
+  readonly readingTypes = [
+    { value: ReadingType.TEMPERATURE, label: 'Temperatura' },
+    { value: ReadingType.HUMIDITY, label: 'Humedad' },
+    { value: ReadingType.PH_LEVEL, label: 'Nivel pH' }
+  ];
 
-  /** Available plots from the OrganizationStore */
+  /** Gets active organizations */
+  get organizations() {
+    return this.organizationStore.organizationsByOwner().filter(org => org.isActive);
+  }
+
+  /** Gets plots filtered by selected organization */
   get plots() {
-    return this.organizationStore.plots();
+    const orgId = this.form.get('organizationId')?.value;
+    if (!orgId) return [];
+    return this.organizationStore.plotsByOrganization().filter(plot => plot.organizationId === orgId);
+  }
+
+  /** Loads organizations on init */
+  ngOnInit(): void {
+    const profileIdStr = sessionStorage.getItem('profile_id');
+    const profileId = profileIdStr ? parseInt(profileIdStr, 10) : null;
+    if (profileId) {
+      this.organizationStore.loadOrganizationsByOwner(profileId);
+    }
+  }
+
+  /** When organization changes, reset plot selection and load plots */
+  onOrganizationChange(organizationId: number): void {
+    const plotControl = this.form.get('plotId');
+    
+    // Reset and enable/disable plot control
+    plotControl?.setValue(null);
+    
+    if (organizationId) {
+      plotControl?.enable();
+      this.organizationStore.loadPlotsByOrganization(organizationId);
+    } else {
+      plotControl?.disable();
+    }
   }
 
   /** Selects a reading type and updates the unit automatically */
@@ -182,7 +218,7 @@ export class ReadingForm {
   }
 
   /**
-   * Submits the form, creating a new environmental reading and triggering alert evaluation.
+   * Submits the form, creating a new environmental reading.
    */
   async submit(): Promise<void> {
     if (this.form.invalid) {
@@ -194,7 +230,7 @@ export class ReadingForm {
 
     try {
       const reading = new EnvironmentalReading({
-        id: Date.now(),
+        id: 0, // Backend will assign ID
         plotId: this.form.value.plotId!,
         type: this.form.value.type!,
         value: this.form.value.value!,
@@ -204,13 +240,9 @@ export class ReadingForm {
 
       this.monitoringControlStore.addReading(reading);
 
-      // Simulate API delay for better UX
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
       await this.router.navigate(['/monitoring']);
     } catch (error) {
-      console.error('Error saving reading:', error);
-      // Aquí podrías mostrar un mensaje de error al usuario
+      // Error handling done in store
     } finally {
       this.isSubmitting = false;
     }
