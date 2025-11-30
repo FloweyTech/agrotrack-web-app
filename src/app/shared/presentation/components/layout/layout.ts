@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
@@ -12,6 +12,9 @@ import {NgOptimizedImage} from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject, takeUntil } from 'rxjs';
 import {Profile} from '../../../../profile/presentation/views/profile/profile';
+// 1. IMPORTAMOS LOS STORES
+import { IamStore } from '../../../../iam/application/iam.store';
+import { ProfileStore } from '../../../../profile/application/profile.store';
 
 
 @Component({
@@ -38,22 +41,40 @@ export class Layout implements OnInit, OnDestroy{
   private destroy$ = new Subject<void>();
 
   options = [
-    { labelKey: 'nav.organization', icon: 'business',            route: '/organization' },
-    { labelKey: 'nav.reports',      icon: 'assessment',          route: '/report' },
+    { labelKey: 'nav.organization', icon: 'business',             route: '/organization' },
+    { labelKey: 'nav.reports',      icon: 'assessment',           route: '/report' },
     { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/tasks' },
-    { labelKey: 'nav.monitoring',   icon: 'visibility',          route: '/monitoring' },
+    { labelKey: 'nav.monitoring',   icon: 'visibility',           route: '/monitoring' },
+    { labelKey: 'nav.sampling_sessions', icon: 'science',            route: '/sampling-sessions' },
+    { labelKey: 'nav.weather',      icon: 'cloud_queue',          route: '/monitoring/weather' },
     { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
+
+  private router = inject(Router);
+  // 2. INYECTAMOS LOS STORES
+  private iamStore = inject(IamStore);
+  private profileStore = inject(ProfileStore);
 
   constructor(private bp: BreakpointObserver) {}
 
   ngOnInit() {
+    // Lógica Responsive
     this.bp.observe(['(max-width: 800px)'])
       .pipe(takeUntil(this.destroy$))
       .subscribe(state => {
         this.isMobile = state.matches;
         if (this.isMobile) this.isMenuOpen = false;
       });
+
+    // 3. MAGIA DE HIDRATACIÓN (Aquí se carga tu perfil al entrar)
+    const userId = this.iamStore.currentUserIdValue;
+
+    if (userId) {
+      // Como ya estamos dentro de la zona segura (Layout),
+      // pedimos cargar los datos del usuario para que salgan en la foto del header y settings.
+      console.log('Layout: Cargando perfil del usuario...', userId);
+      this.profileStore.loadProfilesByIds([userId]);
+    }
   }
 
   ngOnDestroy() {
@@ -71,5 +92,12 @@ export class Layout implements OnInit, OnDestroy{
       this.sidenav.open().catch(() => {});
       this.isCollapsed = !this.isCollapsed;
     }
+  }
+
+  logout() {
+    // 4. LOGOUT CENTRALIZADO
+    // Limpiamos los stores y salimos usando la lógica del IamStore
+    this.profileStore.clearProfiles();
+    this.iamStore.signOut(this.router);
   }
 }

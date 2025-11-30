@@ -1,0 +1,100 @@
+<div class="payment-container">
+  <div class="payment-header">
+    <mat-icon class="header-icon">credit_card</mat-icon>
+    <h1>Complete Your Subscription Payment</h1>
+    <p class="organization-name">{{ organizationName }}</p>
+  </div>
+
+  <mat-card class="payment-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>lock</mat-icon>
+      <mat-card-title>Payment Information</mat-card-title>
+      <mat-card-subtitle>Secure payment processing</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="info-banner">
+        <mat-icon>info</mat-icon>
+        <p>This is a simulation. No real payment will be processed.</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="payment-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Card Number</mat-label>
+          <input 
+            matInput 
+            formControlName="cardNumber" 
+            placeholder="1234 5678 9012 3456"
+            maxlength="16"
+            (input)="formatCardNumber($event)"
+            required>
+          <mat-icon matPrefix>credit_card</mat-icon>
+          @if (form.get('cardNumber')!.hasError('required')) {
+            <mat-error>Card number is required</mat-error>
+          }
+          @if (form.get('cardNumber')!.hasError('pattern') || form.get('cardNumber')!.hasError('minlength')) {
+            <mat-error>Card number must be 16 digits</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="card-details-row">
+          <mat-form-field appearance="outline" class="expiry-field">
+            <mat-label>Expiry Date</mat-label>
+            <input 
+              matInput 
+              formControlName="expiryDate" 
+              placeholder="MM/YY"
+              maxlength="5"
+              (input)="formatExpiryDate($event)"
+              required>
+            <mat-icon matPrefix>calendar_today</mat-icon>
+            @if (form.get('expiryDate')!.hasError('required')) {
+              <mat-error>Expiry date is required</mat-error>
+            }
+            @if (form.get('expiryDate')!.hasError('pattern')) {
+              <mat-error>Format must be MM/YY</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="cvv-field">
+            <mat-label>CVV</mat-label>
+            <input 
+              matInput 
+              formControlName="cvv" 
+              placeholder="123"
+              maxlength="4"
+              type="password"
+              (input)="formatCVV($event)"
+              required>
+            <mat-icon matPrefix>lock</mat-icon>
+            @if (form.get('cvv')!.hasError('required')) {
+              <mat-error>CVV is required</mat-error>
+            }
+            @if (form.get('cvv')!.hasError('pattern') || form.get('cvv')!.hasError('minlength')) {
+              <mat-error>CVV must be 3-4 digits</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <button mat-stroked-button type="button" (click)="goBack()">
+            Cancel
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="form.invalid || store.loading()">
+            <mat-icon>payment</mat-icon>
+            {{ store.loading() ? 'Processing...' : 'Complete Payment' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="security-info">
+    <mat-icon>shield</mat-icon>
+    <p>Your payment information is secure and encrypted</p>
+  </div>
+</div>

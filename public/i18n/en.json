@@ -4,7 +4,9 @@
     "reports": "Reports",
     "tasks": "Tasks",
     "settings": "Settings",
-    "monitoring": "Monitoring"
+    "monitoring": "Monitoring",
+    "sampling_sessions": "Plant Sampling",
+    "weather": "Weather"
   },
   "auth": {
     "login": {
@@ -46,6 +48,24 @@
   },
   "report": {
     "title": "Reports",
+    "create": {
+      "title": "Create New Report",
+      "subtitle": "Generate custom metrics for your plots",
+      "back": "Back to list",
+      "organization": "Organization",
+      "plot": "Plot",
+      "reportType": "Report Type",
+      "metricType": "Metric Type",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "generate": "Generate Report",
+      "loading": "Generating...",
+      "selectOption": "Select an option",
+      "errors": {
+        "required": "This field is required",
+        "noPlots": "No plots found for this organization"
+      }
+    },
     "refresh": "Refresh",
     "loading": "Loading reports...",
     "filterBy": "Filter by Organization:",
@@ -64,13 +84,22 @@
     },
     "detail": {
       "title": "Report Detail #",
+      "metricType": "Metric Type",
+      "generatedAt": "Generated at",
       "back": "Back",
       "type": "Type",
       "status": "Status",
       "startDate": "Start Date",
       "endDate": "End Date",
       "downloadExcel": "Download Excel",
-      "excelPreview": "Excel Preview",
+      "results": "Results / Metrics",
+      "processingOrFailed": "Report is processing or failed. No data available.",
+      "metrics": {
+        "average": "Average",
+        "max": "Max Value",
+        "min": "Min Value",
+        "count": "Data Count"
+      },
       "notFound": "Requested report not found"
     },
     "types": {
@@ -81,6 +110,7 @@
       "REQUESTED": "Requested",
       "PROCESSING": "Processing",
       "GENERATED": "Generated",
+      "CREATED": "Created",
       "FAILED": "Failed"
     }
   },
@@ -272,6 +302,11 @@
   },
   "PLANT_REGISTRATION": {
     "TITLE": "Plot plant registration",
+    "ORGANIZATION": "Organization",
+    "PLOT": "Plot",
+    "SELECT_ORGANIZATION": "Select an organization",
+    "SELECT_PLOT": "Select a plot",
+    "NO_PLOTS_AVAILABLE": "No plots available for this organization",
     "HEIGHT": "Height (cm)",
     "LEAVES": "Number of leaves",
     "FRUITS": "Number of fruits",
@@ -289,9 +324,129 @@
     "NO_RECORDS": "No plant records available",
     "BACK_TO_LIST": "Back to list"
   },
+  "weather": {
+    "title": "Weather Status",
+    "subtitle": "Meteorological monitoring for agriculture",
+    "location": "Current Location",
+    "defaultLocation": "Peru",
+    "loading": "Loading weather data...",
+    "refresh": "Refresh weather",
+    "changeLocation": "Change location",
+    "locationLabel": "City or region",
+    "locationPlaceholder": "Ex: Lima, Arequipa, Cusco, Peru",
+    "locationInstruction": "Enter your city, region or country name to get local weather.",
+    "applyLocation": "Apply location",
+    "status": {
+      "optimal": "Optimal conditions",
+      "suboptimal": "Non-optimal conditions"
+    },
+    "alerts": {
+      "title": "Weather Alerts",
+      "frost_risk": "⚠️ Frost risk - Protect sensitive crops",
+      "heat_stress": "🔥 Extreme heat stress - Critical risk for crops",
+      "cold_warning": "❄️ Low temperatures - Monitor crops closely",
+      "high_heat": "☀️ High heat - Increase irrigation frequency",
+      "storm_warning": "⛈️ Storm in progress - Suspend outdoor activities",
+      "flooding_risk": "💧 Flooding risk - Check drainage systems",
+      "strong_winds": "💨 Strong winds - Check supports and structures"
+    },
+    "recommendations": {
+      "title": "Agricultural Recommendations",
+      "protect_frost": "🛡️ Cover sensitive crops with thermal blankets or plastic",
+      "avoid_watering_morning": "⏰ Avoid watering in morning hours to prevent freezing",
+      "increase_irrigation": "💧 Increase irrigation frequency due to heat",
+      "provide_shade": "🌳 Provide artificial shade for delicate crops",
+      "optimal_growth": "✅ Ideal temperature for growth of most crops",
+      "suspend_irrigation": "🚫 Suspend scheduled irrigation due to rain",
+      "check_drainage": "🔍 Verify that drainage systems are working properly",
+      "monitor_soil_moisture": "📊 Monitor soil moisture levels regularly",
+      "water_evening": "🌙 Water in evening/night hours to reduce evaporation",
+      "postpone_activities": "⏸️ Postpone field activities until the storm passes",
+      "secure_structures": "🔒 Secure greenhouses, nets and temporary structures",
+      "check_supports": "🌱 Check stakes and supports for tall plants"
+    },
+    "info": {
+      "title": "Temperature Ranges for Crops",
+      "optimal_range": "Optimal Range",
+      "warning_range": "Caution",
+      "danger_range": "Danger"
+    },
+    "empty": {
+      "title": "No data available",
+      "subtitle": "Could not load weather data",
+      "action": "Retry"
+    }
+  },
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
     "go-home": "Go Home"
+  },
+  "members": {
+    "button-back": "Go back to organization",
+    "title": "Organization members",
+    "button-add": "Add",
+    "select": "Select a profile"
+  },
+  "plantSessions": {
+    "title": "Plant Sampling Sessions",
+    "session": "Session",
+    "sessions": "sessions",
+    "loading": "Loading sessions...",
+    "loadingDetails": "Loading session details...",
+    "saving": "Saving...",
+    "noOrganizations": "No organizations available",
+    "createOrganizationFirst": "Create an organization first to start sampling",
+    "goToOrganizations": "Go to Organizations",
+    "noPlots": "No plots registered for this organization",
+    "noSessionsForPlot": "No sampling sessions for this plot",
+    "createFirst": "Create first session",
+    "addSession": "Add New Session",
+    "viewDetails": "View Details",
+    "delete": "Delete",
+    "deleteSession": "Delete Session",
+    "backToList": "Back to List",
+    "sessionDetails": "Session Details",
+    "generalInfo": "General Information",
+    "sampledAt": "Sampled At",
+    "plotId": "Plot ID",
+    "totalObservations": "Total Observations",
+    "averages": "Calculated Averages",
+    "avgHeight": "Avg. Height",
+    "avgLeaves": "Avg. Leaves",
+    "avgFruits": "Avg. Fruits",
+    "observations": "Plant Observations",
+    "observationId": "ID",
+    "height": "Height",
+    "leaves": "Leaves",
+    "fruits": "Fruits",
+    "notes": "Notes",
+    "actions": "Actions",
+    "edit": "Edit",
+    "addObservation": "Add Observation",
+    "addFirstObservation": "Add First Observation",
+    "noObservations": "No observations registered yet",
+    "sessionNotFound": "Session not found",
+    "createSession": "Create Sampling Session",
+    "selectPlot": "Select Plot",
+    "plot": "Plot",
+    "selectPlotOption": "Select a plot",
+    "addToList": "Add to List",
+    "observationsList": "Observations List",
+    "noObservationsYet": "No observations added yet. Add plants to calculate averages.",
+    "calculatedAverages": "Calculated Averages",
+    "saveSession": "Save Session",
+    "cancel": "Cancel",
+    "editObservation": "Edit Observation",
+    "saveObservation": "Save Observation",
+    "updateObservation": "Update Observation",
+    "leafCount": "Leaf Count",
+    "fruitCount": "Fruit Count",
+    "heightHint": "Measure plant height in centimeters",
+    "leafCountHint": "Count total number of leaves",
+    "fruitCountHint": "Count visible fruits",
+    "notesPlaceholder": "Additional observations about the plant...",
+    "preview": "Preview",
+    "samples": "samples"
   }
 }

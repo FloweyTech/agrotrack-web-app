@@ -1,4 +1,4 @@
-import {BaseEntity} from '../../../shared/infrastructure/base-entity';
+import {BaseEntity} from '../../../shared/domain/model/base-entity';
 import {Subscription, SubscriptionPlan} from './subscription.entity';
 
 /**
@@ -27,6 +27,10 @@ export class Organization implements BaseEntity {
 
   private _subscription : Subscription;
 
+  private _ownerProfileId: number;
+
+  profileIds: number[];
+
 
   /**
    * Creates an instance of the Organization entity.
@@ -39,6 +43,8 @@ export class Organization implements BaseEntity {
     members: Array<number>;
     status: OrganizationStatus;
     subscription : Subscription;
+    ownerProfileId: number;
+    profileIds?: number[]
     }) {
 
     this._id = organization.id;
@@ -46,6 +52,9 @@ export class Organization implements BaseEntity {
     this._members = organization.members;
     this._status = organization.status;
     this._subscription = organization.subscription;
+    this._ownerProfileId = organization.ownerProfileId;
+    this.profileIds = organization.profileIds || [];
+
   }
 
 
@@ -100,6 +109,8 @@ export class Organization implements BaseEntity {
   set subscription(value: Subscription){
     this._subscription = value;
   }
+  get ownerProfileId() { return this._ownerProfileId; }
+  set ownerProfileId(v: number) { this._ownerProfileId = v; }
 
 }
 

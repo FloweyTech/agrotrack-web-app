@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  @if (store.organizations().length === 0) {
+  @if (store.organizationsByOwner().length === 0) {
     <div class="no-organizations">
       <mat-icon class="no-org-icon">group_off</mat-icon>
       <p>{{ 'organization.no-organizations' | translate }}</p>
@@ -18,43 +18,41 @@
   }
 
 
-  @if (store.organizations().length > 0) {
+  @if (store.organizationsByOwner().length > 0) {
     <div class="organization-grid">
-      @for (org of store.organizations(); track org.id) {
+      @for (org of store.organizationsByOwner(); track org.id) {
         <mat-card class="organization-card">
           <mat-card-header>
             <mat-icon mat-card-avatar>domain</mat-icon>
-            <mat-card-title>{{ org.name }}</mat-card-title>
+            <mat-card-title>{{ org.organizationName }}</mat-card-title>
             <mat-card-subtitle>
-              {{ 'organization.plan-label' | translate }}:
-              {{ org.subscription.plan }}
+              Max Plots: {{ org.maxPlots }}
             </mat-card-subtitle>
           </mat-card-header>
 
           <mat-card-content>
             <p>
               <strong>{{ 'organization.members' | translate }}:</strong>
-              {{ org.members.length }}
+              {{ org.profileIds.length }}
             </p>
             <p>
               <strong>{{ 'organization.status' | translate }}:</strong>
-              {{ org.status | titlecase }}
+              <span [style.color]="org.isActive ? 'green' : 'red'">
+                {{ org.isActive ? 'Active' : 'Inactive' }}
+              </span>
             </p>
             <p>
-              <strong>{{ 'organization.subscription-end' | translate }}:</strong>
-              {{ org.subscription.endDate | date:'mediumDate' }}
+              <strong>Organization ID:</strong>
+              {{ org.organizationId }}
             </p>
           </mat-card-content>
 
           <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="navigateToOrganization(org.id)">
+            <button mat-raised-button color="primary" (click)="navigateToOrganization(org.organizationId)">
               {{ 'organization.enter' | translate }}
             </button>
 
-            <button mat-raised-button color="warn" (click)="deleteOrganization(org.id)">
-              {{ 'organization.delete' | translate }}
-            </button>
-            <button mat-icon-button color="primary" (click)="editOrganization(org.id)" matTooltip="{{ 'organization.edit' | translate }}">
+            <button mat-icon-button color="primary" (click)="editOrganization(org.organizationId)" matTooltip="{{ 'organization.edit' | translate }}">
               <mat-icon>edit</mat-icon>
             </button>
           </mat-card-actions>

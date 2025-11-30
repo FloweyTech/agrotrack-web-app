@@ -1,6 +1,7 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, computed, inject, input} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {ProfileStore} from '../../../application/profile.store';
+import {IamStore} from '../../../../iam/application/iam.store';
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +13,13 @@ import {ProfileStore} from '../../../application/profile.store';
   styleUrl: './profile.css'
 })
 export class Profile {
-  private store = inject(ProfileStore);
+  private readonly store = inject(IamStore);
+  readonly name = this.store.currentUsername;
 
-  name = input<string>('Usuario');
-  avatarUrl = input<string | null>(null);
+
+  readonly avatarUrl = computed(() => {
+    return this.store.isSignedIn()
+      ? 'https://i.pravatar.cc/100?u=agro'
+      : null;
+  });
 }

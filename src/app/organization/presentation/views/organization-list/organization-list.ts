@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrganizationStore } from '../../../application/organization.store';
 import { MatCardModule } from '@angular/material/card';
@@ -6,22 +6,32 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DatePipe, TitleCasePipe } from '@angular/common';
+import {IamStore} from '../../../../iam/application/iam.store';
 
 @Component({
   selector: 'app-organization-list',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule, TranslatePipe, TitleCasePipe, DatePipe],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule, TranslatePipe],
   templateUrl: './organization-list.html',
   styleUrls: ['./organization-list.css']
 })
-export class OrganizationList {
+export class OrganizationList implements OnInit {
   readonly store = inject(OrganizationStore);
+  private readonly iamStore = inject(IamStore)
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
 
+  ngOnInit(): void {
+    const profileId = this.iamStore.currentUserIdValue;
+    if (profileId) {
+      this.store.loadOrganizationsByOwner(profileId);
+    } else {
+      console.error('No profile ID found in session');
+    }
+  }
+
   navigateToOrganization(id: number): void {
-    this.router.navigate(['/organization', id, 'plots']).then();
+    this.router.navigate(['/organization', id]).then();
   }
 
   navigateToNew(): void {
@@ -38,4 +48,10 @@ export class OrganizationList {
   editOrganization(id: number): void {
     this.router.navigate(['/organization', id, 'edit']).then();
   }
+
+  navigateToMembers(id: number): void {
+    this.router.navigate(['/organization', id, 'members']).then();
+  }
+
+
 }

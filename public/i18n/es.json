@@ -4,7 +4,9 @@
     "reports": "Reportes",
     "tasks": "Tareas",
     "settings": "Ajustes",
-    "monitoring": "Monitoreo"
+    "monitoring": "Monitoreo",
+    "sampling_sessions": "Muestreo de Plantas",
+    "weather": "Clima"
   },
   "auth": {
     "login": {
@@ -46,6 +48,25 @@
   },
   "report": {
     "title": "Reportes",
+    "create": {
+      "title": "Crear nuevo informe",
+      "subtitle": "Genera métricas personalizadas para tus parcelas",
+      "back": "Volver a la lista",
+      "organization": "Organización",
+      "plot": "Parcela",
+      "reportType": "Tipo de informe",
+      "metricType": "Tipo de métrica",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "generate": "Generar informe",
+      "loading": "Generando...",
+      "selectOption": "Selecciona una opción",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "noPlots": "No se encontraron parcelas para esta organización"
+      }
+    },
+
     "refresh": "Actualizar",
     "loading": "Cargando reportes...",
     "filterBy": "Filtrar por Organización:",
@@ -64,13 +85,22 @@
     },
     "detail": {
       "title": "Detalle del Reporte #",
+      "metricType": "Tipo de Métrica",
+      "generatedAt": "Generado el",
       "back": "Volver",
       "type": "Tipo",
       "status": "Estado",
       "startDate": "Fecha Inicio",
       "endDate": "Fecha Fin",
       "downloadExcel": "Descargar Excel",
-      "excelPreview": "Previsualización Excel",
+      "results": "Resultados / Métricas",
+      "processingOrFailed": "El reporte se está procesando o falló. No hay datos disponibles.",
+      "metrics": {
+        "average": "Promedio",
+        "max": "Valor Máx",
+        "min": "Valor Mín",
+        "count": "Registros"
+      },
       "notFound": "No se encontró el reporte solicitado"
     },
     "types": {
@@ -81,6 +111,7 @@
       "REQUESTED": "Solicitado",
       "PROCESSING": "Procesando",
       "GENERATED": "Generado",
+      "CREATED": "Creado",
       "FAILED": "Fallido"
     }
   },
@@ -272,6 +303,11 @@
   },
   "PLANT_REGISTRATION": {
     "TITLE": "Registro de plantas de parcela",
+    "ORGANIZATION": "Organización",
+    "PLOT": "Parcela",
+    "SELECT_ORGANIZATION": "Seleccione una organización",
+    "SELECT_PLOT": "Seleccione una parcela",
+    "NO_PLOTS_AVAILABLE": "No hay parcelas disponibles para esta organización",
     "HEIGHT": "Altura (cm)",
     "LEAVES": "Número de hojas",
     "FRUITS": "Número de frutos",
@@ -289,9 +325,129 @@
     "NO_RECORDS": "No hay registros de plantas disponibles",
     "BACK_TO_LIST": "Volver a la lista"
   },
+  "weather": {
+    "title": "Estado del Clima",
+    "subtitle": "Monitoreo meteorológico para agricultura",
+    "location": "Ubicación Actual",
+    "defaultLocation": "Puno",
+    "loading": "Cargando datos del clima...",
+    "refresh": "Actualizar clima",
+    "changeLocation": "Cambiar ubicación",
+    "locationLabel": "Ciudad o región",
+    "locationPlaceholder": "Ej: Lima, Arequipa, Cusco, Peru",
+    "locationInstruction": "Ingresa el nombre de tu ciudad, región o país para obtener el clima local.",
+    "applyLocation": "Aplicar ubicación",
+    "status": {
+      "optimal": "Condiciones óptimas",
+      "suboptimal": "Condiciones no óptimas"
+    },
+    "alerts": {
+      "title": "Alertas Climáticas",
+      "frost_risk": "⚠️ Riesgo de heladas - Proteger cultivos sensibles",
+      "heat_stress": "🔥 Estrés térmico extremo - Riesgo crítico para los cultivos",
+      "cold_warning": "❄️ Temperaturas bajas - Monitorear cultivos de cerca",
+      "high_heat": "☀️ Calor elevado - Aumentar frecuencia de riego",
+      "storm_warning": "⛈️ Tormenta en curso - Suspender actividades al aire libre",
+      "flooding_risk": "💧 Riesgo de inundación - Verificar drenajes",
+      "strong_winds": "💨 Vientos fuertes - Revisar soportes y estructuras"
+    },
+    "recommendations": {
+      "title": "Recomendaciones Agrícolas",
+      "protect_frost": "🛡️ Cubrir cultivos sensibles con mantas térmicas o plástico",
+      "avoid_watering_morning": "⏰ Evitar riego en horas de la mañana para prevenir congelamiento",
+      "increase_irrigation": "💧 Incrementar la frecuencia de riego debido al calor",
+      "provide_shade": "🌳 Proporcionar sombra artificial a cultivos delicados",
+      "optimal_growth": "✅ Temperatura ideal para el crecimiento de la mayoría de cultivos",
+      "suspend_irrigation": "🚫 Suspender el riego programado debido a las lluvias",
+      "check_drainage": "🔍 Verificar que los sistemas de drenaje estén funcionando correctamente",
+      "monitor_soil_moisture": "📊 Monitorear los niveles de humedad del suelo regularmente",
+      "water_evening": "🌙 Regar en horas de la tarde/noche para reducir evaporación",
+      "postpone_activities": "⏸️ Posponer actividades de campo hasta que pase la tormenta",
+      "secure_structures": "🔒 Asegurar invernaderos, mallas y estructuras temporales",
+      "check_supports": "🌱 Verificar tutores y soportes de plantas altas"
+    },
+    "info": {
+      "title": "Rangos de Temperatura para Cultivos",
+      "optimal_range": "Rango Óptimo",
+      "warning_range": "Precaución",
+      "danger_range": "Peligro"
+    },
+    "empty": {
+      "title": "No hay datos disponibles",
+      "subtitle": "No se pudieron cargar los datos del clima",
+      "action": "Reintentar"
+    }
+  },
   "page-not-found": {
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
     "go-home": "Ir a Inicio"
+  },
+  "members": {
+    "button-back": "Volver a organizaciones",
+    "title": "Miembros de la organización",
+    "button-add": "Agregar",
+    "select": "Selecciona un perfil"
+  },
+  "plantSessions": {
+    "title": "Sesiones de Muestreo de Plantas",
+    "session": "Sesión",
+    "sessions": "sesiones",
+    "loading": "Cargando sesiones...",
+    "loadingDetails": "Cargando detalles de la sesión...",
+    "saving": "Guardando...",
+    "noOrganizations": "No hay organizaciones disponibles",
+    "createOrganizationFirst": "Crea una organización primero para comenzar el muestreo",
+    "goToOrganizations": "Ir a Organizaciones",
+    "noPlots": "No hay parcelas registradas para esta organización",
+    "noSessionsForPlot": "No hay sesiones de muestreo para esta parcela",
+    "createFirst": "Crear primera sesión",
+    "addSession": "Agregar Nueva Sesión",
+    "viewDetails": "Ver Detalles",
+    "delete": "Eliminar",
+    "deleteSession": "Eliminar Sesión",
+    "backToList": "Volver a la Lista",
+    "sessionDetails": "Detalles de la Sesión",
+    "generalInfo": "Información General",
+    "sampledAt": "Muestreado el",
+    "plotId": "ID de Parcela",
+    "totalObservations": "Total de Observaciones",
+    "averages": "Promedios Calculados",
+    "avgHeight": "Altura Prom.",
+    "avgLeaves": "Hojas Prom.",
+    "avgFruits": "Frutos Prom.",
+    "observations": "Observaciones de Plantas",
+    "observationId": "ID",
+    "height": "Altura",
+    "leaves": "Hojas",
+    "fruits": "Frutos",
+    "notes": "Notas",
+    "actions": "Acciones",
+    "edit": "Editar",
+    "addObservation": "Agregar Observación",
+    "addFirstObservation": "Agregar Primera Observación",
+    "noObservations": "No hay observaciones registradas aún",
+    "sessionNotFound": "Sesión no encontrada",
+    "createSession": "Crear Sesión de Muestreo",
+    "selectPlot": "Seleccionar Parcela",
+    "plot": "Parcela",
+    "selectPlotOption": "Selecciona una parcela",
+    "addToList": "Agregar a la Lista",
+    "observationsList": "Lista de Observaciones",
+    "noObservationsYet": "No se han agregado observaciones aún. Agrega plantas para calcular promedios.",
+    "calculatedAverages": "Promedios Calculados",
+    "saveSession": "Guardar Sesión",
+    "cancel": "Cancelar",
+    "editObservation": "Editar Observación",
+    "saveObservation": "Guardar Observación",
+    "updateObservation": "Actualizar Observación",
+    "leafCount": "Número de Hojas",
+    "fruitCount": "Número de Frutos",
+    "heightHint": "Mide la altura de la planta en centímetros",
+    "leafCountHint": "Cuenta el número total de hojas",
+    "fruitCountHint": "Cuenta los frutos visibles",
+    "notesPlaceholder": "Observaciones adicionales sobre la planta...",
+    "preview": "Vista Previa",
+    "samples": "muestras"
   }
 }

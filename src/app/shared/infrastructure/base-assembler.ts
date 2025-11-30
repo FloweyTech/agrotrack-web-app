@@ -1,6 +1,6 @@
 
 import {BaseResource, BaseResponse} from './base-response';
-import {BaseEntity} from './base-entity';
+import {BaseEntity} from '../domain/model/base-entity';
 
 /**
  * Defines a contract for assembler classes that convert between entities, resources, and API responses.
