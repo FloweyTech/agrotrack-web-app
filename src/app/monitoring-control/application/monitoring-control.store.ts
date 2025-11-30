@@ -2,9 +2,12 @@ import { Injectable, computed, signal } from '@angular/core';
 import { MonitoringApiEndpoint } from '../infrastructure/monitoring-api-endpoint';
 import { TaskApiEndpoint } from '../infrastructure/task-api-endpoint';
 import { WeatherApiEndpoint } from '../infrastructure/weather-api-endpoint';
+import { PlantSamplingSessionApiEndpoint } from '../infrastructure/plant-sampling-session-api-endpoint';
 import { EnvironmentalReading, ReadingType } from '../domain/model/environmental-reading.entity';
 import { Task } from '../domain/model/task.entity';
 import { Weather } from '../domain/model/weather.entity';
+import { PlantSamplingSession } from '../domain/model/plant-samplimg-session.entity';
+import { PlantObservation } from '../domain/model/plant-observation.entity';
 import { retry, forkJoin, map, switchMap, of } from 'rxjs';
 
 /**
@@ -36,14 +39,23 @@ export class MonitoringStore {
   private readonly weatherLoadingSignal = signal<boolean>(false);
   readonly weatherLoading = this.weatherLoadingSignal.asReadonly();
 
+  private readonly sessionsSignal = signal<PlantSamplingSession[]>([]);
+  readonly sessions = this.sessionsSignal.asReadonly();
+
+  private readonly observationsSignal = signal<PlantObservation[]>([]);
+  readonly observations = this.observationsSignal.asReadonly();
+
   // --- Computed values ---
   readonly readingCount = computed(() => this.readings().length);
   readonly taskCount = computed(() => this.tasks().length);
+  readonly sessionCount = computed(() => this.sessions().length);
+  private router: any;
 
   constructor(
     private monitoringApi: MonitoringApiEndpoint,
     private weatherApi: WeatherApiEndpoint,
-    private taskApi: TaskApiEndpoint
+    private taskApi: TaskApiEndpoint,
+    private plantSamplingApi: PlantSamplingSessionApiEndpoint
   ) {}
 
   /**
@@ -124,7 +136,6 @@ export class MonitoringStore {
    * Evaluates a reading to determine if it is outside safe thresholds.
    * @param reading The EnvironmentalReading to evaluate.
    * @returns A string message if an alert is triggered, otherwise null.
-   * TODO: Pasarlo al backend
    */
   private evaluate(reading: EnvironmentalReading): string | null {
     switch (reading.type) {
@@ -367,6 +378,295 @@ export class MonitoringStore {
       },
       error: (err) => {
         this.errorSignal.set(this.formatError(err, 'Failed to delete task'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  // ========== PLANT SAMPLING SESSIONS ==========
+
+  /**
+   * Loads all plant sampling sessions
+   */
+  loadAllSessions(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.getAllSessions().subscribe({
+      next: (sessions) => {
+        console.log('Loaded all sessions:', sessions);
+        this.sessionsSignal.set(sessions);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading all sessions:', err);
+        // Si es 404 o 500, no mostrar error crítico, solo log
+        if (err.status === 404 || err.status === 500) {
+          console.log('No sessions available or backend error');
+          this.sessionsSignal.set([]); // Array vacío en lugar de error
+        } else {
+          this.errorSignal.set(this.formatError(err, 'Failed to load all sessions'));
+        }
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Loads all sessions for a specific plot
+   * @param plotId - The ID of the plot
+   */
+  loadSessionsByPlot(plotId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.getSessionsByPlot(plotId).subscribe({
+      next: (sessions) => {
+        console.log('Loaded sessions for plot', plotId, ':', sessions);
+        // Remove old sessions for this plot and add new ones
+        const currentSessions = this.sessionsSignal();
+        const filteredSessions = currentSessions.filter(s => s.plotId !== plotId);
+        this.sessionsSignal.set([...filteredSessions, ...sessions]);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        // Si es 404, simplemente no hay sesiones para esta parcela (no es un error crítico)
+        if (err.status === 404) {
+          console.log('No sessions found for plot', plotId);
+          // Remove old sessions for this plot (si existían)
+          const currentSessions = this.sessionsSignal();
+          const filteredSessions = currentSessions.filter(s => s.plotId !== plotId);
+          this.sessionsSignal.set(filteredSessions);
+        } else {
+          console.error('Error loading sessions for plot', plotId, ':', err);
+          this.errorSignal.set(this.formatError(err, 'Failed to load sessions'));
+        }
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Loads a specific session by ID
+   * @param sessionId - The ID of the session
+   */
+  loadSessionById(sessionId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.getSessionById(sessionId).subscribe({
+      next: (session) => {
+        console.log('Loaded session:', session);
+        // Update or add the session in the signal
+        this.sessionsSignal.update((sessions) => {
+          const index = sessions.findIndex(s => s.id === sessionId);
+          if (index >= 0) {
+            const updated = [...sessions];
+            updated[index] = session;
+            return updated;
+          }
+          return [...sessions, session];
+        });
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading session', sessionId, ':', err);
+        // Si es 404 o 500, no mostrar error crítico en UI
+        if (err.status === 404) {
+          console.log('Session not found:', sessionId);
+        } else if (err.status === 500) {
+          console.log('Backend error loading session:', sessionId);
+        } else {
+          this.errorSignal.set(this.formatError(err, 'Failed to load session'));
+        }
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Creates a new plant sampling session
+   * @param session - The session to create
+   */
+  createSession(session: PlantSamplingSession): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.createSession(session).subscribe({
+      next: (created) => {
+        console.log('Session created:', created);
+        this.sessionsSignal.update((sessions) => [...sessions, created]);
+
+        // ⬅ Navegar aquí después del éxito
+        this.router.navigate(['/sampling-sessions']);
+
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error creating session:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to create session'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Updates an existing session
+   * @param sessionId - The ID of the session to update
+   * @param session - The updated session data
+   */
+  updateSession(sessionId: number, session: PlantSamplingSession): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.updateSession(sessionId, session).pipe(retry(2)).subscribe({
+      next: (updated) => {
+        console.log('Session updated:', updated);
+        this.sessionsSignal.update((sessions) =>
+          sessions.map(s => s.id === sessionId ? updated : s)
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error updating session:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to update session'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Deletes a session
+   * @param sessionId - The ID of the session to delete
+   */
+  deleteSession(sessionId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.deleteSession(sessionId).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Session deleted:', sessionId);
+        this.sessionsSignal.update((sessions) =>
+          sessions.filter(s => s.id !== sessionId)
+        );
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error deleting session:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to delete session'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  // ========== PLANT OBSERVATIONS ==========
+
+  /**
+   * Loads all observations for a specific session
+   * @param sessionId - The ID of the session
+   */
+  loadObservationsBySession(sessionId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.getObservationsBySession(sessionId).subscribe({
+      next: (observations) => {
+        console.log('Loaded observations for session', sessionId, ':', observations);
+        this.observationsSignal.set(observations);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading observations:', err);
+        // Si es 404 o 500, no mostrar error crítico, solo log
+        if (err.status === 404) {
+          console.log('No observations found for session', sessionId);
+          this.observationsSignal.set([]); // Array vacío
+        } else if (err.status === 500) {
+          console.log('Backend error loading observations for session', sessionId);
+          this.observationsSignal.set([]);
+        } else {
+          this.errorSignal.set(this.formatError(err, 'Failed to load observations'));
+        }
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Creates a new observation for a session
+   * @param sessionId - The ID of the session
+   * @param observation - The observation to create
+   */
+  createObservation(sessionId: number, observation: PlantObservation): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.createObservation(sessionId, observation).pipe(retry(2)).subscribe({
+      next: (created) => {
+        console.log('Observation created:', created);
+        this.observationsSignal.update((observations) => [...observations, created]);
+        // Reload the session to update averages
+        this.loadSessionById(sessionId);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error creating observation:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to create observation'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Updates an existing observation
+   * @param sessionId - The ID of the session
+   * @param observationId - The ID of the observation to update
+   * @param observation - The updated observation data
+   */
+  updateObservation(sessionId: number, observationId: number, observation: PlantObservation): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.updateObservation(sessionId, observationId, observation).pipe(retry(2)).subscribe({
+      next: (updated) => {
+        console.log('Observation updated:', updated);
+        this.observationsSignal.update((observations) =>
+          observations.map(o => o.id === observationId ? updated : o)
+        );
+        // Reload the session to update averages
+        this.loadSessionById(sessionId);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error updating observation:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to update observation'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  /**
+   * Deletes an observation from a session
+   * @param sessionId - The ID of the session
+   * @param observationId - The ID of the observation to delete
+   */
+  deleteObservation(sessionId: number, observationId: number): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.plantSamplingApi.deleteObservation(sessionId, observationId).pipe(retry(2)).subscribe({
+      next: () => {
+        console.log('Observation deleted:', observationId);
+        this.observationsSignal.update((observations) =>
+          observations.filter(o => o.id !== observationId)
+        );
+        // Reload the session to update averages
+        this.loadSessionById(sessionId);
+        this.loadingSignal.set(false);
+      },
+      error: (err) => {
+        console.error('Error deleting observation:', err);
+        this.errorSignal.set(this.formatError(err, 'Failed to delete observation'));
         this.loadingSignal.set(false);
       }
     });

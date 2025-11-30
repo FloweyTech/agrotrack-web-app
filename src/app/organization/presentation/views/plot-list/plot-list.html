@@ -57,9 +57,6 @@
               >
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-raised-button color="accent" (click)="goToPlantRegistrationList(plot.plotId)">
-                {{ 'PLANT_REGISTRATION.ADD_RECORD' | translate }}
-              </button>
             </mat-card-actions>
           </mat-card>
         }
@@ -91,17 +88,17 @@
           <div class="members-list">
             @for (member of profileMembers(); track member.profileId) {
               <div class="member-item">
-                <img 
-                  [src]="member.photoUrl || 'assets/images/default-avatar.png'" 
+                <img
+                  [src]="member.photoUrl || 'assets/images/default-avatar.png'"
                   [alt]="member.fullName"
                   class="member-avatar"
                 />
                 <div class="member-info">
                   <p class="member-name">{{ member.fullName }}</p>
                 </div>
-                <button 
-                  mat-icon-button 
-                  color="warn" 
+                <button
+                  mat-icon-button
+                  color="warn"
                   (click)="removeMember(member.profileId)"
                   matTooltip="{{ 'organization.removeMember' | translate }}"
                 >

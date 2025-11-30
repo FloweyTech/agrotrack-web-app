@@ -45,8 +45,9 @@ export class Layout implements OnInit, OnDestroy{
     { labelKey: 'nav.reports',      icon: 'assessment',           route: '/report' },
     { labelKey: 'nav.tasks',        icon: 'assignment_turned_in', route: '/tasks' },
     { labelKey: 'nav.monitoring',   icon: 'visibility',           route: '/monitoring' },
+    { labelKey: 'nav.sampling_sessions', icon: 'science',            route: '/sampling-sessions' },
     { labelKey: 'nav.weather',      icon: 'cloud_queue',          route: '/monitoring/weather' },
-    { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' },
+    { labelKey: 'nav.settings',     icon: 'settings',             route: '/settings' }
   ];
 
   private router = inject(Router);
