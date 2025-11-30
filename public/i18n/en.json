@@ -46,6 +46,24 @@
   },
   "report": {
     "title": "Reports",
+    "create": {
+      "title": "Create New Report",
+      "subtitle": "Generate custom metrics for your plots",
+      "back": "Back to list",
+      "organization": "Organization",
+      "plot": "Plot",
+      "reportType": "Report Type",
+      "metricType": "Metric Type",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "generate": "Generate Report",
+      "loading": "Generating...",
+      "selectOption": "Select an option",
+      "errors": {
+        "required": "This field is required",
+        "noPlots": "No plots found for this organization"
+      }
+    },
     "refresh": "Refresh",
     "loading": "Loading reports...",
     "filterBy": "Filter by Organization:",

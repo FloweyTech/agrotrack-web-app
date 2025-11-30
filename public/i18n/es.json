@@ -46,6 +46,25 @@
   },
   "report": {
     "title": "Reportes",
+    "create": {
+      "title": "Crear nuevo informe",
+      "subtitle": "Genera métricas personalizadas para tus parcelas",
+      "back": "Volver a la lista",
+      "organization": "Organización",
+      "plot": "Parcela",
+      "reportType": "Tipo de informe",
+      "metricType": "Tipo de métrica",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "generate": "Generar informe",
+      "loading": "Generando...",
+      "selectOption": "Selecciona una opción",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "noPlots": "No se encontraron parcelas para esta organización"
+      }
+    },
+
     "refresh": "Actualizar",
     "loading": "Cargando reportes...",
     "filterBy": "Filtrar por Organización:",
