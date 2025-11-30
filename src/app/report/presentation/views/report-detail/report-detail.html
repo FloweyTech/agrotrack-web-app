@@ -6,7 +6,7 @@
   <div class="content-layout">
     <div class="report-card">
       <div class="card-header">
-        <h2>{{ 'report.detail.title' | translate }} #{{ report.id }}</h2>
+        <h2>{{ 'report.detail.title' | translate }} {{ report.id }}</h2>
         <span class="status-badge" [class]="'status-' + report.status.toLowerCase()">
           {{ ('report.statuses.' + report.status) | translate }}
         </span>

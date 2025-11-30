@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 80px auto 40px;
   padding: 24px;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif; /* Asumiendo tipografía Material */
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 .back-button {
@@ -23,7 +23,7 @@
 
 .back-button:hover {
   background: #63a880;
-  color: white;
+  color: #eb9f18;
   transform: translateX(-4px);
   box-shadow: 0 4px 6px rgba(99, 168, 128, 0.2);
 }
