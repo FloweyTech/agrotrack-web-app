@@ -62,14 +62,18 @@ export class ReportStore {
       next: (newReport) => {
         this.reportsSignal.update(list => [...list, newReport]);
         this.loadingSignal.set(false);
+
+        alert('Report created successfully!');
         if (router) {
-          // Navigate to detail or list
-          router.navigate(['/reports', newReport.id]);
+          router.navigate(['/report']);
         }
       },
       error: (err) => {
-        this.errorSignal.set(err.message || 'Error creating report');
+        const errorMessage = err.message || 'Error creating report';
+        this.errorSignal.set(errorMessage);
         this.loadingSignal.set(false);
+
+        alert('Error: ' + errorMessage);
       }
     });
   }
