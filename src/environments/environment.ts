@@ -1,20 +1,21 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
+  platformProviderApiBaseUrl: 'https://agrotrack-web-service.up.railway.app',
   platformProviderSubscriptionsEndpointPath: '/subscriptions',
   platformProviderOrganizationsEndpointPath: '/organizations',
   platformProviderPlotsEndpointPath: '/plots',
   platformProviderPlantTypesEndpointPath: '/plant-types',
   platformProviderChecklistEndpointPath: '/checklist',
   platformProviderTaskEndpointPath: '/task',
-  platformProviderPlantSamplingSessionsEndpointPath: '/plant-sampling-session',
-  platformProviderPlantObservationEndpointPath: '/plantobservation',
-  platformProviderEnvironmentalReadingEndpointPath: '/environmental-readings',
+  platformProviderPlantSamplingSessionsEndpointPath: '/plant-sampling-sessions',
+  platformProviderPlantObservationEndpointPath: '/plant-observation',
+  platformProviderEnvironmentalReadingEndpointPath: '/environment-readings',
   platformProviderProfileEndpointPath: '/profile',
   platformProviderSignInEndpointPath: '/authentication/sign-in',
   platformProviderSignUpEndpointPath: '/authentication/sign-up',
   platformProviderReportsEndpointPath: '/reports',
+
   weatherApiBaseUrl: 'https://api.weatherapi.com/v1',
   weatherApiKey: 'd8020360b6a448fe9e1172139250810',
-  weatherApiDefaultLocation: 'Peru',
+  weatherApiDefaultLocation: 'Peru'
 };
