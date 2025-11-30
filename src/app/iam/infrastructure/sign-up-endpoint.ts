@@ -1,4 +1,4 @@
-import {environment} from '../../../environments/environment.development';
+import {environment} from '../../../environments/environment';
 import {ErrorHandlingEnabledBaseType} from '../../shared/infrastructure/error-handling-enabled-base-type';
 import {HttpClient} from '@angular/common/http';
 import {SignUpAssembler} from './sign-up-assembler';
