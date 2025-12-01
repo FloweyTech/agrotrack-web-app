@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { OrganizationStore } from '../../../application/organization.store';
 import {IamStore} from '../../../../iam/application/iam.store';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-subscription-payment',
@@ -20,7 +21,8 @@ import {IamStore} from '../../../../iam/application/iam.store';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    TranslatePipe
   ],
   templateUrl: './subscription-payment.html',
   styleUrls: ['./subscription-payment.css']

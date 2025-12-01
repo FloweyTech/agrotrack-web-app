@@ -65,28 +65,43 @@ export class OrganizationForm {
   plans: PlanOption[] = [
     {
       value: SubscriptionPlan.AGRO_START,
-      name: 'Agro Start',
-      benefits: ['Up to 5 plots', 'Basic monitoring', 'Email support'],
+      name: 'organization.plans.AGRO_START.name',
+      benefits: [
+        'organization.plans.AGRO_START.benefits.plots',
+        'organization.plans.AGRO_START.benefits.monitoring',
+        'organization.plans.AGRO_START.benefits.support'
+      ],
       icon: 'agriculture'
     },
     {
       value: SubscriptionPlan.AGRO_SMART,
-      name: 'Agro Smart',
-      benefits: ['Up to 20 plots', 'Advanced monitoring', 'Priority support', 'Analytics dashboard'],
+      name: 'organization.plans.AGRO_SMART.name',
+      benefits: [
+        'organization.plans.AGRO_SMART.benefits.plots',
+        'organization.plans.AGRO_SMART.benefits.monitoring',
+        'organization.plans.AGRO_SMART.benefits.support',
+        'organization.plans.AGRO_SMART.benefits.analytics'
+      ],
       icon: 'speed'
     },
     {
       value: SubscriptionPlan.AGRO_EXPERT,
-      name: 'Agro Expert',
-      benefits: ['Unlimited plots', 'Premium monitoring', '24/7 support', 'Advanced analytics', 'Custom reports'],
+      name: 'organization.plans.AGRO_EXPERT.name',
+      benefits: [
+        'organization.plans.AGRO_EXPERT.benefits.plots',
+        'organization.plans.AGRO_EXPERT.benefits.monitoring',
+        'organization.plans.AGRO_EXPERT.benefits.support',
+        'organization.plans.AGRO_EXPERT.benefits.analytics',
+        'organization.plans.AGRO_EXPERT.benefits.reports'
+      ],
       icon: 'workspace_premium'
     }
   ];
 
   durations = [
-    { months: 1, label: '1 Month' },
-    { months: 3, label: '3 Months' },
-    { months: 12, label: '12 Months' }
+    { months: 1, label: 'organization.durations.1' },
+    { months: 3, label: 'organization.durations.3' },
+    { months: 12, label: 'organization.durations.12' }
   ];
 
   form = this.fb.group({

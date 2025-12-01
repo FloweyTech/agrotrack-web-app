@@ -163,10 +163,14 @@ export class TaskCreate implements OnInit {
       materialsUsed: formValue.materials || []
     });
 
+    console.log('🚀 Creating task:', task);
     this.monitoringStore.createTask(task);
 
-    // Navigate back to task list
-    this.router.navigate(['/tasks']);
+    // Esperar un momento para que el store se actualice y luego navegar
+    setTimeout(() => {
+      console.log('✅ Navigating back to task list');
+      this.router.navigate(['/tasks']);
+    }, 500);
   }
 
   onCancel(): void {

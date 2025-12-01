@@ -134,13 +134,101 @@
     "delete-confirm": "¿Está seguro de que desea eliminar esta organización?",
     "no-organizations": "No hay organizaciones registradas.",
     "members": "Miembros",
+    "addMember": "Agregar Miembro",
+    "noMembers": "No hay miembros en esta organización.",
+    "removeMember": "Eliminar miembro",
+    "removeMemberConfirm": "¿Estás seguro de que deseas eliminar este miembro de la organización?",
+    "searchMember": "Buscar miembro",
+    "searchMemberPlaceholder": "Buscar por nombre o email...",
+    "searchHint": "Escribe el nombre o email del miembro que deseas encontrar",
     "subscription-end": "Fin de suscripción",
+    "wizard": {
+      "selectPlan": "Selecciona tu Plan",
+      "selectPlanSubtitle": "Elige el plan que mejor se adapte a tu organización",
+      "selectPlanButton": "Seleccionar Plan",
+      "selectDuration": "Selecciona la Duración",
+      "selectDurationSubtitle": "¿Por cuánto tiempo deseas suscribirte?",
+      "selectDurationButton": "Seleccionar",
+      "organizationDetails": "Detalles de la Organización",
+      "organizationDetailsSubtitle": "Paso final: nombra tu organización",
+      "summary": "Resumen",
+      "duration": "Duración",
+      "month": "mes",
+      "months": "meses",
+      "organizationName": "Nombre de la Organización",
+      "organizationNameRequired": "El nombre de la organización es requerido",
+      "back": "Atrás",
+      "creating": "Creando...",
+      "createOrganization": "Crear Organización"
+    },
+    "plans": {
+      "AGRO_START": {
+        "name": "Agro Start",
+        "benefits": {
+          "plots": "Hasta 5 parcelas",
+          "monitoring": "Monitoreo básico",
+          "support": "Soporte por email"
+        }
+      },
+      "AGRO_SMART": {
+        "name": "Agro Smart",
+        "benefits": {
+          "plots": "Hasta 20 parcelas",
+          "monitoring": "Monitoreo avanzado",
+          "support": "Soporte prioritario",
+          "analytics": "Panel de análisis"
+        }
+      },
+      "AGRO_EXPERT": {
+        "name": "Agro Expert",
+        "benefits": {
+          "plots": "Parcelas ilimitadas",
+          "monitoring": "Monitoreo premium",
+          "support": "Soporte 24/7",
+          "analytics": "Análisis avanzados",
+          "reports": "Reportes personalizados"
+        }
+      }
+    },
+    "durations": {
+      "1": "1 Mes",
+      "3": "3 Meses",
+      "12": "12 Meses"
+    },
+    "payment": {
+      "title": "Complete el Pago de su Suscripción",
+      "organizationName": "Organización",
+      "paymentInfo": "Información de Pago",
+      "securePayment": "Procesamiento seguro de pagos",
+      "simulationBanner": "Esta es una simulación. No se procesará ningún pago real.",
+      "cardNumber": "Número de Tarjeta",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "expiryDate": "Fecha de Vencimiento",
+      "expiryDatePlaceholder": "MM/AA",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cancel": "Cancelar",
+      "completePayment": "Completar Pago",
+      "processing": "Procesando...",
+      "securityInfo": "Su información de pago es segura y está encriptada",
+      "errors": {
+        "cardNumberRequired": "El número de tarjeta es requerido",
+        "cardNumberInvalid": "El número de tarjeta debe tener 16 dígitos",
+        "expiryDateRequired": "La fecha de vencimiento es requerida",
+        "expiryDateInvalid": "El formato debe ser MM/AA",
+        "cvvRequired": "El CVV es requerido",
+        "cvvInvalid": "El CVV debe tener 3-4 dígitos"
+      }
+    },
     "error": {
       "name-required": "El nombre de la organización es obligatorio."
     }
   },
   "plot": {
     "plantType": "Tipo de planta",
+    "selectPlantType": "Selecciona el tipo de planta",
+    "searchPlantType": "Buscar tipo de planta",
+    "searchPlaceholder": "Escribe para buscar...",
     "addNewPlantType": "Añadir nuevo tipo",
     "newPlantTypeName": "Nombre del nuevo tipo de planta",
     "placeholderNewType": "Ejemplo: Quinua, Yuca, Mango...",
@@ -148,6 +236,7 @@
     "editTitle": "Editar parcela",
     "name": "Nombre de la parcela",
     "area": "Área (hectáreas)",
+    "unit": "Unidad",
     "location": "Ubicación",
     "error": {
       "nameRequired": "El nombre es obligatorio",
@@ -165,7 +254,8 @@
   "actions": {
     "save": "Guardar",
     "update": "Actualizar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "back": "Volver"
   },
   "custom": "Personalizado",
   "monitoring": {
@@ -176,6 +266,7 @@
     "active-alerts": "Alertas Activas",
     "clear-alerts": "Limpiar Alertas",
     "no-readings": "No hay lecturas registradas",
+    "organization-plots": "Parcelas de la Organización",
     "plot": "Parcela",
     "type": "Tipo",
     "value": "Valor",
@@ -227,15 +318,43 @@
     "subtitle": "Tareas asignadas por el agrónomo",
     "assignedBy": "Asignado por:",
     "dueDate": "Fecha límite:",
+    "filters": {
+      "status": "Estado",
+      "organization": "Organización",
+      "startDate": "Desde",
+      "endDate": "Hasta",
+      "clearFilters": "Limpiar filtros de fecha",
+      "all": "Todos",
+      "allOrganizations": "Todas"
+    },
     "status": {
       "pending": "Pendiente",
-      "inProgress": "En progreso",
-      "completed": "Completada"
+      "inProgress": "En Progreso",
+      "completed": "Completado",
+      "cancelled": "Cancelado",
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
     },
     "priority": {
       "high": "Alta",
       "medium": "Media",
       "low": "Baja"
+    },
+    "assignNewTask": "Asignar Nueva Tarea",
+    "details": {
+      "organization": "Organización:",
+      "startDate": "Fecha Inicio:",
+      "endDate": "Fecha Fin:",
+      "materials": "Materiales:",
+      "moreMaterials": "materiales más",
+      "loading": "Cargando..."
+    },
+    "viewDetails": "Ver Detalles",
+    "emptyState": {
+      "title": "No hay tareas que coincidan con los filtros",
+      "subtitle": "Intenta cambiar los filtros para ver más tareas"
     },
     "categories": {
       "irrigation": "Riego",
@@ -287,13 +406,6 @@
         "description": "Rociar fungicida preventivo en cultivos susceptibles. Usar equipo de protección personal.",
         "category": "pest_control"
       }
-    },
-    "filters": {
-      "all": "Todas las tareas",
-      "pending": "Pendientes",
-      "completed": "Completadas",
-      "category": "Categoría:",
-      "priority": "Prioridad:"
     },
     "actions": {
       "markCompleted": "Marcar como completada",
@@ -406,6 +518,7 @@
     "viewDetails": "Ver Detalles",
     "delete": "Eliminar",
     "deleteSession": "Eliminar Sesión",
+    "deleteConfirm": "¿Estás seguro de que deseas eliminar esta sesión de muestreo? Esta acción no se puede deshacer.",
     "backToList": "Volver a la Lista",
     "sessionDetails": "Detalles de la Sesión",
     "generalInfo": "Información General",
@@ -450,4 +563,5 @@
     "preview": "Vista Previa",
     "samples": "muestras"
   }
+
 }

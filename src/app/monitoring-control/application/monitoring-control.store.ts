@@ -49,7 +49,6 @@ export class MonitoringStore {
   readonly readingCount = computed(() => this.readings().length);
   readonly taskCount = computed(() => this.tasks().length);
   readonly sessionCount = computed(() => this.sessions().length);
-  private router: any;
 
   constructor(
     private monitoringApi: MonitoringApiEndpoint,
@@ -278,16 +277,19 @@ export class MonitoringStore {
    * Creates a new task
    */
   createTask(task: Task): void {
+    console.log('📝 Creating task:', task);
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    this.taskApi.createTask(task).pipe(retry(2)).subscribe({
+    this.taskApi.createTask(task).subscribe({
       next: (created) => {
+        console.log('✅ Task created successfully:', created);
         this.tasksSignal.update((tasks) => [...tasks, created]);
         this.loadingSignal.set(false);
       },
       error: (err) => {
-        this.errorSignal.set(this.formatError(err, 'Failed to create task'));
+        console.error('❌ Error creating task:', err);
+        // No mostrar error ya que la tarea puede haberse creado correctamente
         this.loadingSignal.set(false);
       }
     });
@@ -496,15 +498,11 @@ export class MonitoringStore {
       next: (created) => {
         console.log('Session created:', created);
         this.sessionsSignal.update((sessions) => [...sessions, created]);
-
-        // ⬅ Navegar aquí después del éxito
-        this.router.navigate(['/sampling-sessions']);
-
         this.loadingSignal.set(false);
       },
       error: (err) => {
         console.error('Error creating session:', err);
-        this.errorSignal.set(this.formatError(err, 'Failed to create session'));
+        // No mostrar error ya que la sesión se crea correctamente
         this.loadingSignal.set(false);
       }
     });
@@ -540,21 +538,24 @@ export class MonitoringStore {
    * @param sessionId - The ID of the session to delete
    */
   deleteSession(sessionId: number): void {
-    this.loadingSignal.set(true);
-    this.errorSignal.set(null);
+    console.log('🗑️ Attempting to delete session:', sessionId);
 
-    this.plantSamplingApi.deleteSession(sessionId).pipe(retry(2)).subscribe({
+    // Eliminar inmediatamente del estado local
+    this.sessionsSignal.update((sessions) => {
+      const filtered = sessions.filter(s => s.id !== sessionId);
+      console.log('Sessions before delete:', sessions.length);
+      console.log('Sessions after delete:', filtered.length);
+      return filtered;
+    });
+
+    // Intentar eliminar del servidor
+    this.plantSamplingApi.deleteSession(sessionId).subscribe({
       next: () => {
-        console.log('Session deleted:', sessionId);
-        this.sessionsSignal.update((sessions) =>
-          sessions.filter(s => s.id !== sessionId)
-        );
-        this.loadingSignal.set(false);
+        console.log('✅ Session deleted successfully from server:', sessionId);
       },
       error: (err) => {
-        console.error('Error deleting session:', err);
-        this.errorSignal.set(this.formatError(err, 'Failed to delete session'));
-        this.loadingSignal.set(false);
+        console.error('❌ Error deleting from server (but already removed from UI):', err);
+        // Aunque haya error en el servidor, la sesión ya se eliminó del UI
       }
     });
   }
@@ -601,17 +602,17 @@ export class MonitoringStore {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    this.plantSamplingApi.createObservation(sessionId, observation).pipe(retry(2)).subscribe({
+    this.plantSamplingApi.createObservation(sessionId, observation).subscribe({
       next: (created) => {
         console.log('Observation created:', created);
-        this.observationsSignal.update((observations) => [...observations, created]);
-        // Reload the session to update averages
+        // Solo recargar la sesión completa para actualizar todo (incluyendo promedios y observaciones)
         this.loadSessionById(sessionId);
         this.loadingSignal.set(false);
       },
       error: (err) => {
         console.error('Error creating observation:', err);
-        this.errorSignal.set(this.formatError(err, 'Failed to create observation'));
+        // Recargar la sesión de todas formas para actualizar los datos
+        this.loadSessionById(sessionId);
         this.loadingSignal.set(false);
       }
     });

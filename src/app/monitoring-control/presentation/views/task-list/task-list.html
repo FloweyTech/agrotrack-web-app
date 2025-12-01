@@ -11,22 +11,22 @@
       <div class="filters-row">
         <!-- Status Filter -->
         <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Estado</mat-label>
+          <mat-label>{{ 'tasks.filters.status' | translate }}</mat-label>
           <mat-select [(value)]="selectedStatus">
-            <mat-option value="all">Todos</mat-option>
-            <mat-option value="PENDING">Pendiente</mat-option>
-            <mat-option value="IN_PROGRESS">En Progreso</mat-option>
-            <mat-option value="COMPLETED">Completado</mat-option>
-            <mat-option value="CANCELLED">Cancelado</mat-option>
+            <mat-option value="all">{{ 'tasks.filters.all' | translate }}</mat-option>
+            <mat-option value="PENDING">{{ 'tasks.status.PENDING' | translate }}</mat-option>
+            <mat-option value="IN_PROGRESS">{{ 'tasks.status.IN_PROGRESS' | translate }}</mat-option>
+            <mat-option value="COMPLETED">{{ 'tasks.status.COMPLETED' | translate }}</mat-option>
+            <mat-option value="CANCELLED">{{ 'tasks.status.CANCELLED' | translate }}</mat-option>
           </mat-select>
           <mat-icon matPrefix>filter_list</mat-icon>
         </mat-form-field>
 
         <!-- Organization Filter -->
         <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Organización</mat-label>
+          <mat-label>{{ 'tasks.filters.organization' | translate }}</mat-label>
           <mat-select [(value)]="selectedOrganization">
-            <mat-option value="all">Todas</mat-option>
+            <mat-option value="all">{{ 'tasks.filters.allOrganizations' | translate }}</mat-option>
             @for (org of uniqueOrganizations; track org.id) {
               <mat-option [value]="org.id.toString()">{{ org.name }}</mat-option>
             }
@@ -36,7 +36,7 @@
 
         <!-- Start Date Filter -->
         <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Desde</mat-label>
+          <mat-label>{{ 'tasks.filters.startDate' | translate }}</mat-label>
           <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDateFilter">
           <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
           <mat-datepicker #startPicker></mat-datepicker>
@@ -44,7 +44,7 @@
 
         <!-- End Date Filter -->
         <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Hasta</mat-label>
+          <mat-label>{{ 'tasks.filters.endDate' | translate }}</mat-label>
           <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDateFilter">
           <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
           <mat-datepicker #endPicker></mat-datepicker>
@@ -52,7 +52,7 @@
 
         <!-- Clear Filters Button -->
         <button mat-icon-button color="accent" (click)="clearDateFilters()" class="clear-filters-btn"
-                matTooltip="Limpiar filtros de fecha">
+                [matTooltip]="'tasks.filters.clearFilters' | translate">
           <mat-icon>clear</mat-icon>
         </button>
       </div>
@@ -63,7 +63,7 @@
     <div class="action-bar">
       <button mat-raised-button color="primary" (click)="navigateToCreateTask()">
         <mat-icon>add</mat-icon>
-        Asignar Nueva Tarea
+        {{ 'tasks.assignNewTask' | translate }}
       </button>
     </div>
 
@@ -105,19 +105,19 @@
         <div class="task-details">
           <div class="detail-item">
             <mat-icon class="detail-icon">business</mat-icon>
-            <span class="detail-label">Organización:</span>
-            <span class="detail-value">{{ task.organizationName || 'Cargando...' }}</span>
+            <span class="detail-label">{{ 'tasks.details.organization' | translate }}</span>
+            <span class="detail-value">{{ task.organizationName || ('tasks.details.loading' | translate) }}</span>
           </div>
 
           <div class="detail-item">
             <mat-icon class="detail-icon">calendar_today</mat-icon>
-            <span class="detail-label">Fecha Inicio:</span>
+            <span class="detail-label">{{ 'tasks.details.startDate' | translate }}</span>
             <span class="detail-value">{{ formatDate(task.startDate) }}</span>
           </div>
 
           <div class="detail-item">
             <mat-icon class="detail-icon">event</mat-icon>
-            <span class="detail-label">Fecha Fin:</span>
+            <span class="detail-label">{{ 'tasks.details.endDate' | translate }}</span>
             <span class="detail-value">{{ formatDate(task.endDate) }}</span>
           </div>
 
@@ -125,7 +125,7 @@
             <div class="materials-section">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <mat-icon class="detail-icon">inventory</mat-icon>
-                <span class="detail-label">Materiales:</span>
+                <span class="detail-label">{{ 'tasks.details.materials' | translate }}</span>
               </div>
               <div class="materials-list">
                 @for (material of task.materialsUsed.slice(0, 2); track $index) {
@@ -135,7 +135,7 @@
                 }
               </div>
               @if (task.materialsUsed.length > 2) {
-                <span class="more-materials">+ {{ task.materialsUsed.length - 2 }} materiales más</span>
+                <span class="more-materials">+ {{ task.materialsUsed.length - 2 }} {{ 'tasks.details.moreMaterials' | translate }}</span>
               }
             </div>
           }
@@ -145,7 +145,7 @@
       <mat-card-actions>
         <button mat-button color="primary" class="action-button" (click)="openTaskDetails(task)">
           <mat-icon>visibility</mat-icon>
-          Ver Detalles
+          {{ 'tasks.viewDetails' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>
@@ -154,7 +154,7 @@
   <!-- Empty State -->
   <div *ngIf="filteredTasks.length === 0" class="empty-state">
     <mat-icon class="empty-icon">assignment</mat-icon>
-    <h3>No hay tareas que coincidan con los filtros</h3>
-    <p>Intenta cambiar los filtros para ver más tareas</p>
+    <h3>{{ 'tasks.emptyState.title' | translate }}</h3>
+    <p>{{ 'tasks.emptyState.subtitle' | translate }}</p>
   </div>
 </div>

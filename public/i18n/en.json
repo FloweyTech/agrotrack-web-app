@@ -133,13 +133,101 @@
     "delete-confirm": "Are you sure you want to delete this organization?",
     "no-organizations": "No organizations registered.",
     "members": "Members",
+    "addMember": "Add Member",
+    "noMembers": "No members in this organization.",
+    "removeMember": "Remove member",
+    "removeMemberConfirm": "Are you sure you want to remove this member from the organization?",
+    "searchMember": "Search member",
+    "searchMemberPlaceholder": "Search by name or email...",
+    "searchHint": "Type the name or email of the member you want to find",
     "subscription-end": "Subscription end",
+    "wizard": {
+      "selectPlan": "Select Your Plan",
+      "selectPlanSubtitle": "Choose the plan that best fits your organization",
+      "selectPlanButton": "Select Plan",
+      "selectDuration": "Select Duration",
+      "selectDurationSubtitle": "How long do you want to subscribe?",
+      "selectDurationButton": "Select",
+      "organizationDetails": "Organization Details",
+      "organizationDetailsSubtitle": "Final step: name your organization",
+      "summary": "Summary",
+      "duration": "Duration",
+      "month": "month",
+      "months": "months",
+      "organizationName": "Organization Name",
+      "organizationNameRequired": "Organization name is required",
+      "back": "Back",
+      "creating": "Creating...",
+      "createOrganization": "Create Organization"
+    },
+    "plans": {
+      "AGRO_START": {
+        "name": "Agro Start",
+        "benefits": {
+          "plots": "Up to 5 plots",
+          "monitoring": "Basic monitoring",
+          "support": "Email support"
+        }
+      },
+      "AGRO_SMART": {
+        "name": "Agro Smart",
+        "benefits": {
+          "plots": "Up to 20 plots",
+          "monitoring": "Advanced monitoring",
+          "support": "Priority support",
+          "analytics": "Analytics dashboard"
+        }
+      },
+      "AGRO_EXPERT": {
+        "name": "Agro Expert",
+        "benefits": {
+          "plots": "Unlimited plots",
+          "monitoring": "Premium monitoring",
+          "support": "24/7 support",
+          "analytics": "Advanced analytics",
+          "reports": "Custom reports"
+        }
+      }
+    },
+    "durations": {
+      "1": "1 Month",
+      "3": "3 Months",
+      "12": "12 Months"
+    },
+    "payment": {
+      "title": "Complete Your Subscription Payment",
+      "organizationName": "Organization",
+      "paymentInfo": "Payment Information",
+      "securePayment": "Secure payment processing",
+      "simulationBanner": "This is a simulation. No real payment will be processed.",
+      "cardNumber": "Card Number",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "expiryDate": "Expiry Date",
+      "expiryDatePlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cancel": "Cancel",
+      "completePayment": "Complete Payment",
+      "processing": "Processing...",
+      "securityInfo": "Your payment information is secure and encrypted",
+      "errors": {
+        "cardNumberRequired": "Card number is required",
+        "cardNumberInvalid": "Card number must be 16 digits",
+        "expiryDateRequired": "Expiry date is required",
+        "expiryDateInvalid": "Format must be MM/YY",
+        "cvvRequired": "CVV is required",
+        "cvvInvalid": "CVV must be 3-4 digits"
+      }
+    },
     "error": {
       "name-required": "Organization name is required."
     }
   },
   "plot": {
     "plantType": "Plant type",
+    "selectPlantType": "Select plant type",
+    "searchPlantType": "Search plant type",
+    "searchPlaceholder": "Type to search...",
     "addNewPlantType": "Add new type",
     "newPlantTypeName": "New plant type name",
     "placeholderNewType": "Example: Quinoa, Yuca, Mango...",
@@ -147,6 +235,7 @@
     "editTitle": "Edit plot",
     "name": "Plot name",
     "area": "Area (hectares)",
+    "unit": "Unit",
     "location": "Location",
     "error": {
       "nameRequired": "Name is required",
@@ -164,7 +253,8 @@
   "actions": {
     "save": "Save",
     "update": "Update",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "back": "Back"
   },
   "custom": "Custom",
   "monitoring": {
@@ -175,6 +265,7 @@
     "active-alerts": "Active Alerts",
     "clear-alerts": "Clear Alerts",
     "no-readings": "No readings registered",
+    "organization-plots": "Organization Plots",
     "plot": "Plot",
     "type": "Type",
     "value": "Value",
@@ -226,15 +317,43 @@
     "subtitle": "Tasks assigned by the agronomist",
     "assignedBy": "Assigned by:",
     "dueDate": "Due date:",
+    "filters": {
+      "status": "Status",
+      "organization": "Organization",
+      "startDate": "From",
+      "endDate": "To",
+      "clearFilters": "Clear date filters",
+      "all": "All",
+      "allOrganizations": "All"
+    },
     "status": {
       "pending": "Pending",
-      "inProgress": "In progress",
-      "completed": "Completed"
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
     },
     "priority": {
       "high": "High",
       "medium": "Medium",
       "low": "Low"
+    },
+    "assignNewTask": "Assign New Task",
+    "details": {
+      "organization": "Organization:",
+      "startDate": "Start Date:",
+      "endDate": "End Date:",
+      "materials": "Materials:",
+      "moreMaterials": "more materials",
+      "loading": "Loading..."
+    },
+    "viewDetails": "View Details",
+    "emptyState": {
+      "title": "No tasks match the filters",
+      "subtitle": "Try changing the filters to see more tasks"
     },
     "categories": {
       "irrigation": "Irrigation",
@@ -286,13 +405,6 @@
         "description": "Spray preventive fungicide on susceptible crops. Use personal protective equipment.",
         "category": "pest_control"
       }
-    },
-    "filters": {
-      "all": "All tasks",
-      "pending": "Pending",
-      "completed": "Completed",
-      "category": "Category:",
-      "priority": "Priority:"
     },
     "actions": {
       "markCompleted": "Mark as completed",
@@ -405,6 +517,7 @@
     "viewDetails": "View Details",
     "delete": "Delete",
     "deleteSession": "Delete Session",
+    "deleteConfirm": "Are you sure you want to delete this sampling session? This action cannot be undone.",
     "backToList": "Back to List",
     "sessionDetails": "Session Details",
     "generalInfo": "General Information",
