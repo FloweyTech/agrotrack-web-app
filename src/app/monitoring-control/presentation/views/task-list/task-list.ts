@@ -83,22 +83,32 @@ export class TaskList implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('🔄 Task list component initialized - Loading tasks');
     this.loadData();
   }
 
   loadData(): void {
     const profileId = this.iamStore.currentUserIdValue;
-    if (!profileId) return;
+    console.log('📋 Loading tasks for profileId:', profileId);
+
+    if (!profileId) {
+      console.warn('⚠️ No profileId available');
+      return;
+    }
 
     // 1. Cargar Tareas
     if (this.isFarmer) {
+      console.log('👨‍🌾 Loading tasks as Farmer');
       this.monitoringStore.loadTasksAssignedTo(profileId);
     } else if (this.isAgronomist) {
+      console.log('👩‍🌾 Loading tasks as Agronomist');
       this.monitoringStore.loadTasksByAssignee(profileId);
     }
 
     // 2. Cargar Organizaciones (Para poder mostrar los nombres)
     this.organizationStore.loadOrganizationsByOwner(profileId);
+
+    console.log('✅ Tasks loaded:', this.monitoringStore.tasks().length);
   }
 
 

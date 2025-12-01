@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,6 +40,7 @@ export class PlantSessionList implements OnInit {
   private readonly organizationApi = inject(OrganizationApi);
   readonly organizationStore = inject(OrganizationStore);
   private readonly iamStore = inject(IamStore);
+  private readonly translate = inject(TranslateService);
 
   // Computed signal for active organizations
   readonly activeOrganizations = computed(() =>
@@ -151,9 +152,12 @@ export class PlantSessionList implements OnInit {
    */
   deleteSession(sessionId: number, event: Event): void {
     event.stopPropagation();
-    if (confirm('Are you sure you want to delete this session?')) {
+    const confirmMessage = this.translate.instant('plantSessions.deleteConfirm');
+    if (confirm(confirmMessage)) {
+    if (confirm(confirmMessage)) {
       this.monitoringStore.deleteSession(sessionId);
     }
+  }
   }
 }
 

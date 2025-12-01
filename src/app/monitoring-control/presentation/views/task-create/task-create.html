@@ -10,7 +10,7 @@
 
     <mat-card-content>
       <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        
+
         <!-- Organization Selection -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Organización</mat-label>
@@ -20,7 +20,7 @@
             }
           </mat-select>
           <mat-icon matPrefix>business</mat-icon>
-          @if (taskForm.get('organizationId')?.hasError('required') && taskForm.get('organizationId')?.touched) {
+          @if (taskForm.get('organizationId') && taskForm.get('organizationId')!.hasError('required') && taskForm.get('organizationId')!.touched) {
             <mat-error>Debe seleccionar una organización</mat-error>
           }
         </mat-form-field>
@@ -29,6 +29,19 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Asignar a</mat-label>
           <mat-select formControlName="assignedToProfileId">
+            <!-- Opciones de ejemplo hardcodeadas -->
+            <mat-option [value]="1">
+              <div class="profile-option">
+                <span>Pablo Pérez</span>
+              </div>
+            </mat-option>
+            <mat-option [value]="2">
+              <div class="profile-option">
+                <span>Maria García</span>
+              </div>
+            </mat-option>
+
+            <!-- Opciones dinámicas del store -->
             @for (profile of profilesFromStore; track profile.profileId) {
               <mat-option [value]="profile.profileId">
                 <div class="profile-option">
@@ -41,7 +54,7 @@
             }
           </mat-select>
           <mat-icon matPrefix>person</mat-icon>
-          @if (taskForm.get('assignedToProfileId')?.hasError('required') && taskForm.get('assignedToProfileId')?.touched) {
+          @if (taskForm.get('assignedToProfileId') && taskForm.get('assignedToProfileId')!.hasError('required') && taskForm.get('assignedToProfileId')!.touched) {
             <mat-error>Debe seleccionar un miembro</mat-error>
           }
         </mat-form-field>
@@ -51,10 +64,10 @@
           <mat-label>Título de la Tarea</mat-label>
           <input matInput formControlName="title" placeholder="Ej: Revisar sistema de riego">
           <mat-icon matPrefix>title</mat-icon>
-          @if (taskForm.get('title')?.hasError('required') && taskForm.get('title')?.touched) {
+          @if (taskForm.get('title') && taskForm.get('title')!.hasError('required') && taskForm.get('title')!.touched) {
             <mat-error>El título es requerido</mat-error>
           }
-          @if (taskForm.get('title')?.hasError('minlength')) {
+          @if (taskForm.get('title') && taskForm.get('title')!.hasError('minlength')) {
             <mat-error>El título debe tener al menos 3 caracteres</mat-error>
           }
         </mat-form-field>
@@ -62,13 +75,13 @@
         <!-- Task Description -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Descripción</mat-label>
-          <textarea matInput formControlName="description" rows="4" 
+          <textarea matInput formControlName="description" rows="4"
             placeholder="Describe detalladamente la tarea..."></textarea>
           <mat-icon matPrefix>description</mat-icon>
-          @if (taskForm.get('description')?.hasError('required') && taskForm.get('description')?.touched) {
+          @if (taskForm.get('description') && taskForm.get('description')!.hasError('required') && taskForm.get('description')!.touched) {
             <mat-error>La descripción es requerida</mat-error>
           }
-          @if (taskForm.get('description')?.hasError('minlength')) {
+          @if (taskForm.get('description') && taskForm.get('description')!.hasError('minlength')) {
             <mat-error>La descripción debe tener al menos 10 caracteres</mat-error>
           }
         </mat-form-field>
@@ -80,7 +93,7 @@
             <input matInput [matDatepicker]="startPicker" formControlName="startDate">
             <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
-            @if (taskForm.get('startDate')?.hasError('required') && taskForm.get('startDate')?.touched) {
+            @if (taskForm.get('startDate') && taskForm.get('startDate')!.hasError('required') && taskForm.get('startDate')!.touched) {
               <mat-error>La fecha de inicio es requerida</mat-error>
             }
           </mat-form-field>
@@ -90,7 +103,7 @@
             <input matInput [matDatepicker]="endPicker" formControlName="endDate">
             <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
-            @if (taskForm.get('endDate')?.hasError('required') && taskForm.get('endDate')?.touched) {
+            @if (taskForm.get('endDate') && taskForm.get('endDate')!.hasError('required') && taskForm.get('endDate')!.touched) {
               <mat-error>La fecha de finalización es requerida</mat-error>
             }
           </mat-form-field>

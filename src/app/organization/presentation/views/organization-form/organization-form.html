@@ -4,26 +4,26 @@
   <!-- Step 1: Select Plan -->
   @if (step === 'plan') {
     <div class="step-container">
-      <h2>Select Your Plan</h2>
-      <p class="subtitle">Choose the plan that best fits your organization</p>
-      
+      <h2>{{ 'organization.wizard.selectPlan' | translate }}</h2>
+      <p class="subtitle">{{ 'organization.wizard.selectPlanSubtitle' | translate }}</p>
+
       <div class="plans-grid">
         @for (plan of plans; track plan.value) {
-          <mat-card 
+          <mat-card
             class="plan-card"
             [class.selected]="selectedPlan === plan.value"
             (click)="selectPlan(plan.value)">
             <mat-card-header>
               <mat-icon mat-card-avatar>{{ plan.icon }}</mat-icon>
-              <mat-card-title>{{ plan.name }}</mat-card-title>
+              <mat-card-title>{{ plan.name | translate }}</mat-card-title>
             </mat-card-header>
-            
+
             <mat-card-content>
               <ul class="benefits-list">
                 @for (benefit of plan.benefits; track benefit) {
                   <li>
                     <mat-icon>check_circle</mat-icon>
-                    {{ benefit }}
+                    {{ benefit | translate }}
                   </li>
                 }
               </ul>
@@ -31,7 +31,7 @@
 
             <mat-card-actions>
               <button mat-raised-button color="primary" (click)="selectPlan(plan.value)">
-                Select Plan
+                {{ 'organization.wizard.selectPlanButton' | translate }}
               </button>
             </mat-card-actions>
           </mat-card>
@@ -40,7 +40,7 @@
 
       <div class="actions">
         <button mat-stroked-button color="warn" (click)="goBack()">
-          Cancel
+          {{ 'organization.cancel' | translate }}
         </button>
       </div>
     </div>
@@ -49,23 +49,23 @@
   <!-- Step 2: Select Duration -->
   @if (step === 'duration') {
     <div class="step-container">
-      <h2>Select Duration</h2>
-      <p class="subtitle">How long do you want to subscribe?</p>
-      
+      <h2>{{ 'organization.wizard.selectDuration' | translate }}</h2>
+      <p class="subtitle">{{ 'organization.wizard.selectDurationSubtitle' | translate }}</p>
+
       <div class="duration-grid">
         @for (duration of durations; track duration.months) {
-          <mat-card 
+          <mat-card
             class="duration-card"
             [class.selected]="selectedDuration === duration.months"
             (click)="selectDuration(duration.months)">
             <mat-card-content>
-              <h3>{{ duration.label }}</h3>
-              <p class="month-count">{{ duration.months }} month{{ duration.months > 1 ? 's' : '' }}</p>
+              <h3>{{ duration.label | translate }}</h3>
+              <p class="month-count">{{ duration.months }} {{ (duration.months > 1 ? 'organization.wizard.months' : 'organization.wizard.month') | translate }}</p>
             </mat-card-content>
 
             <mat-card-actions>
               <button mat-raised-button color="primary" (click)="selectDuration(duration.months)">
-                Select
+                {{ 'organization.wizard.selectDurationButton' | translate }}
               </button>
             </mat-card-actions>
           </mat-card>
@@ -74,7 +74,7 @@
 
       <div class="actions">
         <button mat-stroked-button (click)="goBack()">
-          Back
+          {{ 'organization.wizard.back' | translate }}
         </button>
       </div>
     </div>
@@ -83,37 +83,37 @@
   <!-- Step 3: Organization Name -->
   @if (step === 'name') {
     <div class="step-container">
-      <h2>Organization Details</h2>
-      <p class="subtitle">Final step: name your organization</p>
-      
+      <h2>{{ 'organization.wizard.organizationDetails' | translate }}</h2>
+      <p class="subtitle">{{ 'organization.wizard.organizationDetailsSubtitle' | translate }}</p>
+
       <div class="summary-card">
         <mat-card>
           <mat-card-header>
             <mat-icon mat-card-avatar>summarize</mat-icon>
-            <mat-card-title>Summary</mat-card-title>
+            <mat-card-title>{{ 'organization.wizard.summary' | translate }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p><strong>Plan:</strong> {{ selectedPlan }}</p>
-            <p><strong>Duration:</strong> {{ selectedDuration }} month{{ selectedDuration! > 1 ? 's' : '' }}</p>
+            <p><strong>{{ 'organization.plan-label' | translate }}:</strong> {{ selectedPlan }}</p>
+            <p><strong>{{ 'organization.wizard.duration' | translate }}:</strong> {{ selectedDuration }} {{ (selectedDuration! > 1 ? 'organization.wizard.months' : 'organization.wizard.month') | translate }}</p>
           </mat-card-content>
         </mat-card>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="name-form">
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Organization Name</mat-label>
+          <mat-label>{{ 'organization.wizard.organizationName' | translate }}</mat-label>
           <input matInput formControlName="organizationName" required>
           @if (form.get('organizationName')!.touched && form.get('organizationName')!.hasError('required')) {
-            <mat-error>Organization name is required</mat-error>
+            <mat-error>{{ 'organization.wizard.organizationNameRequired' | translate }}</mat-error>
           }
         </mat-form-field>
 
         <div class="actions">
           <button mat-stroked-button type="button" (click)="goBack()">
-            Back
+            {{ 'organization.wizard.back' | translate }}
           </button>
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || store.loading()">
-            {{ store.loading() ? 'Creating...' : 'Create Organization' }}
+            {{ store.loading() ? ('organization.wizard.creating' | translate) : ('organization.wizard.createOrganization' | translate) }}
           </button>
         </div>
       </form>
